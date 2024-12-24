@@ -11,14 +11,14 @@ namespace Project.ENTITIES.Models
         //Görev: Müşterilere ait temel bilgileri tutmak için tasarlanmıştır.
 
         // Müşteri Bilgileri
-        public string FirstName { get; set; }             // Müşterinin adı
-        public string LastName { get; set; }              // Müşterinin soyadı
-        public string ContactPhoneNumber { get; set; }    // İletişim için telefon numarası
+
         public string ContactEMail { get; set; }          // İletişim için e-posta adresi
-        public string CompanyName { get; set; }           // Müşterinin bağlı olduğu şirket adı
+        public string Password { get; set; }              // Şifre 
 
         // Relational Properties
         public virtual List<Fair> Fairs { get; set; }                                   // Müşterinin düzenlediği fuarlar
         public virtual List<CustomBuildingRequest> CustomBuildingRequests { get; set; } // Müşterinin özel bina talepleri
+        public virtual CustomerDetail CustomerDetail { get; set; }                      // Müşterinin detaylı bilgileri
+
     }
 }
