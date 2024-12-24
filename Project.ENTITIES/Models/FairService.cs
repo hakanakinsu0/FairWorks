@@ -19,8 +19,9 @@ namespace Project.ENTITIES.Models
         public int FairId { get; set; }             // Hangi fuara ait
 
         // Relational Properties
-        public virtual Fair Fair { get; set; }                                          // Hizmetin ait olduğu fuar
-        public virtual List<FairServiceProvider> FairServiceProviders { get; set; }     // Hizmet sağlayıcıları
-        public virtual List<AdditionalFairService> AdditionalFairServices { get; set; } // Ek hizmetler
+        public virtual Fair Fair { get; set; }                                          // Yön: // 1 Fair N FairService, 1 FairService 1 Fair
+        public virtual List<FairServiceProvider> FairServiceProviders { get; set; }     // Yön: // 1 FairService N ServiceProvider, 1 ServiceProvider N FairService (Ara tablo: FairServiceProvider)
+
+
     }
 }

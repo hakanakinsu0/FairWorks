@@ -15,7 +15,7 @@ namespace Project.ENTITIES.Models
         public int ServiceProviderId { get; set; }   // Sağlayıcının ID'si
 
         // Relational Properties
-        public virtual FairService FairService { get; set; }         // Hizmet ile ilişki
-        public virtual ServiceProvider ServiceProvider { get; set; } // Sağlayıcı ile ilişki
+        public virtual FairService FairService { get; set; }         // Yön: // 1 FairService N ServiceProvider, 1 ServiceProvider N FairService
+        public virtual ServiceProvider ServiceProvider { get; set; } // Yön: // 1 ServiceProvider N FairService, 1 FairService N ServiceProvider
     }
 }

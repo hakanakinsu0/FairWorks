@@ -17,13 +17,13 @@ namespace Project.ENTITIES.Models
         public string City { get; set; }         // İl
         public string PhoneNumber { get; set; }  // Telefon numarası
         public string Email { get; set; }        // E-posta
-        public decimal Cost { get; set; }        // Hizmet maliyeti
 
         // Foreign Key
-        public int AdditionalServiceId { get; set; } // Ek hizmet ilişkisi
+        public int ServiceValueId { get; set; }  // Hizmet değeri ile ilişki
 
         // Relational Properties
-        public virtual AdditionalService AdditionalService { get; set; }            // Ek hizmet ile ilişki
-        public virtual List<FairServiceProvider> FairServiceProviders { get; set; } // Fuar hizmet sağlayıcıları ile ilişki
+        public virtual ServiceValue ServiceValue { get; set; } // Yön: // 1 ServiceProvider 1 ServiceValue, 1 ServiceValue N ServiceProvider
+        public virtual List<FairServiceProvider> FairServiceProviders { get; set; } // Yön: // 1 ServiceProvider N FairService, 1 FairService N ServiceProvider
+
     }
 }

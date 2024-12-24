@@ -15,6 +15,7 @@ namespace Project.ENTITIES.Models
         public string ContactPhoneNumber { get; set; }    // İletişim için telefon numarası
 
         //Relational Properties
-        public virtual Customer Customer { get; set; }    //Kullanıcı ile ilişkisi
+        public virtual Customer Customer { get; set; }    //Yön: // 1 CustomerDetail 1 Customer, 1 Customer 1 CustomerDetail
+
     }
 }

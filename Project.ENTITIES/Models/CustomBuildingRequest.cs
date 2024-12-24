@@ -21,7 +21,9 @@ namespace Project.ENTITIES.Models
         public int LocationId { get; set; }        // Talep edilen lokasyonun ID'si
 
         // Relational Properties
-        public virtual Customer Customer { get; set; }  // Talep ile ilişkili müşteri
-        public virtual Location Location { get; set; }  // Talep edilen lokasyon
+        public virtual Customer Customer { get; set; }  // Yön: // 1 CustomBuildingRequest 1 Customer, 1 Customer N CustomBuildingRequest
+
+        public virtual Location Location { get; set; }  // Yön: // 1 CustomBuildingRequest 1 Location, 1 Location N CustomBuildingRequest
+
     }
 }

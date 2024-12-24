@@ -16,9 +16,8 @@ namespace Project.ENTITIES.Models
         public string Password { get; set; }              // Şifre 
 
         // Relational Properties
-        public virtual List<Fair> Fairs { get; set; }                                   // Müşterinin düzenlediği fuarlar
-        public virtual List<CustomBuildingRequest> CustomBuildingRequests { get; set; } // Müşterinin özel bina talepleri
-        public virtual CustomerDetail CustomerDetail { get; set; }                      // Müşterinin detaylı bilgileri
-
+        public virtual List<Fair> Fairs { get; set; }                                   // Yön: // 1 Customer N Fair, 1 Fair 1 Customer
+        public virtual List<CustomBuildingRequest> CustomBuildingRequests { get; set; } // Yön: // 1 Customer N CustomBuildingRequest, 1 CustomBuildingRequest 1 Customer
+        public virtual CustomerDetail CustomerDetail { get; set; }                      // Yön: // 1 Customer 1 CustomerDetail, 1 CustomerDetail 1 Customer
     }
 }

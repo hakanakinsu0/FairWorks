@@ -19,6 +19,7 @@ namespace Project.ENTITIES.Models
         public DateTime PaymentDate { get; set; }        // Ödeme tarihi
 
         // Relational Properties
-        public virtual List<FairPayment> FairPayments { get; set; } // Ödeme ile ilişkilendirilen fuarlar
+        public virtual List<FairPayment> FairPayments { get; set; } // Yön: // 1 Payment N Fair, 1 Fair N Payment (Ara tablo: FairPayment)
+
     }
 }

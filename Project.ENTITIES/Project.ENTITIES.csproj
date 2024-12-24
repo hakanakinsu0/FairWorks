@@ -42,23 +42,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\DataStatus.cs" />
+    <Compile Include="Enums\EmployeeRole.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
     <Compile Include="Enums\PaymentStatus.cs" />
     <Compile Include="Enums\RefundStatus.cs" />
-    <Compile Include="Models\AdditionalFairService.cs" />
-    <Compile Include="Models\AdditionalService.cs" />
+    <Compile Include="Models\ServiceDescriptor.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Building.cs" />
     <Compile Include="Models\CustomBuildingRequest.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerDetail.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Fair.cs" />
+    <Compile Include="Models\FairEmployee.cs" />
     <Compile Include="Models\FairPayment.cs" />
     <Compile Include="Models\FairService.cs" />
     <Compile Include="Models\FairServiceProvider.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\ServiceProvider.cs" />
+    <Compile Include="Models\ServiceValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

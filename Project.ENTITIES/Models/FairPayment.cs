@@ -15,7 +15,7 @@ namespace Project.ENTITIES.Models
         public int PaymentId { get; set; }       // Ödeme ID'si
 
         // Relational Properties
-        public virtual Fair Fair { get; set; }       // Fuar ile ilişki
-        public virtual Payment Payment { get; set; } // Ödeme ile ilişki
+        public virtual Fair Fair { get; set; }       // Yön: // 1 Fair N Payment, 1 Payment N Fair
+        public virtual Payment Payment { get; set; } // Yön: // 1 Payment N Fair, 1 Fair N Payment
     }
 }

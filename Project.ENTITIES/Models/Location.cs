@@ -15,7 +15,7 @@ namespace Project.ENTITIES.Models
         public string District { get; set; }    // İlçe adı (örneğin, "Kadıköy")
 
         // Relational Properties
-        public virtual List<Building> Buildings { get; set; }                           // Lokasyondaki binalar
-        public virtual List<CustomBuildingRequest> CustomBuildingRequests { get; set; } // Özel bina talepleri
+        public virtual List<Building> Buildings { get; set; }                           // Yön: // 1 Location N Building, 1 Building 1 Location
+        public virtual List<CustomBuildingRequest> CustomBuildingRequests { get; set; } // Yön: // 1 Location N CustomBuildingRequest, 1 CustomBuildingRequest 1 Location
     }
 }
