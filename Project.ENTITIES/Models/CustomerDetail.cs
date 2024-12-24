@@ -8,6 +8,7 @@ namespace Project.ENTITIES.Models
 {
     public class CustomerDetail : BaseEntity
     {
+        //Müşteri Bilgileri
         public string FirstName { get; set; }             // Müşterinin adı
         public string LastName { get; set; }              // Müşterinin soyadı
         public string CompanyName { get; set; }           // Müşterinin bağlı olduğu şirket adı
