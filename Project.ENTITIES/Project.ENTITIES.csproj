@@ -46,6 +46,7 @@
     <Compile Include="Enums\PaymentMethod.cs" />
     <Compile Include="Enums\PaymentStatus.cs" />
     <Compile Include="Enums\RefundStatus.cs" />
+    <Compile Include="Models\EmployeeProfile.cs" />
     <Compile Include="Models\ServiceDescriptor.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Building.cs" />

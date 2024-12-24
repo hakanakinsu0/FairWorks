@@ -11,7 +11,6 @@ namespace Project.ENTITIES.Models
         //Görev: Müşterilere ait temel bilgileri tutmak için tasarlanmıştır.
 
         // Müşteride En Çok Kullanılan Bilgiler
-
         public string ContactEMail { get; set; }          // İletişim için e-posta adresi
         public string Password { get; set; }              // Şifre 
 
