@@ -11,7 +11,7 @@ namespace Project.ENTITIES.Models
     {
         //Görev: Tüm tabloların ortak özelliklerini barındırmak için tasarlanmış soyut bir sınıftır (abstract class).
 
-        // Constructor: Miras verildiği class'larda, varsayılan değerleri atar.
+        // Constructor: Miras verildiği class'larda varsayılan değerleri atar.
         public BaseEntity()
         {
             CreatedDate = DateTime.Now;      // Kayıt oluşturma tarihi, otomatik olarak atanır.
