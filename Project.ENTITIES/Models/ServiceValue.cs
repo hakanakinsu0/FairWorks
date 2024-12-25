@@ -10,6 +10,8 @@ namespace Project.ENTITIES.Models
     {
         public string Name { get; set; }         // Değer adı (örneğin, "Kahvaltı", "Öğle Yemeği", "Özel Güvenlik")
         public decimal Cost { get; set; }        // Maliyet
+        public int PreparationTime { get; set; } // Hizmet için gerekli hazırlık süresi (gün)
+
 
         public int ServiceDescriptorId { get; set; } // Hizmet tanımı ile ilişki
 

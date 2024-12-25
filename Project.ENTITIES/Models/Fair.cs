@@ -18,6 +18,8 @@ namespace Project.ENTITIES.Models
         public decimal TotalCost { get; set; }      // Fuarın toplam maliyeti
         public bool IsDelayed { get; set; }         // Fuarın gecikip gecikmediği durumu
         public string DelayReason { get; set; }     // Fuarın gecikme nedeni (opsiyonel)
+        public int PreparationDays { get; set; }    // Hazırlık süresi (gün)
+
 
         // Foreign Keys
         public int CustomerId { get; set; }         // Fuarı düzenleyen müşteri
