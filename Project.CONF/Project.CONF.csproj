@@ -51,6 +51,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Options\BaseConfiguration.cs" />
+    <Compile Include="Options\BuildingConfiguration.cs" />
+    <Compile Include="Options\CustomBuildingRequestConfiguration.cs" />
+    <Compile Include="Options\CustomerConfiguration.cs" />
+    <Compile Include="Options\CustomerDetailConfiguration.cs" />
+    <Compile Include="Options\EmployeeConfiguration.cs" />
+    <Compile Include="Options\EmployeeProfileConfiguration.cs" />
+    <Compile Include="Options\FairConfiguration.cs" />
+    <Compile Include="Options\FairDelayConfiguration.cs" />
+    <Compile Include="Options\FairEmployeeConfiguration.cs" />
+    <Compile Include="Options\FairServiceConfiguration.cs" />
+    <Compile Include="Options\FairServiceProviderConfiguration.cs" />
+    <Compile Include="Options\LocationConfiguration.cs" />
+    <Compile Include="Options\PaymentConfiguration.cs" />
+    <Compile Include="Options\ServiceDescriptorConfiguration.cs" />
+    <Compile Include="Options\ServiceProviderConfiguration.cs" />
+    <Compile Include="Options\ServiceValueConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
