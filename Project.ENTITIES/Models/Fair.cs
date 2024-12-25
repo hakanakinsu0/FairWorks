@@ -19,6 +19,8 @@ namespace Project.ENTITIES.Models
         public bool IsDelayed { get; set; }         // Fuarın gecikip gecikmediği durumu
         public string DelayReason { get; set; }     // Fuarın gecikme nedeni (opsiyonel)
         public int PreparationDays { get; set; }    // Hazırlık süresi (gün)
+        public int BasePreparationTime { get; set; } // Sabit hazırlık süresi (gün cinsinden)
+
 
 
         // Foreign Keys

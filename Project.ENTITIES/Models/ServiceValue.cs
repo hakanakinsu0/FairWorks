@@ -11,6 +11,7 @@ namespace Project.ENTITIES.Models
         public string Name { get; set; }         // Değer adı (örneğin, "Kahvaltı", "Öğle Yemeği", "Özel Güvenlik")
         public decimal Cost { get; set; }        // Maliyet
         public int PreparationTime { get; set; } // Hizmet için gerekli hazırlık süresi (gün)
+        public int BufferTime { get; set; }      // Hizmet için ek tampon süre (gün cinsinden)
 
 
         public int ServiceDescriptorId { get; set; } // Hizmet tanımı ile ilişki
