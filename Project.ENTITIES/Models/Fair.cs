@@ -20,6 +20,8 @@ namespace Project.ENTITIES.Models
         public string DelayReason { get; set; }     // Fuarın gecikme nedeni (opsiyonel)
         public int PreparationDays { get; set; }    // Hazırlık süresi (gün)
         public int BasePreparationTime { get; set; } // Sabit hazırlık süresi (gün cinsinden)
+        public DateTime RequestedStartDate { get; set; }  // Müşterinin talep ettiği başlangıç tarihi
+        public DateTime CalculatedStartDate { get; set; } // Hesaplanan gerçek başlangıç tarihi
 
 
 
