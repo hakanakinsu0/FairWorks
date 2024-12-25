@@ -21,8 +21,8 @@ namespace Project.ENTITIES.Models
         public int LocationId { get; set; }        // Binanın konum bilgisine ait Foreign Key
 
         // Relational Properties
-        public virtual Location Location { get; set; }  // Yön: // 1 Building 1 Location, 1 Location N Building
+        public virtual Location Location { get; set; }  // 1 Building 1 Location, 1 Location N Building
 
-        public virtual List<Fair> Fairs { get; set; }   // Yön: // 1 Building N Fair, 1 Fair 1 Building
+        public virtual List<Fair> Fairs { get; set; }   // 1 Building N Fair, 1 Fair 1 Building
     }
 }
