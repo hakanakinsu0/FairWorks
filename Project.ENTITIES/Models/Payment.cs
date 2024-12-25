@@ -18,8 +18,12 @@ namespace Project.ENTITIES.Models
         public RefundStatus RefundStatus { get; set; }   // İade durumu (örneğin, iade talep edildi)
         public DateTime PaymentDate { get; set; }        // Ödeme tarihi
 
+        //Foreign Keys
+        public int FairId { get; set; }                  // Ödemenin ait olduğu fuar
+
         // Relational Properties
-        public virtual List<FairPayment> FairPayments { get; set; } // Yön: // 1 Payment N Fair, 1 Fair N Payment (Ara tablo: FairPayment)
+        public virtual Fair Fair { get; set; }           // Yön: // 1 Payment 1 Fair, 1 Fair N Payment
+
 
     }
 }

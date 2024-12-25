@@ -10,6 +10,11 @@ namespace Project.ENTITIES.Models
     {
         public string FirstName { get; set; }   // Çalışanın adı
         public string LastName { get; set; }    // Çalışanın soyadı
+        public string TC { get; set; }          // Çalışanın TC Kimlik Numarası
+        public string PhoneNumber { get; set; } // Çalışanın telefon numarası
+        public string Address { get; set; }     // Çalışanın tam adresi
+        public string City { get; set; }        // Çalışanın bulunduğu şehir
+        public string District { get; set; }    // Çalışanın bulunduğu ilçe
 
 
         //Relational Properties

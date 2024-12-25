@@ -57,7 +57,6 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Fair.cs" />
     <Compile Include="Models\FairEmployee.cs" />
-    <Compile Include="Models\FairPayment.cs" />
     <Compile Include="Models\FairService.cs" />
     <Compile Include="Models\FairServiceProvider.cs" />
     <Compile Include="Models\Location.cs" />
