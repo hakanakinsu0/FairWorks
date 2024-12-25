@@ -17,13 +17,10 @@ namespace Project.ENTITIES.Models
         public DateTime EndDate { get; set; }       // Fuarın bitiş tarihi
         public decimal TotalCost { get; set; }      // Fuarın toplam maliyeti
         public bool IsDelayed { get; set; }         // Fuarın gecikip gecikmediği durumu
-        public string DelayReason { get; set; }     // Fuarın gecikme nedeni (opsiyonel)
         public int PreparationDays { get; set; }    // Hazırlık süresi (gün)
         public int BasePreparationTime { get; set; } // Sabit hazırlık süresi (gün cinsinden)
         public DateTime RequestedStartDate { get; set; }  // Müşterinin talep ettiği başlangıç tarihi
         public DateTime CalculatedStartDate { get; set; } // Hesaplanan gerçek başlangıç tarihi
-
-
 
         // Foreign Keys
         public int CustomerId { get; set; }         // Fuarı düzenleyen müşteri
@@ -35,6 +32,8 @@ namespace Project.ENTITIES.Models
         public virtual List<FairService> FairServices { get; set; }   // Yön: // 1 Fair N FairService, 1 FairService 1 Fair
         public virtual List<FairPayment> FairPayments { get; set; }   // Yön: // 1 Fair N FairPayment, 1 FairPayment 1 Fair
         public virtual List<FairEmployee> Employees { get; set; }     // Yön: // 1 Fair N Employee, 1 Employee N Fair (Ara tablo: FairEmployee)
+        public virtual List<FairDelay> FairDelays { get; set; }       // Yön: // 1 Fair N FairDelay, 1 FairDelay 1 Fair
+
 
     }
 }
