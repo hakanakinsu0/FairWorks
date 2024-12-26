@@ -51,6 +51,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesignPatterns\GenericRepository\EFBaseRep\BaseRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\BuildingRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\CustomBuildingRequestRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\CustomerDetailRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\CustomerRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\EmployeeProfileRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\EmployeeRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\FairDelayRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\FairEmployeeRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\FairRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\FairServiceProviderRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\FairServiceRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\LocationRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\PaymentRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceDescriptorRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceProviderRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceValueRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\IntRep\IRepository.cs" />
     <Compile Include="DesignPatterns\SingletonPattern\DbTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,10 +86,7 @@
       <Name>Project.ENTITIES</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DesignPatterns\GenericRepository\EFBaseRep\" />
-    <Folder Include="DesignPatterns\GenericRepository\EFConcRep\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
