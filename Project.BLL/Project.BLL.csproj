@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesignPatterns\GenericRepository\IntRep\IRepository.cs" />
     <Compile Include="DesignPatterns\SingletonPattern\DbTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,6 +68,10 @@
       <Project>{e4a91a13-e29b-4851-9802-2f5c0db326f5}</Project>
       <Name>Project.ENTITIES</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DesignPatterns\GenericRepository\EFBaseRep\" />
+    <Folder Include="DesignPatterns\GenericRepository\EFConcRep\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
