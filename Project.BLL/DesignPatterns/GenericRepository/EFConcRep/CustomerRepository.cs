@@ -11,6 +11,10 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
     public class CustomerRepository : BaseRepository<Customer>
     {
         CustomerDetailRepository _customerDetailRepository;
+        public CustomerRepository()
+        {
+            _customerDetailRepository = new CustomerDetailRepository();
+        }
 
         public bool IsValidEmailFormat(string email)
         {
@@ -37,12 +41,7 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return FirstOrDefault(x => x.ContactEMail == email);
         }
 
-        public void RegisterCustomer(Customer customer, CustomerDetail customerDetail)
-        {
-            Add(customer); // CustomerRepository'deki Add çağrılır
-            customerDetail.Id = customer.Id; // Customer'ın ID'sini kullan
-            _customerDetailRepository.Add(customerDetail);
-        }
+
 
     }
 }

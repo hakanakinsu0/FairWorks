@@ -16,8 +16,8 @@ namespace Project.WinFormUI.Forms
     public partial class RegisterForm : Form
     {
         // Repository sınıfları aracılığıyla veritabanı işlemlerini gerçekleştirmek için örnekler oluşturulur.
-        CustomerRepository _customerRepository = new CustomerRepository();
-        CustomerDetailRepository _customerDetailRepository = new CustomerDetailRepository();
+        CustomerRepository _customerRepository;
+        CustomerDetailRepository _customerDetailRepository;
 
         // Müşteri ve müşteri detaylarını temsil edecek nesneler tanımlanır.
         Customer _customer;
@@ -26,6 +26,9 @@ namespace Project.WinFormUI.Forms
         public RegisterForm()
         {
             InitializeComponent();
+
+            _customerRepository = new CustomerRepository();
+            _customerDetailRepository = new CustomerDetailRepository();
         }
 
         // İptal butonuna basıldığında formu kapatır.
@@ -100,7 +103,10 @@ namespace Project.WinFormUI.Forms
             try
             {
                 // Müşteri ve müşteri detayı birlikte kayıt edilir.
-                _customerRepository.RegisterCustomer(_customer, _customerDetail);
+                _customerRepository.Add(_customer);
+                _customerDetail.Id = _customer.Id;
+                _customerDetailRepository.Add(_customerDetail);
+
                 MessageBox.Show("Kayıt başarılı bir şekilde tamamlanmıştır.");
                 Close(); // İşlem tamamlandıktan sonra formu kapatır.
             }
