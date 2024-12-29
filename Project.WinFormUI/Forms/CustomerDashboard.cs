@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Project.WinFormUI
+namespace Project.WinFormUI.Forms
 {
-    public partial class Form1 : Form
+    public partial class CustomerDashboard : Form
     {
-        public Form1()
+        public CustomerDashboard()
         {
             InitializeComponent();
         }
