@@ -148,6 +148,7 @@
             this.chkShowPassword.TabIndex = 3;
             this.chkShowPassword.Text = "Şifreyi Göster";
             this.chkShowPassword.UseVisualStyleBackColor = true;
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
             // 
             // Login
             // 

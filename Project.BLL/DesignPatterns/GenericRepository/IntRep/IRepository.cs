@@ -31,5 +31,6 @@ namespace Project.BLL.DesignPatterns.GenericRepository.IntRep
         T FirstOrDefault(Expression<Func<T, bool>> exp);    // Belirtilen şarta uyan ilk kaydı döndürür, bulunamazsa null döner.
         object Select(Expression<Func<T, dynamic>> exp);    // Dinamik bir sorgu ile belirtilen alanların seçilmesini sağlar ve bir nesne döndürür.
         List<X> Select<X>(Expression<Func<T, X>> exp);      // Dinamik bir sorgu ile belirtilen alanların seçilmesini sağlar ve bir liste döndürür.
+
     }
 }

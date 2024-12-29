@@ -71,6 +71,7 @@
     <Compile Include="DesignPatterns\GenericRepository\IntRep\IRepository.cs" />
     <Compile Include="DesignPatterns\SingletonPattern\DbTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Encryptor\PasswordEncryptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

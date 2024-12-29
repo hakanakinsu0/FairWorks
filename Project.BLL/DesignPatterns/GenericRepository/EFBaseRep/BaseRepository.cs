@@ -109,5 +109,6 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFBaseRep
         {
             return _db.Set<T>().Where(exp).ToList(); // Verilen şartı sağlayan kayıtları döndürür.
         }
+
     }
 }

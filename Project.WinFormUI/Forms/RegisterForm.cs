@@ -1,5 +1,6 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFConcRep;
 using Project.ENTITIES.Models;
+using Sifrelemeler.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,11 @@ namespace Project.WinFormUI.Forms
 {
     public partial class RegisterForm : Form
     {
+        // Repository sınıfları aracılığıyla veritabanı işlemlerini gerçekleştirmek için örnekler oluşturulur.
         CustomerRepository _customerRepository = new CustomerRepository();
         CustomerDetailRepository _customerDetailRepository = new CustomerDetailRepository();
 
+        // Müşteri ve müşteri detaylarını temsil edecek nesneler tanımlanır.
         Customer _customer;
         CustomerDetail _customerDetail;
 
@@ -25,54 +28,44 @@ namespace Project.WinFormUI.Forms
             InitializeComponent();
         }
 
-        private void TextboxlariSifirla()
-        {
-            txtFirstName.Text = "";
-            txtLastName.Text = "";
-            txtCompanyName.Text = "";
-            txtContactPhoneNumber.Text = "";
-            txtContactEMail.Text = "";
-            txtPassword.Text = "";
-            txtConfirmPassword.Text = "";
-        }
-
+        // İptal butonuna basıldığında formu kapatır.
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        // Kaydet butonuna basıldığında çalışacak olan metot.
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (txtFirstName.Text == "" || txtLastName.Text == "" || txtCompanyName.Text == "" || txtContactPhoneNumber.Text == "" || txtContactEMail.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "") //Eger herhangi bir textboximiz bos ise bu bloga girer
+            // Tüm alanların doldurulup doldurulmadığını kontrol eder.
+            if (IsAllFieldsFilled()) //Eger herhangi bir textboximiz bos ise bu bloga girer
             {
                 MessageBox.Show("Lütfen tüm alanları doldurunuz.");
                 return;
             }
 
+            // Girilen e-posta formatını doğrular.
             if (!_customerRepository.IsValidEmailFormat(txtContactEMail.Text))
             {
                 MessageBox.Show("Geçersiz e-posta formatı. Lütfen doğru bir e-posta adresi giriniz.");
                 return;
             }
 
+            // Girilen telefon numarasının formatını doğrular.
             if (!_customerDetailRepository.IsValidPhoneNumber(txtContactPhoneNumber.Text))
             {
                 MessageBox.Show("Geçersiz telefon numarası formatı. Lütfen doğru bir telefon numarası giriniz.");
                 return;
             }
+
+            // Şifrenin geçerli bir formatta olup olmadığını kontrol eder.
             if (!_customerRepository.IsValidPassword(txtPassword.Text))
             {
                 MessageBox.Show("Geçersiz şifre formatı. Lütfen en az 8 karakterli şifre belirleyiniz.");
                 return;
             }
 
-            if (txtPassword.Text != txtConfirmPassword.Text)
-            {
-                MessageBox.Show("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
-                txtConfirmPassword.Text = "";
-                return;
-            }
-
+            // Girilen e-postanın zaten kayıtlı olup olmadığını kontrol eder.
             if (_customerRepository.IsEmailRegistered(txtContactEMail.Text))
             {
                 MessageBox.Show("Bu email sistemde kayıtlıdır. Lütfen geçerli bir email giriniz.");
@@ -80,12 +73,22 @@ namespace Project.WinFormUI.Forms
                 return;
             }
 
+            // Girilen şifrelerin birbirine eşit olup olmadığını kontrol eder.
+            if (txtPassword.Text != txtConfirmPassword.Text)
+            {
+                MessageBox.Show("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
+                txtConfirmPassword.Text = "";
+                return;
+            }
+
+            // Yeni müşteri nesnesi oluşturulur.
             _customer = new Customer
             {
                 ContactEMail = txtContactEMail.Text,
-                Password = txtPassword.Text,
+                Password = PasswordEncryptor.Encode(txtPassword.Text),
             };
 
+            // Yeni müşteri detayı nesnesi oluşturulur.
             _customerDetail = new CustomerDetail
             {
                 FirstName = txtFirstName.Text,
@@ -93,20 +96,24 @@ namespace Project.WinFormUI.Forms
                 CompanyName = txtCompanyName.Text,
                 ContactPhoneNumber = txtContactPhoneNumber.Text
             };
+
             try
             {
-                _customerRepository.Add(_customer);
-                _customerDetail.Id = _customer.Id;
-                _customerDetailRepository.Add(_customerDetail);
-
+                // Müşteri ve müşteri detayı birlikte kayıt edilir.
+                _customerRepository.RegisterCustomer(_customer, _customerDetail);
                 MessageBox.Show("Kayıt başarılı bir şekilde tamamlanmıştır.");
-
-                TextboxlariSifirla();
+                Close(); // İşlem tamamlandıktan sonra formu kapatır.
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message); // Hata mesajını kullanıcıya gösterir.
             }
+        }
+
+        // Tüm alanların doldurulup doldurulmadığını kontrol eden yardımcı metot.
+        private bool IsAllFieldsFilled()
+        {
+            return txtFirstName.Text == "" || txtLastName.Text == "" || txtCompanyName.Text == "" || txtContactPhoneNumber.Text == "" || txtContactEMail.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "";
         }
     }
 }

@@ -10,5 +10,9 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class EmployeeRepository : BaseRepository<Employee>
     {
+        public Employee GetByEmailAndPassword(string email, string password)
+        {
+            return FirstOrDefault(x => x.Email == email && x.Password == password);
+        }
     }
 }
