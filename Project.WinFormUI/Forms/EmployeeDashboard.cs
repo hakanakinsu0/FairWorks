@@ -33,5 +33,10 @@ namespace Project.WinFormUI.Forms
             AddLocationForm addLocationForm = new AddLocationForm();
             addLocationForm.ShowDialog();
         }
+
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -112,6 +112,7 @@
             this.btnAddEmployee.TabIndex = 0;
             this.btnAddEmployee.Text = "Çalışan Ekle";
             this.btnAddEmployee.UseVisualStyleBackColor = true;
+            this.btnAddEmployee.Click += new System.EventHandler(this.btnAddEmployee_Click);
             // 
             // btnAddBuilding
             // 

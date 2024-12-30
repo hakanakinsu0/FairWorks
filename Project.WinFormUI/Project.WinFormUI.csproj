@@ -62,6 +62,12 @@
     <Compile Include="Forms\AddBuildingForm.Designer.cs">
       <DependentUpon>AddBuildingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AddEmployeeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEmployeeForm.Designer.cs">
+      <DependentUpon>AddEmployeeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AddLocationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AddBuildingForm.resx">
       <DependentUpon>AddBuildingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEmployeeForm.resx">
+      <DependentUpon>AddEmployeeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddLocationForm.resx">
       <DependentUpon>AddLocationForm.cs</DependentUpon>
