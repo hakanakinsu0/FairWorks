@@ -70,5 +70,10 @@ namespace Project.WinFormUI.Forms
         {
             Close();
         }
+
+        private void AddLocationForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

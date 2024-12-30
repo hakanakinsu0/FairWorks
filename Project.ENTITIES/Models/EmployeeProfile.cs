@@ -19,5 +19,10 @@ namespace Project.ENTITIES.Models
 
         //Relational Properties
         public virtual Employee Employee { get; set; } // Yön: // 1 Employee 1 Profile
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName} / {Employee.Role}";
+        }
     }
 }

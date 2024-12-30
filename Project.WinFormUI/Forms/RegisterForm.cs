@@ -121,5 +121,10 @@ namespace Project.WinFormUI.Forms
         {
             return txtFirstName.Text == "" || txtLastName.Text == "" || txtCompanyName.Text == "" || txtContactPhoneNumber.Text == "" || txtContactEMail.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "";
         }
+
+        private void RegisterForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

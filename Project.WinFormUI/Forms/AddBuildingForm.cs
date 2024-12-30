@@ -132,5 +132,10 @@ namespace Project.WinFormUI.Forms
                             nudRoomPerFloor.Value <= 0 ||
                             cmbLocation.SelectedIndex == -1;
         }
+
+        private void AddBuildingForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

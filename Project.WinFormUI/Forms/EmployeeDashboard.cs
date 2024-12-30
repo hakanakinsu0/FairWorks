@@ -36,6 +36,9 @@ namespace Project.WinFormUI.Forms
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
+            AddEmployeeForm addEmployeeForm = new AddEmployeeForm();
+            addEmployeeForm.ShowDialog();
+
 
         }
     }

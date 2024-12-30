@@ -14,5 +14,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
         {
             return FirstOrDefault(x => x.Email == email && x.Password == password);
         }
+
+        public bool IsValidPassword(string password)
+        {
+            return password.Length >= 8;
+        }
+
+        public bool IsValidEmailFormat(string email)
+        {
+            return email.Contains("@") && email.Contains(".");
+        }
     }
 }
