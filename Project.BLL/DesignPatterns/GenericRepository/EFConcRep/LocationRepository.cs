@@ -10,5 +10,11 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class LocationRepository:BaseRepository<Location>
     {
+        public bool IsLocationUnique(string city, string district)
+        {
+            return !Any(x => x.City.ToLower() == city.ToLower() &&
+                             x.District.ToLower() == district.ToLower());
+        }
+
     }
 }

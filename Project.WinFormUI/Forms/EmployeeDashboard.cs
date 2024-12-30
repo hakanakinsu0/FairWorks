@@ -16,5 +16,22 @@ namespace Project.WinFormUI.Forms
         {
             InitializeComponent();
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnAddBuilding_Click(object sender, EventArgs e)
+        {
+            AddBuildingForm addBuildingForm = new AddBuildingForm();
+            addBuildingForm.ShowDialog();
+        }
+
+        private void btnAddLocation_Click(object sender, EventArgs e)
+        {
+            AddLocationForm addLocationForm = new AddLocationForm();
+            addLocationForm.ShowDialog();
+        }
     }
 }

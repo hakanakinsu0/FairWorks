@@ -24,5 +24,10 @@ namespace Project.ENTITIES.Models
         public virtual Location Location { get; set; }  // 1 Building 1 Location, 1 Location N Building
 
         public virtual List<Fair> Fairs { get; set; }   // 1 Building N Fair, 1 Fair 1 Building
+
+        public override string ToString()
+        {
+            return $"{Name} - {Location.District}/{Location.City}";
+        }
     }
 }

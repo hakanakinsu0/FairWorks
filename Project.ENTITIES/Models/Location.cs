@@ -17,5 +17,11 @@ namespace Project.ENTITIES.Models
         // Relational Properties
         public virtual List<Building> Buildings { get; set; }                           // Yön: // 1 Location N Building, 1 Building 1 Location
         public virtual List<CustomBuildingRequest> CustomBuildingRequests { get; set; } // Yön: // 1 Location N CustomBuildingRequest, 1 CustomBuildingRequest 1 Location
+
+        public override string ToString()
+        {
+            return $"{District}/{City}";
+
+        }
     }
 }
