@@ -25,6 +25,9 @@ namespace Project.WinFormUI
         EmployeeRepository _employeeRepository;
         Employee _employee;
 
+        public static int LoggedInCustomerId { get; private set; } // Static property ile global erişim
+
+
         public Login()
         {
             InitializeComponent();
@@ -32,6 +35,7 @@ namespace Project.WinFormUI
             //Repository'lerin ornekleri baslangicta alinir.
             _customerRepository = new CustomerRepository();
             _employeeRepository = new EmployeeRepository();
+            _customer = new Customer();
 
             // Şifre giriş alanı gizlenir
             txtPassword.UseSystemPasswordChar = true;
@@ -56,6 +60,7 @@ namespace Project.WinFormUI
         // Giriş işlemini gerçekleştirir
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
             // E-posta ve şifre kontrolü
             if (txtEmail.Text == "" || txtPassword.Text == "")
             {
@@ -76,8 +81,10 @@ namespace Project.WinFormUI
             // Kullanıcı olup olmadığını kontrol eder
             if (_customerRepository.GetByEmailAndPassword(txtEmail.Text, encryptedPassword) != null)
             {
+                LoggedInCustomerId = _customer.Id; // Giriş yapan müşterinin ID'sini sakla
                 CustomerDashboard customerDashboard = new CustomerDashboard(); // Müşteri için dashboard formu
                 customerDashboard.ShowDialog();
+                TextboxlariTemizle();
                 return;
             }
 
@@ -86,17 +93,25 @@ namespace Project.WinFormUI
             {
                 EmployeeDashboard employeeDashboard = new EmployeeDashboard(); // Çalışan için dashboard formu
                 employeeDashboard.ShowDialog();
+                TextboxlariTemizle();
                 return;
             }
-
             // Eğer hiçbir eşleşme bulunamazsa hata mesajı gösterilir
             MessageBox.Show("E-posta veya şifre hatalı.");
         }
+
+      
 
         // Şifre göster/gizle checkbox'ının kontrol edildiğinde davranışı
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked; // Şifreyi göster veya gizle
+        }
+
+        private void TextboxlariTemizle()
+        {
+            txtEmail.Text = "";
+            txtPassword.Text = "";
         }
     }
 }

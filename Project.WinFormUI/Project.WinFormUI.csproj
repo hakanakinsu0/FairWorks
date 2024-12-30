@@ -74,6 +74,12 @@
     <Compile Include="Forms\AddLocationForm.Designer.cs">
       <DependentUpon>AddLocationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CustomBuildingRequestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomBuildingRequestForm.Designer.cs">
+      <DependentUpon>CustomBuildingRequestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CustomerDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,12 @@
     </Compile>
     <Compile Include="Forms\EmployeeDashboard.Designer.cs">
       <DependentUpon>EmployeeDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FairServicesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FairServicesForm.Designer.cs">
+      <DependentUpon>FairServicesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ForgotPasswordForm.cs">
       <SubType>Form</SubType>
@@ -114,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddLocationForm.resx">
       <DependentUpon>AddLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomBuildingRequestForm.resx">
+      <DependentUpon>CustomBuildingRequestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CustomerDashboard.resx">
       <DependentUpon>CustomerDashboard.cs</DependentUpon>

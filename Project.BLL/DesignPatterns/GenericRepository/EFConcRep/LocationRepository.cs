@@ -16,5 +16,29 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                              x.District.ToLower() == district.ToLower());
         }
 
+        // Tüm şehirleri döndürür, tekrarlayan şehirleri kaldırır
+        public List<string> GetAllCities()
+        {
+            //return GetAll() // Tüm lokasyonları al
+            //    .Select(x => x.City) // Sadece City alanını seç
+            //    .Distinct() // Tekrarlayan şehirleri kaldır
+            //    .ToList(); // Listeye dönüştür
+
+            return GetAll().Select(location => location.City).Distinct().ToList();
+
+        }
+
+        // Seçilen şehre göre ilçeleri döndürür
+        public List<string> GetDistrictsByCity(string city)
+        {
+            // Şehre göre ilçeleri filtreleyip benzersiz olarak döndür
+            return GetAll().Where(location => location.City == city)
+                           .Select(location => location.District)
+                           .Distinct()
+                           .ToList();
+        }
+
+
+
     }
 }
