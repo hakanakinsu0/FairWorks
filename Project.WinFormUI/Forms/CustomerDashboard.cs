@@ -14,59 +14,62 @@ namespace Project.WinFormUI.Forms
 {
     public partial class CustomerDashboard : Form
     {
-        BuildingRepository _buildingRepository;
-        LocationRepository _locationRepository;
-        FairRepository _fairRepository;
+        // Repository sınıfları
+        BuildingRepository _buildingRepository; // Bina işlemleri için repository
+        LocationRepository _locationRepository; // Lokasyon işlemleri için repository
 
         public CustomerDashboard()
         {
             InitializeComponent();
+
+            // Repository nesneleri oluşturuluyor
             _buildingRepository = new BuildingRepository();
             _locationRepository = new LocationRepository();
-            _fairRepository = new FairRepository();
+
+            // Şehirleri yükleme ve alanları temizleme işlemleri
             LoadCities();
             ClearFields();
         }
 
         private void btnSearchBuildings_Click(object sender, EventArgs e)
         {
-            if (cmbCity.SelectedIndex == -1 || cmbDistrict.SelectedIndex == -1 || txtFairName.Text=="")
+            // Fuar ismi, şehir ve ilçe seçiminin kontrolü
+            if (cmbCity.SelectedIndex == -1 || cmbDistrict.SelectedIndex == -1 || txtFairName.Text == "")
             {
                 MessageBox.Show("Lütfen fuar ismini, şehiri ve ilçeyi seçiniz.");
                 return;
             }
 
+            // Tarih aralığının kontrolü
             if (dtpEndDate.Value <= dtpStartDate.Value)
             {
                 MessageBox.Show("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
                 return;
             }
 
-            // Uygun binaları ara
+            // Uygun binaları arama işlemi
             List<Building> availableBuildings = _buildingRepository.GetAvailableBuildings(cmbCity.SelectedItem.ToString(), cmbDistrict.SelectedItem.ToString(), dtpEndDate.Value, dtpStartDate.Value);
 
-            if (availableBuildings.Any())
+            if (availableBuildings.Any()) // Eğer uygun bina bulunursa
             {
                 lstBuildings.DataSource = availableBuildings;
                 lstBuildings.DisplayMember = "ToString";
                 lstBuildings.SelectedIndex = -1;
             }
-            else
-            {
-                MessageBox.Show("Seçilen tarihlerde uygun bina bulunamadı. İsterseniz talep olusturabilirsiniz.");
-            }
+            // Uygun bina bulunamazsa mesaj gösterilir
+            else MessageBox.Show("Seçilen tarihlerde uygun bina bulunamadı. İsterseniz talep olusturabilirsiniz.");
         }
 
         private void btnConfirmFair_Click(object sender, EventArgs e)
         {
-            // Kullanıcının bina seçip seçmediğini kontrol et
+            // Kullanıcının bir bina seçip seçmediğini kontrol eder
             if (lstBuildings.SelectedItem == null)
             {
                 MessageBox.Show("Lütfen bir bina seçiniz.");
                 return;
             }
 
-            // Seçilen bina bilgilerini al
+            // Seçilen bina bilgilerini alır
             Building selectedBuilding = lstBuildings.SelectedItem as Building;
 
             try
@@ -74,57 +77,58 @@ namespace Project.WinFormUI.Forms
                 // Binanın maliyetini hesapla
                 decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding);
 
-                // Ek hizmetler formunu aç
+                // Ek hizmetler formunu açar ve bina bilgilerini gönderir
                 FairServicesForm servicesForm = new FairServicesForm
                 {
                     SelectedBuilding = selectedBuilding, // Seçilen bina bilgisi
-                    BuildingCost = buildingCost         // Hesaplanan bina maliyeti
+                    BuildingCost = buildingCost          // Hesaplanan bina maliyeti
                 };
 
                 servicesForm.ShowDialog();
             }
             catch (Exception ex)
             {
+                // Hata durumunda mesaj gösterilir
                 MessageBox.Show($"Bir hata oluştu: {ex.Message}");
             }
         }
 
         private void btnRequestBuilding_Click(object sender, EventArgs e)
         {
+            // Tarih aralığının kontrolü
             if (dtpEndDate.Value <= dtpStartDate.Value)
             {
                 MessageBox.Show("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
                 return;
             }
 
+            // Fuar ismi kontrolü
             if (txtFairName.Text == "")
             {
                 MessageBox.Show("Lütfen fuar ismini giriniz.");
                 return;
             }
 
-            // Fuar adı, başlangıç ve bitiş tarihlerini al ve formu aç
-            CustomBuildingRequestForm requestForm = new CustomBuildingRequestForm(
-                txtFairName.Text, dtpStartDate.Value, dtpEndDate.Value);
+            // Fuar adı, başlangıç ve bitiş tarihlerini alıp talep formunu açar
+            CustomBuildingRequestForm requestForm = new CustomBuildingRequestForm(txtFairName.Text, dtpStartDate.Value, dtpEndDate.Value);
             requestForm.ShowDialog();
         }
 
         private void cmbCity_SelectedIndexChanged_1(object sender, EventArgs e)
         {
+            // Şehir seçimi değiştiğinde ilgili ilçeleri yükler
             if (cmbCity.SelectedItem != null)
             {
-                string selectedCity = cmbCity.SelectedItem.ToString();
-
                 // Seçilen şehir için ilçeleri al
-                List<string> districts = _locationRepository.GetDistrictsByCity(selectedCity);
+                List<string> districts = _locationRepository.GetDistrictsByCity(cmbCity.SelectedItem.ToString());
 
-                if (districts != null && districts.Any())
+                if (districts != null && districts.Any()) //İlçeler bulunursa ComboBox'a bağlanır
                 {
                     cmbDistrict.DataSource = districts;
                 }
                 else
                 {
-                    cmbDistrict.DataSource = null;
+                    cmbDistrict.DataSource = null; // İlçe bulunamazsa temizlenir
                     MessageBox.Show("Seçilen şehir için ilçe bulunamadı.");
                 }
             }
@@ -132,50 +136,43 @@ namespace Project.WinFormUI.Forms
 
         private void lstBuildings_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Liste kutusunda seçilen bina değiştiğinde detaylarını gösterir
             if (lstBuildings.SelectedItem != null)
             {
-                var selectedBuilding = (Building)lstBuildings.SelectedItem;
+                Building selectedBuilding = lstBuildings.SelectedItem as Building;
 
-                // Gün sayısını hesapla (başlangıç ve bitiş günlerini dahil et)
-                int dayCount = (dtpEndDate.Value - dtpStartDate.Value).Days + 2;
-
-                // Seçilen binanın detaylarını Label'da göster
-                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\n" +
-                                           $"Adres: {selectedBuilding.Address}\n" +
-                                           $"Kat Sayısı: {selectedBuilding.NumberOfFloor}\n" +
-                                           $"Kat Metrekare: {selectedBuilding.FloorSize}\n" +
-                                           $"Kat Başına Oda: {selectedBuilding.RoomPerFloor}\n" +
-                                           $"Gün Sayısı: {dayCount}";
+                // Binanın detaylarını Label'a yazar
+                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\nKat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\nKat Başına Oda: {selectedBuilding.RoomPerFloor}\nGün Sayısı: {(dtpEndDate.Value - dtpStartDate.Value).Days + 2}";
             }
-            else
-            {
-                lblBuildingDetails.Text = "Bina seçilmedi.";
-            }
+            else lblBuildingDetails.Text = "Bina seçilmedi."; // Seçim yapılmamışsa mesaj gösterilir
         }
-
 
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            // Formu kapatır
             Close();
         }
 
         private void LoadCities()
         {
-            var cities = _locationRepository.GetAllCities();
-            if (cities != null && cities.Any())
+            // Şehirleri yükler
+            List<string> cities = _locationRepository.GetAllCities();
+
+            if (cities != null && cities.Any()) // Eğer şehirler bulunursa
             {
                 cmbCity.DataSource = cities;
             }
             else
             {
-                cmbCity.DataSource = null;
+                cmbCity.DataSource = null; // Şehirler bulunamazsa temizlenir
                 MessageBox.Show("Şehir verileri yüklenemedi.");
             }
         }
 
         private void ClearFields()
         {
+            // Formdaki alanları temizler
             txtFairName.Clear();
             cmbCity.SelectedIndex = -1;
             cmbDistrict.DataSource = null;
