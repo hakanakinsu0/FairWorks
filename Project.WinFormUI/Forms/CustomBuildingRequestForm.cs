@@ -86,26 +86,25 @@ namespace Project.WinFormUI.Forms
                 lstAvailableBuildings.DataSource = null;
                 MessageBox.Show("Kriterlere uygun bina bulunamadı.");
             }
+            lstAvailableBuildings.SelectedIndex = -1;
         }
 
         private void lstAvailableBuildings_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (lstAvailableBuildings.SelectedItem != null)
             {
-                if (lstAvailableBuildings.SelectedItem != null)
-                {
-                    var selectedBuilding = (Building)lstAvailableBuildings.SelectedItem;
+                Building selectedBuilding = (Building)lstAvailableBuildings.SelectedItem;
 
-                    lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\n" +
-                                              $"Adres: {selectedBuilding.Address}\n" +
-                                              $"Kat Sayısı: {selectedBuilding.NumberOfFloor}\n" +
-                                              $"Kat Metrekare: {selectedBuilding.FloorSize}\n" +
-                                              $"Kat Başına Oda: {selectedBuilding.RoomPerFloor}";
-                }
-                else
-                {
-                    lblBuildingDetails.Text = "Bina seçilmedi.";
-                }
+                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\n" +
+                                          $"Adres: {selectedBuilding.Address}\n" +
+                                          $"Kat Sayısı: {selectedBuilding.NumberOfFloor}\n" +
+                                          $"Kat Metrekare: {selectedBuilding.FloorSize}\n" +
+                                          $"Kat Başına Oda: {selectedBuilding.RoomPerFloor}";
+            }
+            else
+            {
+                lblBuildingDetails.Text = "Bina seçilmedi.";
             }
         }
 
@@ -120,7 +119,6 @@ namespace Project.WinFormUI.Forms
             var selectedBuilding = (Building)lstAvailableBuildings.SelectedItem;
 
             MessageBox.Show($"Seçilen bina onaylandı: {selectedBuilding.Name}");
-
             // Fuar oluşturma işlemi ve ek hizmetler ekranı
             FairServicesForm fairServicesForm = new FairServicesForm { };
             fairServicesForm.ShowDialog();
@@ -148,6 +146,11 @@ namespace Project.WinFormUI.Forms
         private void cmbLocations_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstAvailableBuildings.DataSource = null; // Lokasyon değiştiğinde listeyi temizle
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

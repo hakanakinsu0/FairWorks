@@ -50,5 +50,11 @@ namespace Project.WinFormUI.Forms
         {
             Close();
         }
+
+        private void btnUpdateLocation_Click(object sender, EventArgs e)
+        {
+            UpdateDeleteLocationForm updateDeleteLocationForm = new UpdateDeleteLocationForm();
+            updateDeleteLocationForm.ShowDialog();
+        }
     }
 }

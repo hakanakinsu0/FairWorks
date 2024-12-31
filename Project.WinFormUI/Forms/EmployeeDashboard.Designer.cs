@@ -38,7 +38,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnExitUpdate = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnUpdateLocation = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.btnUpdateBuilding = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -128,7 +128,7 @@
             // 
             this.tabPage2.Controls.Add(this.btnExitUpdate);
             this.tabPage2.Controls.Add(this.button2);
-            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Controls.Add(this.btnUpdateLocation);
             this.tabPage2.Controls.Add(this.button4);
             this.tabPage2.Controls.Add(this.btnUpdateBuilding);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -158,14 +158,15 @@
             this.button2.Text = "Hizmet Güncelle";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnUpdateLocation
             // 
-            this.button3.Location = new System.Drawing.Point(126, 36);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(94, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Lokasyon Güncelle";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnUpdateLocation.Location = new System.Drawing.Point(126, 36);
+            this.btnUpdateLocation.Name = "btnUpdateLocation";
+            this.btnUpdateLocation.Size = new System.Drawing.Size(112, 23);
+            this.btnUpdateLocation.TabIndex = 3;
+            this.btnUpdateLocation.Text = "Lokasyon Güncelle";
+            this.btnUpdateLocation.UseVisualStyleBackColor = true;
+            this.btnUpdateLocation.Click += new System.EventHandler(this.btnUpdateLocation_Click);
             // 
             // button4
             // 
@@ -233,7 +234,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnExitUpdate;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnUpdateLocation;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnUpdateBuilding;
     }

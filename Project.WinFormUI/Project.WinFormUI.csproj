@@ -122,6 +122,18 @@
     <Compile Include="Forms\UpdateDeleteBuildingForm.Designer.cs">
       <DependentUpon>UpdateDeleteBuildingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UpdateDeleteEmployeeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateDeleteEmployeeForm.Designer.cs">
+      <DependentUpon>UpdateDeleteEmployeeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UpdateDeleteLocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateDeleteLocationForm.Designer.cs">
+      <DependentUpon>UpdateDeleteLocationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AddBuildingForm.resx">
@@ -153,6 +165,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UpdateDeleteBuildingForm.resx">
       <DependentUpon>UpdateDeleteBuildingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateDeleteEmployeeForm.resx">
+      <DependentUpon>UpdateDeleteEmployeeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateDeleteLocationForm.resx">
+      <DependentUpon>UpdateDeleteLocationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
