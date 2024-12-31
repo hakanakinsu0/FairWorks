@@ -44,35 +44,39 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label13.Location = new System.Drawing.Point(165, 27);
+            this.label13.Location = new System.Drawing.Point(220, 33);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(386, 23);
+            this.label13.Size = new System.Drawing.Size(490, 28);
             this.label13.TabIndex = 32;
             this.label13.Text = "LOKASYON BİLGİLERİNİ GÜNCELLE VE SİL";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(395, 101);
+            this.label2.Location = new System.Drawing.Point(527, 124);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.Size = new System.Drawing.Size(34, 16);
             this.label2.TabIndex = 28;
             this.label2.Text = "İlçe :";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(394, 75);
+            this.label1.Location = new System.Drawing.Point(525, 92);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 13);
+            this.label1.Size = new System.Drawing.Size(19, 16);
             this.label1.TabIndex = 26;
             this.label1.Text = "İl :";
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(428, 124);
+            this.btnClose.Location = new System.Drawing.Point(571, 153);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.Size = new System.Drawing.Size(100, 28);
             this.btnClose.TabIndex = 25;
             this.btnClose.Text = "İptal";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -80,9 +84,10 @@
             // 
             // btnDeleteLocation
             // 
-            this.btnDeleteLocation.Location = new System.Drawing.Point(509, 124);
+            this.btnDeleteLocation.Location = new System.Drawing.Point(679, 153);
+            this.btnDeleteLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDeleteLocation.Name = "btnDeleteLocation";
-            this.btnDeleteLocation.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteLocation.Size = new System.Drawing.Size(100, 28);
             this.btnDeleteLocation.TabIndex = 24;
             this.btnDeleteLocation.Text = "Sil";
             this.btnDeleteLocation.UseVisualStyleBackColor = true;
@@ -90,9 +95,10 @@
             // 
             // btnUpdateLocation
             // 
-            this.btnUpdateLocation.Location = new System.Drawing.Point(590, 124);
+            this.btnUpdateLocation.Location = new System.Drawing.Point(787, 153);
+            this.btnUpdateLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUpdateLocation.Name = "btnUpdateLocation";
-            this.btnUpdateLocation.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdateLocation.Size = new System.Drawing.Size(100, 28);
             this.btnUpdateLocation.TabIndex = 23;
             this.btnUpdateLocation.Text = "Güncelle";
             this.btnUpdateLocation.UseVisualStyleBackColor = true;
@@ -101,39 +107,44 @@
             // lblSelectedLocation
             // 
             this.lblSelectedLocation.BackColor = System.Drawing.Color.White;
-            this.lblSelectedLocation.Location = new System.Drawing.Point(394, 176);
+            this.lblSelectedLocation.Location = new System.Drawing.Point(525, 217);
+            this.lblSelectedLocation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSelectedLocation.Name = "lblSelectedLocation";
-            this.lblSelectedLocation.Size = new System.Drawing.Size(271, 147);
+            this.lblSelectedLocation.Size = new System.Drawing.Size(361, 181);
             this.lblSelectedLocation.TabIndex = 22;
             // 
             // txtDistrict
             // 
-            this.txtDistrict.Location = new System.Drawing.Point(428, 98);
+            this.txtDistrict.Location = new System.Drawing.Point(571, 121);
+            this.txtDistrict.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDistrict.Name = "txtDistrict";
-            this.txtDistrict.Size = new System.Drawing.Size(237, 20);
+            this.txtDistrict.Size = new System.Drawing.Size(315, 22);
             this.txtDistrict.TabIndex = 17;
             // 
             // txtCity
             // 
-            this.txtCity.Location = new System.Drawing.Point(428, 72);
+            this.txtCity.Location = new System.Drawing.Point(571, 89);
+            this.txtCity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCity.Name = "txtCity";
-            this.txtCity.Size = new System.Drawing.Size(237, 20);
+            this.txtCity.Size = new System.Drawing.Size(315, 22);
             this.txtCity.TabIndex = 16;
             // 
             // lstLocations
             // 
             this.lstLocations.FormattingEnabled = true;
-            this.lstLocations.Location = new System.Drawing.Point(26, 72);
+            this.lstLocations.ItemHeight = 16;
+            this.lstLocations.Location = new System.Drawing.Point(35, 89);
+            this.lstLocations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstLocations.Name = "lstLocations";
-            this.lstLocations.Size = new System.Drawing.Size(362, 251);
+            this.lstLocations.Size = new System.Drawing.Size(481, 308);
             this.lstLocations.TabIndex = 15;
             this.lstLocations.SelectedIndexChanged += new System.EventHandler(this.lstLocations_SelectedIndexChanged);
             // 
             // UpdateDeleteLocationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(694, 347);
+            this.ClientSize = new System.Drawing.Size(925, 427);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -144,8 +155,10 @@
             this.Controls.Add(this.txtDistrict);
             this.Controls.Add(this.txtCity);
             this.Controls.Add(this.lstLocations);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UpdateDeleteLocationForm";
             this.Text = "UpdateDeleteLocationForm";
+            this.Load += new System.EventHandler(this.UpdateDeleteLocationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

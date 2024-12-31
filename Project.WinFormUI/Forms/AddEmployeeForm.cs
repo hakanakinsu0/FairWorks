@@ -30,6 +30,7 @@ namespace Project.WinFormUI.Forms
             InitializeComponent();
             _employeeRepository = new EmployeeRepository();
             _employeeProfileRepository = new EmployeeProfileRepository();
+            _employee = new Employee();
             LoadRoles();
             LoadManagers();
             LoadEmployeeList();
@@ -141,20 +142,32 @@ namespace Project.WinFormUI.Forms
 
         private void LoadManagers()
         {
-            var managerDisplayData = _employeeProfileRepository.GetAll().Select(x => new
+            if (_employee.Role == EmployeeRole.Admin)
             {
-                Display = x.ToString(), // ToString ile formatlanmış hali
-                Value = x.Id           // ID değeri
-            }).ToList();
+                // Sadece Admin rolüne sahip olanları filtreleyin
+                var managerDisplayData = _employeeRepository
+                    .GetAll()
+                    .Where(x => x.Role == EmployeeRole.Admin) // Admin rolüne göre filtreleme
+                    .Select(x => new
+                    {
+                        Display = x.ToString(), // ToString ile formatlanmış hali
+                        Value = x.Id            // ID değeri
+                    })
+                    .ToList();
 
-            cmbManager.DataSource = managerDisplayData;
-            cmbManager.DisplayMember = "Display"; // Görüntülenecek alan
-            cmbManager.ValueMember = "Value";    // ID olarak seçilecek alan
+                // Filtrelenmiş verileri ComboBox'a bağlayın
+                cmbManager.DataSource = managerDisplayData;
+                cmbManager.DisplayMember = "Display"; // Görüntülenecek alan
+                cmbManager.ValueMember = "Value";    // ID olarak seçilecek alan
+            }
+
+
+
         }
 
         private void LoadEmployeeList()
         {
-            lstCurrentEmployees.DataSource = _employeeProfileRepository.GetAll();
+            lstCurrentEmployees.DataSource = _employeeProfileRepository.GetActives();
             lstCurrentEmployees.DisplayMember = "ToString";
         }
 
@@ -189,6 +202,10 @@ namespace Project.WinFormUI.Forms
                       txtCity.Text == "";
         }
 
+        private void AddEmployeeForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

@@ -151,5 +151,10 @@ namespace Project.WinFormUI.Forms
         {
             Close();
         }
+
+        private void UpdateDeleteBuildingForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

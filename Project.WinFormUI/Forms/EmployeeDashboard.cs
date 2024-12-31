@@ -56,5 +56,11 @@ namespace Project.WinFormUI.Forms
             UpdateDeleteLocationForm updateDeleteLocationForm = new UpdateDeleteLocationForm();
             updateDeleteLocationForm.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            UpdateDeleteEmployeeForm updateDeleteEmployeeForm= new UpdateDeleteEmployeeForm();
+            updateDeleteEmployeeForm.ShowDialog();
+        }
     }
 }

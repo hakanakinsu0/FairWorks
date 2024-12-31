@@ -54,68 +54,78 @@
             // lstBuildings
             // 
             this.lstBuildings.FormattingEnabled = true;
-            this.lstBuildings.Location = new System.Drawing.Point(12, 83);
+            this.lstBuildings.ItemHeight = 16;
+            this.lstBuildings.Location = new System.Drawing.Point(16, 102);
+            this.lstBuildings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstBuildings.Name = "lstBuildings";
-            this.lstBuildings.Size = new System.Drawing.Size(362, 355);
+            this.lstBuildings.Size = new System.Drawing.Size(481, 436);
             this.lstBuildings.TabIndex = 0;
             this.lstBuildings.SelectedIndexChanged += new System.EventHandler(this.lstBuildings_SelectedIndexChanged);
             // 
             // txtBuildingName
             // 
-            this.txtBuildingName.Location = new System.Drawing.Point(454, 83);
+            this.txtBuildingName.Location = new System.Drawing.Point(605, 102);
+            this.txtBuildingName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBuildingName.Name = "txtBuildingName";
-            this.txtBuildingName.Size = new System.Drawing.Size(306, 20);
+            this.txtBuildingName.Size = new System.Drawing.Size(407, 22);
             this.txtBuildingName.TabIndex = 1;
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(454, 109);
+            this.txtAddress.Location = new System.Drawing.Point(605, 134);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(306, 20);
+            this.txtAddress.Size = new System.Drawing.Size(407, 22);
             this.txtAddress.TabIndex = 2;
             // 
             // nudNumberOfFloor
             // 
-            this.nudNumberOfFloor.Location = new System.Drawing.Point(454, 135);
+            this.nudNumberOfFloor.Location = new System.Drawing.Point(605, 166);
+            this.nudNumberOfFloor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.nudNumberOfFloor.Name = "nudNumberOfFloor";
-            this.nudNumberOfFloor.Size = new System.Drawing.Size(306, 20);
+            this.nudNumberOfFloor.Size = new System.Drawing.Size(408, 22);
             this.nudNumberOfFloor.TabIndex = 3;
             // 
             // nudFloorSize
             // 
-            this.nudFloorSize.Location = new System.Drawing.Point(454, 161);
+            this.nudFloorSize.Location = new System.Drawing.Point(605, 198);
+            this.nudFloorSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.nudFloorSize.Name = "nudFloorSize";
-            this.nudFloorSize.Size = new System.Drawing.Size(306, 20);
+            this.nudFloorSize.Size = new System.Drawing.Size(408, 22);
             this.nudFloorSize.TabIndex = 3;
             // 
             // nudRoomPerFloor
             // 
-            this.nudRoomPerFloor.Location = new System.Drawing.Point(454, 187);
+            this.nudRoomPerFloor.Location = new System.Drawing.Point(605, 230);
+            this.nudRoomPerFloor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.nudRoomPerFloor.Name = "nudRoomPerFloor";
-            this.nudRoomPerFloor.Size = new System.Drawing.Size(306, 20);
+            this.nudRoomPerFloor.Size = new System.Drawing.Size(408, 22);
             this.nudRoomPerFloor.TabIndex = 3;
             // 
             // cmbLocation
             // 
             this.cmbLocation.FormattingEnabled = true;
-            this.cmbLocation.Location = new System.Drawing.Point(453, 213);
+            this.cmbLocation.Location = new System.Drawing.Point(604, 262);
+            this.cmbLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbLocation.Name = "cmbLocation";
-            this.cmbLocation.Size = new System.Drawing.Size(307, 21);
+            this.cmbLocation.Size = new System.Drawing.Size(408, 24);
             this.cmbLocation.TabIndex = 4;
             // 
             // lblSelectedBuilding
             // 
             this.lblSelectedBuilding.BackColor = System.Drawing.Color.White;
-            this.lblSelectedBuilding.Location = new System.Drawing.Point(381, 291);
+            this.lblSelectedBuilding.Location = new System.Drawing.Point(508, 358);
+            this.lblSelectedBuilding.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSelectedBuilding.Name = "lblSelectedBuilding";
-            this.lblSelectedBuilding.Size = new System.Drawing.Size(379, 147);
+            this.lblSelectedBuilding.Size = new System.Drawing.Size(505, 181);
             this.lblSelectedBuilding.TabIndex = 5;
             // 
             // btnUpdateBuilding
             // 
-            this.btnUpdateBuilding.Location = new System.Drawing.Point(546, 253);
+            this.btnUpdateBuilding.Location = new System.Drawing.Point(728, 311);
+            this.btnUpdateBuilding.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUpdateBuilding.Name = "btnUpdateBuilding";
-            this.btnUpdateBuilding.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdateBuilding.Size = new System.Drawing.Size(100, 28);
             this.btnUpdateBuilding.TabIndex = 6;
             this.btnUpdateBuilding.Text = "Güncelle";
             this.btnUpdateBuilding.UseVisualStyleBackColor = true;
@@ -123,9 +133,10 @@
             // 
             // btnDeleteBuilding
             // 
-            this.btnDeleteBuilding.Location = new System.Drawing.Point(465, 253);
+            this.btnDeleteBuilding.Location = new System.Drawing.Point(620, 311);
+            this.btnDeleteBuilding.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDeleteBuilding.Name = "btnDeleteBuilding";
-            this.btnDeleteBuilding.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteBuilding.Size = new System.Drawing.Size(100, 28);
             this.btnDeleteBuilding.TabIndex = 6;
             this.btnDeleteBuilding.Text = "Sil";
             this.btnDeleteBuilding.UseVisualStyleBackColor = true;
@@ -133,9 +144,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(384, 253);
+            this.btnClose.Location = new System.Drawing.Point(512, 311);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.Size = new System.Drawing.Size(100, 28);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "İptal";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -144,54 +156,60 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(380, 86);
+            this.label1.Location = new System.Drawing.Point(507, 106);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(67, 16);
             this.label1.TabIndex = 7;
             this.label1.Text = "Bina Ismi :";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(381, 112);
+            this.label2.Location = new System.Drawing.Point(508, 138);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.Size = new System.Drawing.Size(82, 16);
             this.label2.TabIndex = 7;
             this.label2.Text = "Bina Adresi :";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(381, 137);
+            this.label3.Location = new System.Drawing.Point(508, 169);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 13);
+            this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "Kat Sayısı :";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(381, 163);
+            this.label4.Location = new System.Drawing.Point(508, 201);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 13);
+            this.label4.Size = new System.Drawing.Size(78, 16);
             this.label4.TabIndex = 7;
             this.label4.Text = "Metre Kare :";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(381, 189);
+            this.label5.Location = new System.Drawing.Point(508, 233);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.Size = new System.Drawing.Size(79, 16);
             this.label5.TabIndex = 7;
             this.label5.Text = "Oda Sayısı :";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(381, 216);
+            this.label6.Location = new System.Drawing.Point(508, 266);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 13);
+            this.label6.Size = new System.Drawing.Size(72, 16);
             this.label6.TabIndex = 7;
             this.label6.Text = "Lokasyon :";
             // 
@@ -199,17 +217,18 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label13.Location = new System.Drawing.Point(209, 34);
+            this.label13.Location = new System.Drawing.Point(279, 42);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(331, 23);
+            this.label13.Size = new System.Drawing.Size(421, 28);
             this.label13.TabIndex = 14;
             this.label13.Text = "BİNA BİLGİLERİNİ GÜNCELLE VE SİL";
             // 
             // UpdateDeleteBuildingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 450);
+            this.ClientSize = new System.Drawing.Size(1029, 554);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
@@ -228,8 +247,10 @@
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.txtBuildingName);
             this.Controls.Add(this.lstBuildings);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UpdateDeleteBuildingForm";
             this.Text = "Bina Güncelle / Sil";
+            this.Load += new System.EventHandler(this.UpdateDeleteBuildingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudNumberOfFloor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFloorSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRoomPerFloor)).EndInit();

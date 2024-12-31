@@ -42,7 +42,7 @@ namespace Project.WinFormUI.Forms
                 txtDistrict.Text = _selectedLocation.District;
 
                 // Seçilen lokasyon bilgilerini Label'de göster
-                lblSelectedLocation.Text = $"Seçilen Lokasyon: {_selectedLocation.District}, {_selectedLocation.City}";
+                lblSelectedLocation.Text = $"Seçilen Çalışan: {_selectedLocation.District}, {_selectedLocation.City}";
             }
             else
             {
@@ -114,6 +114,11 @@ namespace Project.WinFormUI.Forms
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void UpdateDeleteLocationForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
