@@ -23,10 +23,8 @@ namespace Project.WinFormUI
         Customer _customer;
 
         EmployeeRepository _employeeRepository;
-        Employee _employee;
-
-        public static int LoggedInCustomerId { get; private set; } // Static property ile global erişim
-
+        
+        public static int LoggedInCustomerId { get; private set; } // Static property ile global erişim. Giriş yapan müşterinin kimliğini (ID) uygulama boyunca kolayca erişilebilir bir şekilde tutmak için tanımlanmıştır.
 
         public Login()
         {
@@ -100,14 +98,13 @@ namespace Project.WinFormUI
             MessageBox.Show("E-posta veya şifre hatalı.");
         }
 
-      
-
         // Şifre göster/gizle checkbox'ının kontrol edildiğinde davranışı
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked; // Şifreyi göster veya gizle
         }
 
+        //Textboxlara girilmis olan ifadeleri temizler.
         private void TextboxlariTemizle()
         {
             txtEmail.Text = "";
