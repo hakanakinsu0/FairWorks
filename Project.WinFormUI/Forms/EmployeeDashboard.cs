@@ -38,8 +38,17 @@ namespace Project.WinFormUI.Forms
         {
             AddEmployeeForm addEmployeeForm = new AddEmployeeForm();
             addEmployeeForm.ShowDialog();
+        }
 
+        private void btnUpdateBuilding_Click(object sender, EventArgs e)
+        {
+            UpdateDeleteBuildingForm updateDeleteBuildingForm = new UpdateDeleteBuildingForm();
+            updateDeleteBuildingForm.ShowDialog();
+        }
 
+        private void btnExitUpdate_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

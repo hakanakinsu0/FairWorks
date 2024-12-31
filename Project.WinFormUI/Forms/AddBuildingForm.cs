@@ -119,7 +119,7 @@ namespace Project.WinFormUI.Forms
             cmbLocation.DisplayMember = "Display"; // Görüntülenecek alan
             cmbLocation.ValueMember = "Value";    // ID olarak seçilecek alan
 
-            lstBuildings.DataSource = _buildingRepository.GetAll();
+            lstBuildings.DataSource = _buildingRepository.GetActives();
             lstBuildings.DisplayMember = "ToString";
         }
 

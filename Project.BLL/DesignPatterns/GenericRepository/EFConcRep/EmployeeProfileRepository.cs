@@ -10,5 +10,17 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class EmployeeProfileRepository : BaseRepository<EmployeeProfile>
     {
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            if (phoneNumber.Length != 11) return false;
+
+            foreach (char c in phoneNumber)
+            {
+                if (c < '0' || c > '9') return false;
+            }
+            return true;
+        }
+        
     }
+
 }

@@ -22,23 +22,19 @@ namespace Project.WinFormUI.Forms
         EmployeeRepository _employeeRepository;
         EmployeeProfileRepository _employeeProfileRepository;
 
-
-        // çalışan ve çalışan detaylarını temsil edecek nesneler tanımlanır.
-        Employee _Employee;
-        EmployeeProfile _Profile;
-
-
+        Employee _employee;
+        EmployeeProfile _employeeProfile;
 
         public AddEmployeeForm()
         {
             InitializeComponent();
-            _employeeRepository= new EmployeeRepository();
-            _employeeProfileRepository= new EmployeeProfileRepository();
-
-
+            _employeeRepository = new EmployeeRepository();
+            _employeeProfileRepository = new EmployeeProfileRepository();
+            LoadRoles();
+            LoadManagers();
+            LoadEmployeeList();
+            ClearFields();
         }
-
-      
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -47,132 +43,150 @@ namespace Project.WinFormUI.Forms
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
-            // Tüm alanların doldurulup doldurulmadığını kontrol eder.
-            if (IsAllFieldsFilled()) //Eger herhangi bir textboximiz bos ise bu bloga girer
+            // Alanlar boş mu?
+            if (AreFieldsEmpty())
             {
                 MessageBox.Show("Lütfen tüm alanları doldurunuz.");
                 return;
             }
 
-         
+            // TC Kimlik Numarası doğrulaması
+            if (txtTC.Text.Length != 11)
+            {
+                MessageBox.Show("TC Kimlik Numarası 11 haneli ve yalnızca rakamlardan oluşmalıdır.");
+                return;
+            }
 
+            // Telefon numarası doğrulaması
+            if (!_employeeProfileRepository.IsValidPhoneNumber(txtPhoneNumber.Text))
+            {
+                MessageBox.Show("Telefon numarası en az 10 haneli ve yalnızca rakamlardan oluşmalıdır.");
+                return;
+            }
+
+            // Şifre kontrolü
             if (!_employeeRepository.IsValidPassword(txtPassword.Text))
             {
-                MessageBox.Show("Geçersiz şifre formatı. Lütfen en az 8 karakterli şifre belirleyiniz.");
+                MessageBox.Show("Şifre en az 8 karakterden oluşmalıdır.");
                 return;
             }
 
-            // Girilen şifrelerin birbirine eşit olup olmadığını kontrol eder.
             if (txtPassword.Text != txtConfirmPassword.Text)
             {
-                MessageBox.Show("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
-                txtConfirmPassword.Text = "";
+                MessageBox.Show("Şifreler eşleşmiyor. Lütfen tekrar kontrol ediniz.");
+                txtConfirmPassword.Clear();
                 return;
             }
 
-            // Girilen e-posta formatını doğrular.
+            // E-posta doğrulaması
             if (!_employeeRepository.IsValidEmailFormat(txtEmail.Text))
             {
-                MessageBox.Show("Geçersiz e-posta formatı. Lütfen doğru bir e-posta adresi giriniz.");
+                MessageBox.Show("Geçersiz e-posta formatı.");
                 return;
             }
 
-            // Yeni çalışan nesnesi oluşturulur.
-            _Employee = new Employee
+            try
             {
-                
-                Email = txtEmail.Text,
-                Role = (EmployeeRole)cmbRole.SelectedItem,
-                ManagerId=(int)cmbManager.SelectedItem,
-                Password = txtPassword.Text
-            };
+                // Yeni Employee oluştur
+                _employee = new Employee
+                {
+                    Email = txtEmail.Text,
+                    Role = (EmployeeRole)cmbRole.SelectedItem,
+                    ManagerId = cmbManager.SelectedValue != null ? (int?)cmbManager.SelectedValue : null,
+                    Password = PasswordEncryptor.Encode(txtPassword.Text) // Şifre encode edilir
+                };
 
-            // Yeni çalışan detayı nesnesi oluşturulur.
-            _Profile = new EmployeeProfile
+                _employeeRepository.Add(_employee);
+
+                // Yeni EmployeeProfile oluştur
+                _employeeProfile = new EmployeeProfile
+                {
+                    FirstName = txtFirstName.Text,
+                    LastName = txtLastName.Text,
+                    TC = txtTC.Text,
+                    PhoneNumber = txtPhoneNumber.Text,
+                    Address = txtAddress.Text,
+                    City = txtCity.Text,
+                    District = txtDistrict.Text,
+                    Employee = _employee // İlişkilendirme
+                };
+
+                _employeeProfileRepository.Add(_employeeProfile);
+
+                MessageBox.Show("Çalışan başarıyla eklendi.");
+
+                ClearFields(); // Alanları temizle
+                LoadEmployeeList(); // Listeyi güncelle
+            }
+            catch (Exception ex)
             {
-               FirstName = txtFirstName.Text,
-               LastName = txtLastName.Text,
-               TC = txtTC.Text,
-               PhoneNumber = txtPhoneNumber.Text,
-               Address = txtAddress.Text,
-               City = txtCity.Text,
-               District = txtDistrict.Text,
-            };
-
-            _employeeProfileRepository.Add(_Profile);
-            MessageBox.Show("Çalışan başarıyla eklendi");
-            ClearFields();
-            LoadEmployee();
-           
-
-
-
+                MessageBox.Show($"Bir hata oluştu: {ex.Message}");
+            }
         }
 
-        public bool IsAllFieldsFilled()
+        private void LoadRoles()
         {
-            return txtFirstName.Text == "" || txtLastName.Text == "" || txtPhoneNumber.Text == "" || txtEmail.Text == "" || txtDistrict.Text == "" || txtTC.Text == "" || txtConfirmPassword.Text == "" || txtPassword.Text =="" || txtAddress.Text == "" || txtCity.Text =="";
+            List<EmployeeRole> roles = new List<EmployeeRole>
+            {
+                EmployeeRole.Admin,
+                EmployeeRole.Organizer,
+                EmployeeRole.Support,
+                EmployeeRole.Sales,
+                EmployeeRole.Finance
+            };
+
+            cmbRole.DataSource = roles;
+            cmbRole.SelectedIndex = -1;
         }
 
+        private void LoadManagers()
+        {
+            var managerDisplayData = _employeeProfileRepository.GetAll().Select(x => new
+            {
+                Display = x.ToString(), // ToString ile formatlanmış hali
+                Value = x.Id           // ID değeri
+            }).ToList();
+
+            cmbManager.DataSource = managerDisplayData;
+            cmbManager.DisplayMember = "Display"; // Görüntülenecek alan
+            cmbManager.ValueMember = "Value";    // ID olarak seçilecek alan
+        }
+
+        private void LoadEmployeeList()
+        {
+            lstCurrentEmployees.DataSource = _employeeProfileRepository.GetAll();
+            lstCurrentEmployees.DisplayMember = "ToString";
+        }
 
         private void ClearFields()
         {
             txtFirstName.Clear();
-            txtAddress.Clear();
             txtLastName.Clear();
-            txtCity.Clear();
-            txtDistrict.Clear();
-            txtConfirmPassword.Clear();
-            txtPassword.Clear();
             txtPhoneNumber.Clear();
             txtEmail.Clear();
-             
-            cmbManager.SelectedIndex = -1; // ComboBox seçimini kaldır
+            txtDistrict.Clear();
+            txtTC.Clear();
+            txtConfirmPassword.Clear();
+            txtPassword.Clear();
+            txtAddress.Clear();
+            txtCity.Clear();
+
+            cmbManager.SelectedIndex = -1;
             cmbRole.SelectedIndex = -1;
         }
-        private void LoadEmployee()
+
+        private bool AreFieldsEmpty()
         {
-            lstCurrentEmployees.DataSource = null; // Önce listeyi sıfırla
-            lstCurrentEmployees.DataSource = _employeeProfileRepository.GetAll(); // Tüm lokasyonları getir
-            lstCurrentEmployees.DisplayMember = "ToString"; 
-        }
-
-        private void AddEmployeeForm_Load(object sender, EventArgs e)
-        {
-            RoleControls();
-            manageControls();
-        }
-
-        // ComboBox ve ListBox'a enum değerlerini ekleme
-        private void RoleControls()
-        {
-            // Enum değerlerini listeye çevir
-            var roles = Enum.GetValues(typeof(EmployeeRole))
-                            .Cast<EmployeeRole>()
-                            .ToList();
-
-            // ComboBox doldurma
-            cmbRole.DataSource = roles;
-            cmbRole.SelectedIndex = -1; // İlk eleman seçili (boş) olur
-        }
-
-        private void manageControls()
-        {
-            // Veri kaynağını oluşturun
-            var managers = _employeeRepository
-                           .Where(x => x.Role == EmployeeRole.Admin)
-                           .Select(x => new
-                           {
-                               FullName = x.Profile.FirstName + " " + x.Profile.LastName,
-                               ManagerId = x.ManagerId
-                           })
-                           .ToList();
-
-            // ComboBox'a veri kaynağını bağlayın
-            cmbManager.DataSource = managers;
-            cmbManager.DisplayMember = "FullName"; // Görüntülenen alan
-            cmbManager.ValueMember = "ManagerId"; // Seçilen öğenin değerini temsil eden alan
-
+            return txtFirstName.Text == "" ||
+                      txtLastName.Text == "" ||
+                      txtPhoneNumber.Text == "" ||
+                      txtEmail.Text == "" ||
+                      txtDistrict.Text == "" ||
+                      txtTC.Text == "" ||
+                      txtConfirmPassword.Text == "" ||
+                      txtPassword.Text == "" ||
+                      txtAddress.Text == "" ||
+                      txtCity.Text == "";
         }
 
     }

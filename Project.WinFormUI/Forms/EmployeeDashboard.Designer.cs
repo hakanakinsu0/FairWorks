@@ -36,11 +36,13 @@
             this.btnAddEmployee = new System.Windows.Forms.Button();
             this.btnAddBuilding = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnExitUpdate = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.btnUpdateBuilding = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tbcEmployeeDashboard.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -50,10 +52,8 @@
             // 
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage1);
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage2);
-            this.tbcEmployeeDashboard.Controls.Add(this.tabPage3);
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage4);
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage5);
-            this.tbcEmployeeDashboard.Controls.Add(this.tabPage6);
             this.tbcEmployeeDashboard.Location = new System.Drawing.Point(13, 13);
             this.tbcEmployeeDashboard.Name = "tbcEmployeeDashboard";
             this.tbcEmployeeDashboard.SelectedIndex = 0;
@@ -126,32 +126,65 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.btnExitUpdate);
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Controls.Add(this.button4);
+            this.tabPage2.Controls.Add(this.btnUpdateBuilding);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(696, 349);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Güncelle";
+            this.tabPage2.Text = "Güncelle / Sil";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnExitUpdate
             // 
-            this.button1.Location = new System.Drawing.Point(301, 163);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Bina Ekle";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnExitUpdate.Location = new System.Drawing.Point(26, 94);
+            this.btnExitUpdate.Name = "btnExitUpdate";
+            this.btnExitUpdate.Size = new System.Drawing.Size(194, 23);
+            this.btnExitUpdate.TabIndex = 6;
+            this.btnExitUpdate.Text = "Çıkış Yap";
+            this.btnExitUpdate.UseVisualStyleBackColor = true;
+            this.btnExitUpdate.Click += new System.EventHandler(this.btnExitUpdate_Click);
             // 
-            // tabPage3
+            // button2
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(696, 349);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Sil";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.button2.Location = new System.Drawing.Point(126, 65);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(94, 23);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Hizmet Güncelle";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(126, 36);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(94, 23);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "Lokasyon Güncelle";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(26, 65);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(94, 23);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "Çalışan Güncelle";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdateBuilding
+            // 
+            this.btnUpdateBuilding.Location = new System.Drawing.Point(26, 36);
+            this.btnUpdateBuilding.Name = "btnUpdateBuilding";
+            this.btnUpdateBuilding.Size = new System.Drawing.Size(94, 23);
+            this.btnUpdateBuilding.TabIndex = 5;
+            this.btnUpdateBuilding.Text = "Bina Güncelle";
+            this.btnUpdateBuilding.UseVisualStyleBackColor = true;
+            this.btnUpdateBuilding.Click += new System.EventHandler(this.btnUpdateBuilding_Click);
             // 
             // tabPage4
             // 
@@ -170,15 +203,6 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Gecikme Yönetimi";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(696, 349);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Çalışan İşlemleri";
-            this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // EmployeeDashboard
             // 
@@ -204,11 +228,13 @@
         private System.Windows.Forms.Button btnAddLocation;
         private System.Windows.Forms.Button btnAddEmployee;
         private System.Windows.Forms.Button btnAddBuilding;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnExitUpdate;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnUpdateBuilding;
     }
 }

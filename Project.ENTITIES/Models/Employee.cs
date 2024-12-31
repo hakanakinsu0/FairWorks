@@ -21,7 +21,7 @@ namespace Project.ENTITIES.Models
         public virtual List<FairEmployee> Employees { get; set; }   // Yön: // 1 Employee N Fair, 1 Fair N Employee (Ara tablo: FairEmployee)
         public virtual EmployeeProfile Profile { get; set; }        // Yön: // 1 Employee 1 Profile
 
+        
 
-       
     }
 }
