@@ -37,15 +37,27 @@
             this.btnAddBuilding = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnExitUpdate = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnUpdateService = new System.Windows.Forms.Button();
             this.btnUpdateLocation = new System.Windows.Forms.Button();
             this.btnUpdateEmployee = new System.Windows.Forms.Button();
             this.btnUpdateBuilding = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cmbReportFilters = new System.Windows.Forms.ComboBox();
+            this.lstReportResults = new System.Windows.Forms.ListBox();
+            this.flpReportButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnEmployeeReport = new System.Windows.Forms.Button();
+            this.btnServiceReport = new System.Windows.Forms.Button();
+            this.btnBuildingReport = new System.Windows.Forms.Button();
+            this.btnLocationReport = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnExitReport = new System.Windows.Forms.Button();
             this.tbcEmployeeDashboard.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.flpReportButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcEmployeeDashboard
@@ -57,7 +69,7 @@
             this.tbcEmployeeDashboard.Location = new System.Drawing.Point(13, 13);
             this.tbcEmployeeDashboard.Name = "tbcEmployeeDashboard";
             this.tbcEmployeeDashboard.SelectedIndex = 0;
-            this.tbcEmployeeDashboard.Size = new System.Drawing.Size(704, 375);
+            this.tbcEmployeeDashboard.Size = new System.Drawing.Size(904, 568);
             this.tbcEmployeeDashboard.TabIndex = 0;
             // 
             // tabPage1
@@ -128,7 +140,7 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.btnExitUpdate);
-            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.btnUpdateService);
             this.tabPage2.Controls.Add(this.btnUpdateLocation);
             this.tabPage2.Controls.Add(this.btnUpdateEmployee);
             this.tabPage2.Controls.Add(this.btnUpdateBuilding);
@@ -150,14 +162,15 @@
             this.btnExitUpdate.UseVisualStyleBackColor = true;
             this.btnExitUpdate.Click += new System.EventHandler(this.btnExitUpdate_Click);
             // 
-            // button2
+            // btnUpdateService
             // 
-            this.button2.Location = new System.Drawing.Point(126, 65);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Hizmet Güncelle";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnUpdateService.Location = new System.Drawing.Point(126, 65);
+            this.btnUpdateService.Name = "btnUpdateService";
+            this.btnUpdateService.Size = new System.Drawing.Size(94, 23);
+            this.btnUpdateService.TabIndex = 2;
+            this.btnUpdateService.Text = "Hizmet Güncelle";
+            this.btnUpdateService.UseVisualStyleBackColor = true;
+            this.btnUpdateService.Click += new System.EventHandler(this.btnUpdateService_Click);
             // 
             // btnUpdateLocation
             // 
@@ -191,12 +204,105 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btnExitReport);
+            this.tabPage4.Controls.Add(this.label1);
+            this.tabPage4.Controls.Add(this.label13);
+            this.tabPage4.Controls.Add(this.cmbReportFilters);
+            this.tabPage4.Controls.Add(this.lstReportResults);
+            this.tabPage4.Controls.Add(this.flpReportButtons);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(696, 349);
+            this.tabPage4.Size = new System.Drawing.Size(896, 542);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Raporlar";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 148);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 44;
+            this.label1.Text = "Filtreleme :";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label13.Location = new System.Drawing.Point(17, 23);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(106, 23);
+            this.label13.TabIndex = 43;
+            this.label13.Text = "RAPORLAR";
+            // 
+            // cmbReportFilters
+            // 
+            this.cmbReportFilters.FormattingEnabled = true;
+            this.cmbReportFilters.Location = new System.Drawing.Point(84, 141);
+            this.cmbReportFilters.Name = "cmbReportFilters";
+            this.cmbReportFilters.Size = new System.Drawing.Size(161, 21);
+            this.cmbReportFilters.TabIndex = 4;
+            // 
+            // lstReportResults
+            // 
+            this.lstReportResults.FormattingEnabled = true;
+            this.lstReportResults.Location = new System.Drawing.Point(18, 233);
+            this.lstReportResults.Name = "lstReportResults";
+            this.lstReportResults.Size = new System.Drawing.Size(858, 251);
+            this.lstReportResults.TabIndex = 3;
+            this.lstReportResults.DoubleClick += new System.EventHandler(this.lstReportResults_DoubleClick);
+            // 
+            // flpReportButtons
+            // 
+            this.flpReportButtons.Controls.Add(this.btnEmployeeReport);
+            this.flpReportButtons.Controls.Add(this.btnServiceReport);
+            this.flpReportButtons.Controls.Add(this.btnBuildingReport);
+            this.flpReportButtons.Controls.Add(this.btnLocationReport);
+            this.flpReportButtons.Location = new System.Drawing.Point(18, 73);
+            this.flpReportButtons.Name = "flpReportButtons";
+            this.flpReportButtons.Size = new System.Drawing.Size(227, 62);
+            this.flpReportButtons.TabIndex = 2;
+            // 
+            // btnEmployeeReport
+            // 
+            this.btnEmployeeReport.Location = new System.Drawing.Point(3, 3);
+            this.btnEmployeeReport.Name = "btnEmployeeReport";
+            this.btnEmployeeReport.Size = new System.Drawing.Size(105, 23);
+            this.btnEmployeeReport.TabIndex = 0;
+            this.btnEmployeeReport.Text = "Çalışan Raporu";
+            this.btnEmployeeReport.UseVisualStyleBackColor = true;
+            this.btnEmployeeReport.Click += new System.EventHandler(this.btnEmployeeReport_Click);
+            // 
+            // btnServiceReport
+            // 
+            this.btnServiceReport.Location = new System.Drawing.Point(114, 3);
+            this.btnServiceReport.Name = "btnServiceReport";
+            this.btnServiceReport.Size = new System.Drawing.Size(105, 23);
+            this.btnServiceReport.TabIndex = 1;
+            this.btnServiceReport.Text = "Hizmet Raporu";
+            this.btnServiceReport.UseVisualStyleBackColor = true;
+            this.btnServiceReport.Click += new System.EventHandler(this.btnServiceReport_Click);
+            // 
+            // btnBuildingReport
+            // 
+            this.btnBuildingReport.Location = new System.Drawing.Point(3, 32);
+            this.btnBuildingReport.Name = "btnBuildingReport";
+            this.btnBuildingReport.Size = new System.Drawing.Size(105, 23);
+            this.btnBuildingReport.TabIndex = 1;
+            this.btnBuildingReport.Text = "Bina Raporu";
+            this.btnBuildingReport.UseVisualStyleBackColor = true;
+            this.btnBuildingReport.Click += new System.EventHandler(this.btnBuildingReport_Click);
+            // 
+            // btnLocationReport
+            // 
+            this.btnLocationReport.Location = new System.Drawing.Point(114, 32);
+            this.btnLocationReport.Name = "btnLocationReport";
+            this.btnLocationReport.Size = new System.Drawing.Size(105, 23);
+            this.btnLocationReport.TabIndex = 1;
+            this.btnLocationReport.Text = "Lokasyon Raporu";
+            this.btnLocationReport.UseVisualStyleBackColor = true;
+            this.btnLocationReport.Click += new System.EventHandler(this.btnLocationReport_Click);
             // 
             // tabPage5
             // 
@@ -207,17 +313,30 @@
             this.tabPage5.Text = "Gecikme Yönetimi";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // btnExitReport
+            // 
+            this.btnExitReport.Location = new System.Drawing.Point(18, 180);
+            this.btnExitReport.Name = "btnExitReport";
+            this.btnExitReport.Size = new System.Drawing.Size(75, 23);
+            this.btnExitReport.TabIndex = 45;
+            this.btnExitReport.Text = "İptal";
+            this.btnExitReport.UseVisualStyleBackColor = true;
+            this.btnExitReport.Click += new System.EventHandler(this.btnExitReport_Click);
+            // 
             // EmployeeDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(946, 649);
             this.Controls.Add(this.tbcEmployeeDashboard);
             this.Name = "EmployeeDashboard";
             this.Text = "EmployeeDashboard";
             this.tbcEmployeeDashboard.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.flpReportButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -235,9 +354,19 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnExitUpdate;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnUpdateService;
         private System.Windows.Forms.Button btnUpdateLocation;
         private System.Windows.Forms.Button btnUpdateEmployee;
         private System.Windows.Forms.Button btnUpdateBuilding;
+        private System.Windows.Forms.ComboBox cmbReportFilters;
+        private System.Windows.Forms.ListBox lstReportResults;
+        private System.Windows.Forms.FlowLayoutPanel flpReportButtons;
+        private System.Windows.Forms.Button btnEmployeeReport;
+        private System.Windows.Forms.Button btnServiceReport;
+        private System.Windows.Forms.Button btnBuildingReport;
+        private System.Windows.Forms.Button btnLocationReport;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnExitReport;
     }
 }

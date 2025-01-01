@@ -15,5 +15,10 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             Add(value);
         }
 
+        public ServiceValue GetByName(string name)
+        {
+            return FirstOrDefault(sv => sv.Name == name);
+        }
+
     }
 }

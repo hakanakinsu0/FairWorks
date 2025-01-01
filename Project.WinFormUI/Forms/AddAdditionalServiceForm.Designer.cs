@@ -68,21 +68,21 @@
             // 
             this.txtDescriptorName.Location = new System.Drawing.Point(129, 122);
             this.txtDescriptorName.Name = "txtDescriptorName";
-            this.txtDescriptorName.Size = new System.Drawing.Size(120, 20);
+            this.txtDescriptorName.Size = new System.Drawing.Size(217, 20);
             this.txtDescriptorName.TabIndex = 0;
             // 
             // txtDescriptorDescription
             // 
             this.txtDescriptorDescription.Location = new System.Drawing.Point(129, 148);
             this.txtDescriptorDescription.Name = "txtDescriptorDescription";
-            this.txtDescriptorDescription.Size = new System.Drawing.Size(120, 20);
+            this.txtDescriptorDescription.Size = new System.Drawing.Size(217, 20);
             this.txtDescriptorDescription.TabIndex = 0;
             // 
             // txtValueName
             // 
             this.txtValueName.Location = new System.Drawing.Point(129, 174);
             this.txtValueName.Name = "txtValueName";
-            this.txtValueName.Size = new System.Drawing.Size(120, 20);
+            this.txtValueName.Size = new System.Drawing.Size(217, 20);
             this.txtValueName.TabIndex = 1;
             // 
             // nudCost
@@ -94,68 +94,68 @@
             0,
             0});
             this.nudCost.Name = "nudCost";
-            this.nudCost.Size = new System.Drawing.Size(120, 20);
+            this.nudCost.Size = new System.Drawing.Size(217, 20);
             this.nudCost.TabIndex = 2;
             // 
             // nudPreparationTime
             // 
             this.nudPreparationTime.Location = new System.Drawing.Point(129, 226);
             this.nudPreparationTime.Name = "nudPreparationTime";
-            this.nudPreparationTime.Size = new System.Drawing.Size(120, 20);
+            this.nudPreparationTime.Size = new System.Drawing.Size(217, 20);
             this.nudPreparationTime.TabIndex = 2;
             // 
             // nudBufferTime
             // 
             this.nudBufferTime.Location = new System.Drawing.Point(129, 252);
             this.nudBufferTime.Name = "nudBufferTime";
-            this.nudBufferTime.Size = new System.Drawing.Size(120, 20);
+            this.nudBufferTime.Size = new System.Drawing.Size(217, 20);
             this.nudBufferTime.TabIndex = 2;
             // 
             // txtProviderName
             // 
             this.txtProviderName.Location = new System.Drawing.Point(129, 278);
             this.txtProviderName.Name = "txtProviderName";
-            this.txtProviderName.Size = new System.Drawing.Size(120, 20);
+            this.txtProviderName.Size = new System.Drawing.Size(217, 20);
             this.txtProviderName.TabIndex = 3;
             // 
             // txtProviderAddress
             // 
             this.txtProviderAddress.Location = new System.Drawing.Point(129, 304);
             this.txtProviderAddress.Name = "txtProviderAddress";
-            this.txtProviderAddress.Size = new System.Drawing.Size(120, 20);
+            this.txtProviderAddress.Size = new System.Drawing.Size(217, 20);
             this.txtProviderAddress.TabIndex = 3;
             // 
             // txtProviderCity
             // 
             this.txtProviderCity.Location = new System.Drawing.Point(129, 330);
             this.txtProviderCity.Name = "txtProviderCity";
-            this.txtProviderCity.Size = new System.Drawing.Size(120, 20);
+            this.txtProviderCity.Size = new System.Drawing.Size(217, 20);
             this.txtProviderCity.TabIndex = 3;
             // 
             // txtProviderDistrict
             // 
             this.txtProviderDistrict.Location = new System.Drawing.Point(129, 356);
             this.txtProviderDistrict.Name = "txtProviderDistrict";
-            this.txtProviderDistrict.Size = new System.Drawing.Size(120, 20);
+            this.txtProviderDistrict.Size = new System.Drawing.Size(217, 20);
             this.txtProviderDistrict.TabIndex = 3;
             // 
             // txtProviderPhoneNumber
             // 
             this.txtProviderPhoneNumber.Location = new System.Drawing.Point(129, 382);
             this.txtProviderPhoneNumber.Name = "txtProviderPhoneNumber";
-            this.txtProviderPhoneNumber.Size = new System.Drawing.Size(120, 20);
+            this.txtProviderPhoneNumber.Size = new System.Drawing.Size(217, 20);
             this.txtProviderPhoneNumber.TabIndex = 3;
             // 
             // txtProviderEmail
             // 
             this.txtProviderEmail.Location = new System.Drawing.Point(129, 408);
             this.txtProviderEmail.Name = "txtProviderEmail";
-            this.txtProviderEmail.Size = new System.Drawing.Size(120, 20);
+            this.txtProviderEmail.Size = new System.Drawing.Size(217, 20);
             this.txtProviderEmail.TabIndex = 3;
             // 
             // btnAddService
             // 
-            this.btnAddService.Location = new System.Drawing.Point(174, 434);
+            this.btnAddService.Location = new System.Drawing.Point(210, 432);
             this.btnAddService.Name = "btnAddService";
             this.btnAddService.Size = new System.Drawing.Size(75, 23);
             this.btnAddService.TabIndex = 4;
@@ -165,7 +165,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(93, 434);
+            this.btnClose.Location = new System.Drawing.Point(129, 432);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 4;
@@ -176,9 +176,9 @@
             // lstServices
             // 
             this.lstServices.HideSelection = false;
-            this.lstServices.Location = new System.Drawing.Point(291, 122);
+            this.lstServices.Location = new System.Drawing.Point(370, 122);
             this.lstServices.Name = "lstServices";
-            this.lstServices.Size = new System.Drawing.Size(526, 333);
+            this.lstServices.Size = new System.Drawing.Size(476, 333);
             this.lstServices.TabIndex = 5;
             this.lstServices.UseCompatibleStateImageBehavior = false;
             // 
@@ -294,7 +294,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label13.Location = new System.Drawing.Point(244, 23);
+            this.label13.Location = new System.Drawing.Point(289, 25);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(133, 23);
             this.label13.TabIndex = 14;
@@ -303,7 +303,7 @@
             // cmbExistingProviders
             // 
             this.cmbExistingProviders.FormattingEnabled = true;
-            this.cmbExistingProviders.Location = new System.Drawing.Point(444, 86);
+            this.cmbExistingProviders.Location = new System.Drawing.Point(444, 82);
             this.cmbExistingProviders.Name = "cmbExistingProviders";
             this.cmbExistingProviders.Size = new System.Drawing.Size(121, 21);
             this.cmbExistingProviders.TabIndex = 15;
@@ -323,7 +323,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(290, 89);
+            this.label14.Location = new System.Drawing.Point(290, 86);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(148, 13);
             this.label14.TabIndex = 17;
@@ -333,7 +333,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 483);
+            this.ClientSize = new System.Drawing.Size(878, 483);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.chkNewProvider);
             this.Controls.Add(this.cmbExistingProviders);
