@@ -17,7 +17,7 @@ namespace Project.WinFormUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EmployeeDashboard());
+            Application.Run(new CustomerDashboard());
         }
     }
 }

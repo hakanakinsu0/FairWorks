@@ -52,17 +52,23 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return availableBuildings;
         }
 
-        public decimal CalculateFairCost(Building building)
+        public decimal CalculateFairCost(Building building, DateTime startDate, DateTime endDate)
         {
+            if (endDate <= startDate)
+                throw new ArgumentException("Bitiş tarihi başlangıç tarihinden önce olamaz.");
+
+            int days = (endDate - startDate).Days + 1; // Tarih aralığındaki gün sayısını hesapla
+
             decimal costPerSquareMeter = 1000; // Her metrekare için temel fiyat
             decimal roomCost = 3000;          // Her oda için sabit fiyat
 
             // Hesaplama
-            decimal totalCost = (building.FloorSize * costPerSquareMeter * building.NumberOfFloor) +
-                                (building.RoomPerFloor * roomCost * building.NumberOfFloor);
+            decimal totalCost = ((building.FloorSize * costPerSquareMeter * building.NumberOfFloor) +
+                                 (building.RoomPerFloor * roomCost * building.NumberOfFloor)) * days;
 
             return totalCost;
         }
+
 
         public List<Building> GetBuildingsByCriteria(string city, int floors, int rooms, int minFloorSize)
         {

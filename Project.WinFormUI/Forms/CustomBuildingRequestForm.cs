@@ -143,7 +143,7 @@ namespace Project.WinFormUI.Forms
             Building selectedBuilding = SecilenBinayiAl();
 
             // Binanın maliyetini hesapla
-            decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding);
+            decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding, _startDate, _endDate);
 
             // Onay mesajı göster
             MessageBox.Show($"Seçilen bina onaylandı: {selectedBuilding.Name}");

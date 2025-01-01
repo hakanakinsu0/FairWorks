@@ -1,5 +1,4 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFConcRep;
-using Project.ENTITIES.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,20 +118,6 @@ namespace Project.WinFormUI.Forms
             lstReportResults.Items.Clear();
 
             var employees = _employeeRepository.GetAll();
-            var filter = cmbReportFilters.SelectedItem?.ToString();
-
-            if (filter == "Yalnızca Adminler")
-            {
-                employees = employees.Where(x => x.Role == EmployeeRole.Admin).ToList();
-            }
-            else if (filter == "Yalnızca Organizerlar")
-            {
-                employees = employees.Where(x => x.Role == EmployeeRole.Organizer).ToList();
-            }
-            else if (filter == "Aktif Çalışanlar")
-            {
-                employees = _employeeRepository.GetActives();
-            }
 
             foreach (var employee in employees)
             {

@@ -20,6 +20,19 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return GetAll().ToList();
         }
 
-     
+        public decimal CalculateTotalCostForServices(List<int> selectedServiceValueIds, int days)
+        {
+            // Seçilen hizmet değerlerine göre maliyet hesaplama
+            var selectedServices = GetAll()
+                .Where(psv => selectedServiceValueIds.Contains(psv.ServiceValueId))
+                .Select(psv => psv.ServiceValue.Cost)
+                .ToList();
+
+            // Seçilen gün sayısı ile çarpıp toplamı döndür
+            return selectedServices.Sum() * days;
+        }
+
+
+
     }
 }

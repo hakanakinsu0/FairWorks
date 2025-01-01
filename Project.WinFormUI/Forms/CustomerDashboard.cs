@@ -62,36 +62,32 @@ namespace Project.WinFormUI.Forms
 
         private void btnConfirmFair_Click(object sender, EventArgs e)
         {
-            // Kullanıcının bir bina seçip seçmediğini kontrol eder
             if (lstBuildings.SelectedItem == null)
             {
                 MessageBox.Show("Lütfen bir bina seçiniz.");
                 return;
             }
 
-            // Seçilen bina bilgilerini alır
             Building selectedBuilding = lstBuildings.SelectedItem as Building;
 
             try
             {
-                // Binanın maliyetini hesapla
-                decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding);
+                // Tarih aralığını hesaplamaya dahil ederek maliyeti hesapla
+                decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding, dtpStartDate.Value, dtpEndDate.Value);
 
-                // Onay mesajı göster
-                MessageBox.Show($"Seçilen bina onaylandı: {selectedBuilding.Name}");
-
-                // Ek hizmetler formunu açar ve bina bilgilerini gönderir
+                // FairServicesForm'u başlat ve bilgileri gönder
                 FairServicesForm servicesForm = new FairServicesForm
                 {
-                    SelectedBuilding = selectedBuilding, // Seçilen bina bilgisi
-                    BuildingCost = buildingCost          // Hesaplanan bina maliyeti
+                    SelectedBuilding = selectedBuilding,
+                    BuildingCost = buildingCost,
+                    StartDate = dtpStartDate.Value,
+                    EndDate = dtpEndDate.Value
                 };
 
                 servicesForm.ShowDialog();
             }
             catch (Exception ex)
             {
-                // Hata durumunda mesaj gösterilir
                 MessageBox.Show($"Bir hata oluştu: {ex.Message}");
             }
         }
