@@ -77,6 +77,9 @@ namespace Project.WinFormUI.Forms
                 // Binanın maliyetini hesapla
                 decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding);
 
+                // Onay mesajı göster
+                MessageBox.Show($"Seçilen bina onaylandı: {selectedBuilding.Name}");
+
                 // Ek hizmetler formunu açar ve bina bilgilerini gönderir
                 FairServicesForm servicesForm = new FairServicesForm
                 {

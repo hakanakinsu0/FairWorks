@@ -64,7 +64,21 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return totalCost;
         }
 
+        public List<Building> GetBuildingsByCriteria(string city, int floors, int rooms, int minFloorSize)
+        {
+            return GetAll()
+                .Where(b => b.Location.City == city &&
+                            b.NumberOfFloor == floors &&
+                            b.RoomPerFloor == rooms &&
+                            b.FloorSize >= minFloorSize)
+                .ToList();
+        }
 
-
+        public bool ValidateBuildingCriteria(int floors, int rooms, int minFloorSize)
+        {
+            return IsFloorCountValid(floors) &&
+                   IsRoomCountValid(rooms) &&
+                   IsFloorSizeValid(minFloorSize);
+        }
     }
 }

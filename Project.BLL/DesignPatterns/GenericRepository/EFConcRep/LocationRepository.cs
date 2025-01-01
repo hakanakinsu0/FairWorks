@@ -38,6 +38,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                            .ToList();
         }
 
+        public List<string> GetUniqueCities()
+        {
+            return GetAll()
+                .Select(location => location.City)
+                .Distinct()
+                .ToList();
+        }
+
+
 
 
     }

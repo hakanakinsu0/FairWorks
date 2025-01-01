@@ -14,66 +14,68 @@ namespace Project.WinFormUI.Forms
 {
     public partial class AddLocationForm : Form
     {
-        LocationRepository _locationRepository;
-        Location _newLocation;
+        LocationRepository _locationRepository; // Lokasyon işlemleri için repository
+        Location _newLocation; // Yeni lokasyon nesnesini tutar
+
+        // Constructor: Formun başlatılması ve repository örneğinin oluşturulması
         public AddLocationForm()
         {
             InitializeComponent();
-            _locationRepository = new LocationRepository();
-            LoadLocations(); // Listeyi Güncelle
+
+            _locationRepository = new LocationRepository(); // Lokasyon repository'si oluşturulur
+            LoadLocations(); // Aktif lokasyonları yükler
         }
 
+        // "Lokasyon Ekle" butonuna tıklandığında çağrılır
         private void btnAddLocation_Click(object sender, EventArgs e)
         {
-            // Validasyon
+            // Şehir ve ilçe alanlarının boş olup olmadığını kontrol eder
             if (txtCity.Text=="" || txtDistrict.Text=="")
             {
                 MessageBox.Show("Lütfen şehir ve ilçe bilgilerini doldurun.");
                 return;
             }
 
-            // Benzersizlik Kontrolü
+            // Lokasyonun benzersiz olup olmadığını kontrol eder
             if (!_locationRepository.IsLocationUnique(txtCity.Text, txtDistrict.Text))
             {
                 MessageBox.Show("Bu lokasyon zaten mevcut.");
                 return;
             }
 
-            // Yeni Lokasyon Nesnesi
+            // Yeni lokasyon nesnesi oluşturulur ve formdaki bilgiler atanır
             _newLocation = new Location
             {
                 City = txtCity.Text,
                 District = txtDistrict.Text
             };
 
-            // Veritabanına Ekle
+            // Lokasyonu veritabanına ekleme işlemi
             try
             {
-                _locationRepository.Add(_newLocation);
-                MessageBox.Show("Lokasyon başarıyla eklendi.");
-                LoadLocations(); // Listeyi Güncelle
+                _locationRepository.Add(_newLocation); // Repository aracılığıyla ekleme yapılır
+                MessageBox.Show("Lokasyon başarıyla eklendi."); // Başarı mesajı gösterilir
+                LoadLocations(); // Lokasyon listesini günceller
             }
             catch (Exception ex)
             {
+                // Hata durumunda kullanıcıya bilgi verilir
                 MessageBox.Show("Bir hata oluştu: " + ex.Message);
             }
         }
+
+        // Lokasyon listesini yükler
         private void LoadLocations()
         {
-            lstLocations.DataSource = null; // Önce listeyi sıfırla
-            lstLocations.DataSource = _locationRepository.GetAll(); // Tüm lokasyonları getir
-            lstLocations.DisplayMember = "ToString"; // Görünecek alan (örn. "İstanbul - Ataşehir")
-            //lstLocations.ValueMember = "Id"; // Gizli ID değeri
+            lstLocations.DataSource = null; // Listeyi temizler
+            lstLocations.DataSource = _locationRepository.GetActives(); // Aktif lokasyonları getirir
+            lstLocations.DisplayMember = "ToString"; // Görünecek alan olarak ToString kullanılır
         }
 
+        // "Kapat" butonuna tıklandığında formu kapatır
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Close();
-        }
-
-        private void AddLocationForm_Load(object sender, EventArgs e)
-        {
-
+            Close(); // Formu kapatır
         }
     }
 }

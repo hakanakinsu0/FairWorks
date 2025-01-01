@@ -225,7 +225,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AddBuildingForm";
             this.Text = "Bina Ekleme";
-            this.Load += new System.EventHandler(this.AddBuildingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudNumberOfFloor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFloorSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRoomPerFloor)).EndInit();

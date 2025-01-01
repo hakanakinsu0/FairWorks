@@ -40,46 +40,41 @@
             // 
             // txtCity
             // 
-            this.txtCity.Location = new System.Drawing.Point(68, 133);
-            this.txtCity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCity.Location = new System.Drawing.Point(51, 108);
             this.txtCity.Name = "txtCity";
-            this.txtCity.Size = new System.Drawing.Size(319, 22);
+            this.txtCity.Size = new System.Drawing.Size(240, 20);
             this.txtCity.TabIndex = 7;
             // 
             // txtDistrict
             // 
-            this.txtDistrict.Location = new System.Drawing.Point(68, 101);
-            this.txtDistrict.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDistrict.Location = new System.Drawing.Point(51, 82);
             this.txtDistrict.Name = "txtDistrict";
-            this.txtDistrict.Size = new System.Drawing.Size(319, 22);
+            this.txtDistrict.Size = new System.Drawing.Size(240, 20);
             this.txtDistrict.TabIndex = 8;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 137);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(27, 111);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 16);
+            this.label2.Size = new System.Drawing.Size(18, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "İl :";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 105);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(15, 85);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 16);
+            this.label7.Size = new System.Drawing.Size(30, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "İlçe :";
             // 
             // btnAddLocation
             // 
-            this.btnAddLocation.Location = new System.Drawing.Point(268, 165);
-            this.btnAddLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddLocation.Location = new System.Drawing.Point(201, 134);
             this.btnAddLocation.Name = "btnAddLocation";
-            this.btnAddLocation.Size = new System.Drawing.Size(120, 28);
+            this.btnAddLocation.Size = new System.Drawing.Size(90, 23);
             this.btnAddLocation.TabIndex = 11;
             this.btnAddLocation.Text = "Lokasyon Ekle";
             this.btnAddLocation.UseVisualStyleBackColor = true;
@@ -87,10 +82,9 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(140, 165);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClose.Location = new System.Drawing.Point(105, 134);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(120, 28);
+            this.btnClose.Size = new System.Drawing.Size(90, 23);
             this.btnClose.TabIndex = 10;
             this.btnClose.Text = "İptal";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -99,29 +93,26 @@
             // lstLocations
             // 
             this.lstLocations.FormattingEnabled = true;
-            this.lstLocations.ItemHeight = 16;
-            this.lstLocations.Location = new System.Drawing.Point(420, 105);
-            this.lstLocations.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstLocations.Location = new System.Drawing.Point(315, 85);
             this.lstLocations.Name = "lstLocations";
-            this.lstLocations.Size = new System.Drawing.Size(509, 276);
+            this.lstLocations.Size = new System.Drawing.Size(280, 225);
             this.lstLocations.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(63, 52);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(47, 42);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(203, 28);
+            this.label1.Size = new System.Drawing.Size(161, 23);
             this.label1.TabIndex = 12;
             this.label1.Text = "LOKASYON EKLE";
             // 
             // AddLocationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(612, 330);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAddLocation);
             this.Controls.Add(this.btnClose);
@@ -130,10 +121,8 @@
             this.Controls.Add(this.txtDistrict);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label7);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AddLocationForm";
             this.Text = "Lokasyon Ekle";
-            this.Load += new System.EventHandler(this.AddLocationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -17,50 +17,62 @@ namespace Project.WinFormUI.Forms
             InitializeComponent();
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+        /*--------------------------Ekle Sekmesi-----------------------*/
 
+        // Yeni bina ekleme butonu olayı: AddBuildingForm'u açar
         private void btnAddBuilding_Click(object sender, EventArgs e)
         {
             AddBuildingForm addBuildingForm = new AddBuildingForm();
             addBuildingForm.ShowDialog();
         }
 
+        // Yeni lokasyon ekleme butonu olayı: AddLocationForm'u açar
         private void btnAddLocation_Click(object sender, EventArgs e)
         {
             AddLocationForm addLocationForm = new AddLocationForm();
             addLocationForm.ShowDialog();
         }
 
+        // Yeni çalışan ekleme butonu olayı: AddEmployeeForm'u açar
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             AddEmployeeForm addEmployeeForm = new AddEmployeeForm();
             addEmployeeForm.ShowDialog();
         }
 
+        // Çıkış butonu olayı: Formu kapatır
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        /*--------------------------Guncelle/Sil Sekmesi-----------------------*/
+
+        // Bina güncelleme/silme butonu olayı: UpdateDeleteBuildingForm'u açar
         private void btnUpdateBuilding_Click(object sender, EventArgs e)
         {
             UpdateDeleteBuildingForm updateDeleteBuildingForm = new UpdateDeleteBuildingForm();
             updateDeleteBuildingForm.ShowDialog();
         }
 
-        private void btnExitUpdate_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
+        // Lokasyon güncelleme/silme butonu olayı: UpdateDeleteLocationForm'u açar
         private void btnUpdateLocation_Click(object sender, EventArgs e)
         {
             UpdateDeleteLocationForm updateDeleteLocationForm = new UpdateDeleteLocationForm();
             updateDeleteLocationForm.ShowDialog();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        // Çalışan güncelleme/silme butonu olayı: UpdateDeleteEmployeeForm'u açar
+        private void btnUpdateEmployee_Click(object sender, EventArgs e)
         {
             UpdateDeleteEmployeeForm updateDeleteEmployeeForm= new UpdateDeleteEmployeeForm();
             updateDeleteEmployeeForm.ShowDialog();
+        }
+
+        // Güncelleme ekranından çıkış butonu: Formu kapatır
+        private void btnExitUpdate_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
