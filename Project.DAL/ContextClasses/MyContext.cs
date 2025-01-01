@@ -41,6 +41,7 @@ namespace Project.DAL.ContextClasses
 
             modelBuilder.Configurations.Add(new ServiceProviderConfiguration());
             modelBuilder.Configurations.Add(new ServiceValueConfiguration());
+            modelBuilder.Configurations.Add(new ServiceProviderServiceValueConfiguration());
 
         }
 
@@ -63,5 +64,6 @@ namespace Project.DAL.ContextClasses
         public DbSet<ServiceDescriptor> ServiceDescriptors { get; set; }
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<ServiceValue> ServiceValues { get; set; }
+        public DbSet<ServiceProviderServiceValue> serviceProviderServiceValues { get; set; }
     }
 }

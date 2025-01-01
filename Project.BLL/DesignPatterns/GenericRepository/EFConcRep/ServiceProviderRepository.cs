@@ -10,5 +10,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class ServiceProviderRepository:BaseRepository<ServiceProvider>
     {
+        public void AddServiceProvider(ServiceProvider provider)
+        {
+            Add(provider);
+        }
+
+        public ServiceProvider GetByName(string name)
+        {
+            return FirstOrDefault(sp => sp.ProviderName == name);
+        }
+
     }
 }

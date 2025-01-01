@@ -67,6 +67,7 @@
     <Compile Include="Options\PaymentConfiguration.cs" />
     <Compile Include="Options\ServiceDescriptorConfiguration.cs" />
     <Compile Include="Options\ServiceProviderConfiguration.cs" />
+    <Compile Include="Options\ServiceProviderServiceValueConfiguration.cs" />
     <Compile Include="Options\ServiceValueConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -25,6 +25,7 @@ namespace Project.BLL.DesignPatterns.GenericRepository.IntRep
         void Delete(T entity);      // Mevcut bir varlığı pasif duruma getirir (silinmiş olarak işaretler).
         string Destroy(T entity);   // Varlığı fiziksel olarak veri tabanından siler ve işlem sonucunda bir mesaj döndürür.
 
+
         // ************* Expressions (Dinamik Sorgulamalar) *************
         List<T> Where(Expression<Func<T, bool>> exp);       // Belirtilen şarta (Expression) uyan tüm kayıtları döndürür.
         bool Any(Expression<Func<T, bool>> exp);            // Belirtilen şarta uyan en az bir kayıt olup olmadığını kontrol eder.

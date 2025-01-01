@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddAdditionalServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddAdditionalServiceForm.Designer.cs">
+      <DependentUpon>AddAdditionalServiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AddBuildingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AddAdditionalServiceForm.resx">
+      <DependentUpon>AddAdditionalServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddBuildingForm.resx">
       <DependentUpon>AddBuildingForm.cs</DependentUpon>
     </EmbeddedResource>

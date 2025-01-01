@@ -67,6 +67,7 @@
     <Compile Include="DesignPatterns\GenericRepository\EFConcRep\PaymentRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceDescriptorRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceProviderRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceProviderServiceValueRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ServiceValueRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\IntRep\IRepository.cs" />
     <Compile Include="DesignPatterns\SingletonPattern\DbTool.cs" />

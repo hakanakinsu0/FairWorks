@@ -19,11 +19,14 @@ namespace Project.ENTITIES.Models
         public string Email { get; set; }        // E-posta
 
         // Foreign Key
-        public int ServiceValueId { get; set; }  // Hizmet değeri ile ilişki
+        //public int ServiceValueId { get; set; }  // Hizmet değeri ile ilişki
 
         // Relational Properties
-        public virtual ServiceValue ServiceValue { get; set; } // Yön: // 1 ServiceProvider 1 ServiceValue, 1 ServiceValue N ServiceProvider
+        //public virtual ServiceValue ServiceValue { get; set; } // Yön: // 1 ServiceProvider 1 ServiceValue, 1 ServiceValue N ServiceProvider
         public virtual List<FairServiceProvider> FairServiceProviders { get; set; } // Yön: // 1 ServiceProvider N FairService, 1 FairService N ServiceProvider
+        public virtual List<ServiceProviderServiceValue> ProviderServiceValues { get; set; } // Ara tablo ilişkisi
+
+
 
     }
 }

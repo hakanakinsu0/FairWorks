@@ -10,5 +10,14 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class ServiceDescriptorRepository:BaseRepository<ServiceDescriptor>
     {
+        public void AddServiceDescriptor(ServiceDescriptor descriptor)
+        {
+            Add(descriptor); // GenericRepository'nin Add metodu çağrılır.
+        }
+
+        public ServiceDescriptor GetByName(string name)
+        {
+            return FirstOrDefault(sd => sd.Name == name);
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace Project.ENTITIES.Models
 
         // Relational Properties
         public virtual ServiceDescriptor ServiceDescriptor { get; set; } // Yön: // 1 ServiceValue 1 ServiceDescriptor, 1 ServiceDescriptor N ServiceValue
-        public virtual List<ServiceProvider> Providers { get; set; }     // Yön: // 1 ServiceValue N ServiceProvider, 1 ServiceProvider 1 ServiceValue
+        //public virtual List<ServiceProvider> Providers { get; set; }     // Yön: // 1 ServiceValue N ServiceProvider, 1 ServiceProvider 1 ServiceValue
+        public virtual List<ServiceProviderServiceValue> ProviderServiceValues { get; set; } // Ara tablo ilişkisi
+
     }
 }

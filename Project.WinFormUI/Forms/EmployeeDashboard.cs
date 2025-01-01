@@ -40,6 +40,13 @@ namespace Project.WinFormUI.Forms
             addEmployeeForm.ShowDialog();
         }
 
+
+        private void btnAddService_Click(object sender, EventArgs e)
+        {
+            AddAdditionalServiceForm addAdditionalServiceForm = new AddAdditionalServiceForm();
+            addAdditionalServiceForm.ShowDialog();
+        }
+
         // Çıkış butonu olayı: Formu kapatır
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -74,5 +81,7 @@ namespace Project.WinFormUI.Forms
         {
             Close();
         }
+
+
     }
 }

@@ -10,5 +10,10 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class ServiceValueRepository:BaseRepository<ServiceValue>
     {
+        public void AddServiceValue(ServiceValue value)
+        {
+            Add(value);
+        }
+
     }
 }
