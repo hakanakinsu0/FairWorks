@@ -10,5 +10,6 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class FairServiceRepository:BaseRepository<FairService>
     {
+        
     }
 }

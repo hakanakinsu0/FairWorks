@@ -21,8 +21,11 @@ namespace Project.WinFormUI.Forms
         LocationRepository _locationRepository; // Lokasyon veritabanı işlemleri için repository
         BuildingRepository _buildingRepository;// Bina veritabanı işlemleri için repository
 
+        public Customer LoggedInCustomer { get; set; }
+
+
         // Constructor: Formun başlatılması ve gerekli değerlerin alınması
-        public CustomBuildingRequestForm(string fairName, DateTime startDate, DateTime endDate)
+        public CustomBuildingRequestForm(string fairName, DateTime startDate, DateTime endDate, Customer loggedInCustomer)
         {
             InitializeComponent();
 
@@ -32,6 +35,7 @@ namespace Project.WinFormUI.Forms
 
             _locationRepository = new LocationRepository(); // Lokasyon repository örneği oluştur
             _buildingRepository = new BuildingRepository(); // Bina repository örneği oluştur
+            LoggedInCustomer = loggedInCustomer;
         }
 
         // Form yüklendiğinde çalışacak olay
@@ -151,9 +155,13 @@ namespace Project.WinFormUI.Forms
             // Ek hizmetler formunu aç
             FairServicesForm fairServicesForm = new FairServicesForm
             {
+                LoggedInCustomer = LoggedInCustomer, // Giriş yapan müşteri bilgisi
                 SelectedBuilding = selectedBuilding, // Seçilen bina bilgisi
-                BuildingCost = buildingCost          // Hesaplanan bina maliyeti
+                BuildingCost = buildingCost,         // Hesaplanan bina maliyeti
+                StartDate = _startDate,              // Başlangıç tarihi
+                EndDate = _endDate                   // Bitiş tarihi
             };
+
             fairServicesForm.ShowDialog();
         }
 

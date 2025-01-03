@@ -56,141 +56,168 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\AddAdditionalServiceForm.cs">
+    <Compile Include="Forms\CustomerForms\FairPriceOfferForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddAdditionalServiceForm.Designer.cs">
+    <Compile Include="Forms\CustomerForms\FairPriceOfferForm.Designer.cs">
+      <DependentUpon>FairPriceOfferForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomerForms\PaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomerForms\PaymentForm.Designer.cs">
+      <DependentUpon>PaymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EmployeeForms\AddAdditionalServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmployeeForms\AddAdditionalServiceForm.Designer.cs">
       <DependentUpon>AddAdditionalServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddBuildingForm.cs">
+    <Compile Include="Forms\EmployeeForms\AddBuildingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddBuildingForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\AddBuildingForm.Designer.cs">
       <DependentUpon>AddBuildingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddEmployeeForm.cs">
+    <Compile Include="Forms\EmployeeForms\AddEmployeeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddEmployeeForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\AddEmployeeForm.Designer.cs">
       <DependentUpon>AddEmployeeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddLocationForm.cs">
+    <Compile Include="Forms\EmployeeForms\AddLocationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddLocationForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\AddLocationForm.Designer.cs">
       <DependentUpon>AddLocationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CustomBuildingRequestForm.cs">
+    <Compile Include="Forms\CustomerForms\CustomBuildingRequestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CustomBuildingRequestForm.Designer.cs">
+    <Compile Include="Forms\CustomerForms\CustomBuildingRequestForm.Designer.cs">
       <DependentUpon>CustomBuildingRequestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CustomerDashboard.cs">
+    <Compile Include="Forms\CustomerForms\CustomerDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CustomerDashboard.Designer.cs">
+    <Compile Include="Forms\CustomerForms\CustomerDashboard.Designer.cs">
       <DependentUpon>CustomerDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\EmployeeDashboard.cs">
+    <Compile Include="Forms\EmployeeForms\EmployeeDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EmployeeDashboard.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\EmployeeDashboard.Designer.cs">
       <DependentUpon>EmployeeDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FairServicesForm.cs">
+    <Compile Include="Forms\CustomerForms\FairServicesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FairServicesForm.Designer.cs">
+    <Compile Include="Forms\CustomerForms\FairServicesForm.Designer.cs">
       <DependentUpon>FairServicesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ForgotPasswordForm.cs">
+    <Compile Include="Forms\CustomerForms\FairSummaryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ForgotPasswordForm.Designer.cs">
+    <Compile Include="Forms\CustomerForms\FairSummaryForm.Designer.cs">
+      <DependentUpon>FairSummaryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoginForms\ForgotPasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginForms\ForgotPasswordForm.Designer.cs">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Login.cs">
+    <Compile Include="Forms\LoginForms\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Login.Designer.cs">
+    <Compile Include="Forms\LoginForms\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RegisterForm.cs">
+    <Compile Include="Forms\LoginForms\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RegisterForm.Designer.cs">
+    <Compile Include="Forms\LoginForms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteBuildingForm.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteBuildingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteBuildingForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteBuildingForm.Designer.cs">
       <DependentUpon>UpdateDeleteBuildingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteEmployeeForm.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteEmployeeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteEmployeeForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteEmployeeForm.Designer.cs">
       <DependentUpon>UpdateDeleteEmployeeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteLocationForm.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteLocationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteLocationForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteLocationForm.Designer.cs">
       <DependentUpon>UpdateDeleteLocationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteServiceForm.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UpdateDeleteServiceForm.Designer.cs">
+    <Compile Include="Forms\EmployeeForms\UpdateDeleteServiceForm.Designer.cs">
       <DependentUpon>UpdateDeleteServiceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\AddAdditionalServiceForm.resx">
+    <EmbeddedResource Include="Forms\CustomerForms\FairPriceOfferForm.resx">
+      <DependentUpon>FairPriceOfferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomerForms\PaymentForm.resx">
+      <DependentUpon>PaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmployeeForms\AddAdditionalServiceForm.resx">
       <DependentUpon>AddAdditionalServiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddBuildingForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\AddBuildingForm.resx">
       <DependentUpon>AddBuildingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddEmployeeForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\AddEmployeeForm.resx">
       <DependentUpon>AddEmployeeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddLocationForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\AddLocationForm.resx">
       <DependentUpon>AddLocationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomBuildingRequestForm.resx">
+    <EmbeddedResource Include="Forms\CustomerForms\CustomBuildingRequestForm.resx">
       <DependentUpon>CustomBuildingRequestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomerDashboard.resx">
+    <EmbeddedResource Include="Forms\CustomerForms\CustomerDashboard.resx">
       <DependentUpon>CustomerDashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EmployeeDashboard.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\EmployeeDashboard.resx">
       <DependentUpon>EmployeeDashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FairServicesForm.resx">
+    <EmbeddedResource Include="Forms\CustomerForms\FairServicesForm.resx">
       <DependentUpon>FairServicesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ForgotPasswordForm.resx">
+    <EmbeddedResource Include="Forms\CustomerForms\FairSummaryForm.resx">
+      <DependentUpon>FairSummaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoginForms\ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Login.resx">
+    <EmbeddedResource Include="Forms\LoginForms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RegisterForm.resx">
+    <EmbeddedResource Include="Forms\LoginForms\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateDeleteBuildingForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\UpdateDeleteBuildingForm.resx">
       <DependentUpon>UpdateDeleteBuildingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateDeleteEmployeeForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\UpdateDeleteEmployeeForm.resx">
       <DependentUpon>UpdateDeleteEmployeeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateDeleteLocationForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\UpdateDeleteLocationForm.resx">
       <DependentUpon>UpdateDeleteLocationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateDeleteServiceForm.resx">
+    <EmbeddedResource Include="Forms\EmployeeForms\UpdateDeleteServiceForm.resx">
       <DependentUpon>UpdateDeleteServiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

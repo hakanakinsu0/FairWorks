@@ -79,8 +79,11 @@ namespace Project.WinFormUI
             // Kullanıcı olup olmadığını kontrol eder
             if (_customerRepository.GetByEmailAndPassword(txtEmail.Text, encryptedPassword) != null)
             {
-                LoggedInCustomerId = _customer.Id; // Giriş yapan müşterinin ID'sini sakla
-                CustomerDashboard customerDashboard = new CustomerDashboard(); // Müşteri için dashboard formu
+                Customer loggedInCustomer = _customerRepository.FirstOrDefault(c => c.ContactEMail == txtEmail.Text && c.Password == encryptedPassword);
+
+
+                //LoggedInCustomerId = _customer.Id; // Giriş yapan müşterinin ID'sini sakla
+                CustomerDashboard customerDashboard = new CustomerDashboard() { LoggedInCustomer=loggedInCustomer}; // Müşteri için dashboard formu
                 customerDashboard.ShowDialog();
                 TextboxlariTemizle();
                 return;

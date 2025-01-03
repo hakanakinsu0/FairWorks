@@ -12,6 +12,6 @@ namespace Project.ENTITIES.Enums
        
         Cash = 1,        // Nakit ödeme
         CreditCart = 2,  // Kredi kartı ile ödeme
-        BankTransfer = 3 // Banka havalesi ile ödeme
+        BankTransfer = 3, // Banka havalesi ile ödeme
     }
 }

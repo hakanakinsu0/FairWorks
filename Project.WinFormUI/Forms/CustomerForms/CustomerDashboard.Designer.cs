@@ -49,8 +49,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dgvFairs = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFairs)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -62,6 +65,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(751, 405);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -253,6 +257,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.dgvFairs);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -260,6 +265,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Fuarlarım";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dgvFairs
+            // 
+            this.dgvFairs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFairs.Location = new System.Drawing.Point(19, 29);
+            this.dgvFairs.Name = "dgvFairs";
+            this.dgvFairs.Size = new System.Drawing.Size(703, 241);
+            this.dgvFairs.TabIndex = 0;
             // 
             // CustomerDashboard
             // 
@@ -272,6 +285,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFairs)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -299,5 +314,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblBuildingDetails;
+        private System.Windows.Forms.DataGridView dgvFairs;
     }
 }

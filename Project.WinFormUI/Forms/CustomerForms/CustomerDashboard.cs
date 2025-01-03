@@ -1,5 +1,6 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFConcRep;
 using Project.ENTITIES.Models;
+using Project.WinFormUI.Forms.CustomerForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,10 @@ namespace Project.WinFormUI.Forms
         BuildingRepository _buildingRepository; // Bina işlemleri için repository
         LocationRepository _locationRepository; // Lokasyon işlemleri için repository
 
+        public Customer LoggedInCustomer { get; set; }
+
+
+
         public CustomerDashboard()
         {
             InitializeComponent();
@@ -30,6 +35,7 @@ namespace Project.WinFormUI.Forms
             LoadCities();
             ClearFields();
         }
+
 
         private void btnSearchBuildings_Click(object sender, EventArgs e)
         {
@@ -75,16 +81,18 @@ namespace Project.WinFormUI.Forms
                 // Tarih aralığını hesaplamaya dahil ederek maliyeti hesapla
                 decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding, dtpStartDate.Value, dtpEndDate.Value);
 
-                // FairServicesForm'u başlat ve bilgileri gönder
-                FairServicesForm servicesForm = new FairServicesForm
+                // FairServicesForm yerine FairPriceOfferForm'u başlatıyoruz
+                FairPriceOfferForm offerForm = new FairPriceOfferForm
                 {
+                    LoggedInCustomer = LoggedInCustomer,
                     SelectedBuilding = selectedBuilding,
-                    BuildingCost = buildingCost,
+                    TotalCost = buildingCost,
                     StartDate = dtpStartDate.Value,
-                    EndDate = dtpEndDate.Value
+                    EndDate = dtpEndDate.Value,
+                    FairName = txtFairName.Text // CustomerDashboard'daki değeri aktarıyoruz
                 };
 
-                servicesForm.ShowDialog();
+                offerForm.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -109,7 +117,9 @@ namespace Project.WinFormUI.Forms
             }
 
             // Fuar adı, başlangıç ve bitiş tarihlerini alıp talep formunu açar
-            CustomBuildingRequestForm requestForm = new CustomBuildingRequestForm(txtFairName.Text, dtpStartDate.Value, dtpEndDate.Value);
+            CustomBuildingRequestForm requestForm = new CustomBuildingRequestForm(txtFairName.Text, dtpStartDate.Value, dtpEndDate.Value, LoggedInCustomer)
+            {
+            };
             requestForm.ShowDialog();
         }
 
@@ -178,6 +188,48 @@ namespace Project.WinFormUI.Forms
             dtpEndDate.Value = DateTime.Now;
             dtpStartDate.Value = DateTime.Now;
             lstBuildings.DataSource = null;
+        }
+
+        private void LoadFairs()
+        {
+            try
+            {
+                // Giriş yapan müşteriye ait fuarları almak için repository'deki özel metodu kullanın
+                FairRepository fairRepo = new FairRepository();
+                List<Fair> customerFairs = fairRepo.GetFairsByCustomer(LoggedInCustomer.Id);
+
+                if (customerFairs.Any())
+                {
+                    dgvFairs.DataSource = customerFairs.Select(f => new
+                    {
+                        FuarAdı = f.Name,
+                        BaşlangıçTarihi = f.RequestedStartDate.ToShortDateString(),
+                        BitişTarihi = f.EndDate.ToShortDateString(),
+                        ToplamMaliyet = f.TotalCost.ToString("C"),
+                        HazırlıkSüresi = $"{f.PreparationDays} gün",
+                        GecikmeDurumu = f.IsDelayed ? "Gecikmiş" : "Zamanında"
+                    }).ToList();
+                }
+                else
+                {
+                    dgvFairs.DataSource = null; // Eğer fuar yoksa DataGridView'i temizle
+                    MessageBox.Show("Henüz bu kullanıcıya ait fuar bulunmamaktadır.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fuarlar yüklenirken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+       
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPage2)
+            {
+                LoadFairs(); // Fuarlar sekmesine geçildiğinde fuarları yükler
+            }
         }
     }
 }

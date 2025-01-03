@@ -22,6 +22,8 @@ namespace Project.WinFormUI.Forms
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public Customer LoggedInCustomer { get; set; }
+
 
         public FairServicesForm()
         {
@@ -189,8 +191,9 @@ namespace Project.WinFormUI.Forms
                 return;
             }
 
-            int days = (EndDate - StartDate).Days + 1; // Tarih aralığındaki gün sayısını hesapla
+            int days = (EndDate - StartDate).Days + 1;
 
+            var selectedServices = new List<string>();
             var selectedServiceValueIds = new List<int>();
 
             foreach (TabPage tabPage in tabControl1.TabPages)
@@ -205,9 +208,16 @@ namespace Project.WinFormUI.Forms
                             {
                                 foreach (var selectedItem in listBox.SelectedItems)
                                 {
+                                    // selectedItem bir ListBoxItem'dır ve Tag özelliğinde ServiceValueId saklıdır.
                                     if (selectedItem is ListViewItem listViewItem && listViewItem.Tag is int serviceValueId)
                                     {
                                         selectedServiceValueIds.Add(serviceValueId);
+                                        selectedServices.Add(listViewItem.Text); // Seçilen hizmetleri listeye ekle
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Bir veya daha fazla hizmet doğru formatta değil.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
                                     }
                                 }
                             }
@@ -222,10 +232,22 @@ namespace Project.WinFormUI.Forms
                 return;
             }
 
+            // Toplam maliyeti hesapla
             var totalServiceCost = _providerServiceValueRepository.CalculateTotalCostForServices(selectedServiceValueIds, days);
             var finalCost = BuildingCost + totalServiceCost;
 
-            MessageBox.Show($"Toplam Teklif: {finalCost:C2}", "Sonuç", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Yeni formu aç
+            FairSummaryForm summaryForm = new FairSummaryForm
+            {
+                LoggedInCustomer = LoggedInCustomer,
+                SelectedBuilding = SelectedBuilding,
+                TotalCost = finalCost,
+                SelectedServices = selectedServices,
+                StartDate = StartDate,
+                EndDate = EndDate
+            };
+
+            summaryForm.ShowDialog();
         }
     }
 }
