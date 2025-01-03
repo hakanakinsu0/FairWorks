@@ -158,7 +158,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UpdateDeleteLocationForm";
             this.Text = "UpdateDeleteLocationForm";
-            this.Load += new System.EventHandler(this.UpdateDeleteLocationForm_Load);
+
             this.ResumeLayout(false);
             this.PerformLayout();
 

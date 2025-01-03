@@ -266,7 +266,7 @@
             this.Controls.Add(this.lstEmployees);
             this.Name = "UpdateDeleteEmployeeForm";
             this.Text = "Çalışan Güncelle / Sil";
-            this.Load += new System.EventHandler(this.UpdateDeleteEmployeeForm_Load);
+
             this.ResumeLayout(false);
             this.PerformLayout();
 

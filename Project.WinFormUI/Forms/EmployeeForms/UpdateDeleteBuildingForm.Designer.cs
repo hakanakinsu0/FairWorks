@@ -250,7 +250,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UpdateDeleteBuildingForm";
             this.Text = "Bina Güncelle / Sil";
-            this.Load += new System.EventHandler(this.UpdateDeleteBuildingForm_Load);
+           
             ((System.ComponentModel.ISupportInitialize)(this.nudNumberOfFloor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFloorSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRoomPerFloor)).EndInit();

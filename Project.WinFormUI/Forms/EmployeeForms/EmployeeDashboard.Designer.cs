@@ -50,9 +50,9 @@
             this.btnServiceReport = new System.Windows.Forms.Button();
             this.btnBuildingReport = new System.Windows.Forms.Button();
             this.btnLocationReport = new System.Windows.Forms.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.btnMevcutFuarlar = new System.Windows.Forms.Button();
             this.btnFuarOdemeleri = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tbcEmployeeDashboard.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -66,10 +66,11 @@
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage2);
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage4);
             this.tbcEmployeeDashboard.Controls.Add(this.tabPage5);
-            this.tbcEmployeeDashboard.Location = new System.Drawing.Point(13, 13);
+            this.tbcEmployeeDashboard.Location = new System.Drawing.Point(17, 16);
+            this.tbcEmployeeDashboard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbcEmployeeDashboard.Name = "tbcEmployeeDashboard";
             this.tbcEmployeeDashboard.SelectedIndex = 0;
-            this.tbcEmployeeDashboard.Size = new System.Drawing.Size(904, 568);
+            this.tbcEmployeeDashboard.Size = new System.Drawing.Size(1205, 699);
             this.tbcEmployeeDashboard.TabIndex = 0;
             // 
             // tabPage1
@@ -79,19 +80,21 @@
             this.tabPage1.Controls.Add(this.btnAddLocation);
             this.tabPage1.Controls.Add(this.btnAddEmployee);
             this.tabPage1.Controls.Add(this.btnAddBuilding);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(896, 542);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1197, 670);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Ekle";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(30, 125);
+            this.btnExit.Location = new System.Drawing.Point(40, 154);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(194, 23);
+            this.btnExit.Size = new System.Drawing.Size(259, 28);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "Çıkış Yap";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -99,9 +102,10 @@
             // 
             // btnAddService
             // 
-            this.btnAddService.Location = new System.Drawing.Point(130, 96);
+            this.btnAddService.Location = new System.Drawing.Point(173, 118);
+            this.btnAddService.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddService.Name = "btnAddService";
-            this.btnAddService.Size = new System.Drawing.Size(94, 23);
+            this.btnAddService.Size = new System.Drawing.Size(125, 28);
             this.btnAddService.TabIndex = 0;
             this.btnAddService.Text = "Hizmet Ekle";
             this.btnAddService.UseVisualStyleBackColor = true;
@@ -109,9 +113,10 @@
             // 
             // btnAddLocation
             // 
-            this.btnAddLocation.Location = new System.Drawing.Point(130, 67);
+            this.btnAddLocation.Location = new System.Drawing.Point(173, 82);
+            this.btnAddLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddLocation.Name = "btnAddLocation";
-            this.btnAddLocation.Size = new System.Drawing.Size(94, 23);
+            this.btnAddLocation.Size = new System.Drawing.Size(125, 28);
             this.btnAddLocation.TabIndex = 0;
             this.btnAddLocation.Text = "Lokasyon Ekle";
             this.btnAddLocation.UseVisualStyleBackColor = true;
@@ -119,9 +124,10 @@
             // 
             // btnAddEmployee
             // 
-            this.btnAddEmployee.Location = new System.Drawing.Point(30, 96);
+            this.btnAddEmployee.Location = new System.Drawing.Point(40, 118);
+            this.btnAddEmployee.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddEmployee.Name = "btnAddEmployee";
-            this.btnAddEmployee.Size = new System.Drawing.Size(94, 23);
+            this.btnAddEmployee.Size = new System.Drawing.Size(125, 28);
             this.btnAddEmployee.TabIndex = 0;
             this.btnAddEmployee.Text = "Çalışan Ekle";
             this.btnAddEmployee.UseVisualStyleBackColor = true;
@@ -129,9 +135,10 @@
             // 
             // btnAddBuilding
             // 
-            this.btnAddBuilding.Location = new System.Drawing.Point(30, 67);
+            this.btnAddBuilding.Location = new System.Drawing.Point(40, 82);
+            this.btnAddBuilding.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddBuilding.Name = "btnAddBuilding";
-            this.btnAddBuilding.Size = new System.Drawing.Size(94, 23);
+            this.btnAddBuilding.Size = new System.Drawing.Size(125, 28);
             this.btnAddBuilding.TabIndex = 0;
             this.btnAddBuilding.Text = "Bina Ekle";
             this.btnAddBuilding.UseVisualStyleBackColor = true;
@@ -144,19 +151,21 @@
             this.tabPage2.Controls.Add(this.btnUpdateLocation);
             this.tabPage2.Controls.Add(this.btnUpdateEmployee);
             this.tabPage2.Controls.Add(this.btnUpdateBuilding);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(896, 542);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1197, 670);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Güncelle / Sil";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnExitUpdate
             // 
-            this.btnExitUpdate.Location = new System.Drawing.Point(26, 94);
+            this.btnExitUpdate.Location = new System.Drawing.Point(35, 116);
+            this.btnExitUpdate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExitUpdate.Name = "btnExitUpdate";
-            this.btnExitUpdate.Size = new System.Drawing.Size(194, 23);
+            this.btnExitUpdate.Size = new System.Drawing.Size(259, 28);
             this.btnExitUpdate.TabIndex = 6;
             this.btnExitUpdate.Text = "Çıkış Yap";
             this.btnExitUpdate.UseVisualStyleBackColor = true;
@@ -164,9 +173,10 @@
             // 
             // btnUpdateService
             // 
-            this.btnUpdateService.Location = new System.Drawing.Point(126, 65);
+            this.btnUpdateService.Location = new System.Drawing.Point(168, 80);
+            this.btnUpdateService.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUpdateService.Name = "btnUpdateService";
-            this.btnUpdateService.Size = new System.Drawing.Size(94, 23);
+            this.btnUpdateService.Size = new System.Drawing.Size(125, 28);
             this.btnUpdateService.TabIndex = 2;
             this.btnUpdateService.Text = "Hizmet Güncelle";
             this.btnUpdateService.UseVisualStyleBackColor = true;
@@ -174,9 +184,10 @@
             // 
             // btnUpdateLocation
             // 
-            this.btnUpdateLocation.Location = new System.Drawing.Point(126, 36);
+            this.btnUpdateLocation.Location = new System.Drawing.Point(168, 44);
+            this.btnUpdateLocation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUpdateLocation.Name = "btnUpdateLocation";
-            this.btnUpdateLocation.Size = new System.Drawing.Size(112, 23);
+            this.btnUpdateLocation.Size = new System.Drawing.Size(149, 28);
             this.btnUpdateLocation.TabIndex = 3;
             this.btnUpdateLocation.Text = "Lokasyon Güncelle";
             this.btnUpdateLocation.UseVisualStyleBackColor = true;
@@ -184,9 +195,10 @@
             // 
             // btnUpdateEmployee
             // 
-            this.btnUpdateEmployee.Location = new System.Drawing.Point(26, 65);
+            this.btnUpdateEmployee.Location = new System.Drawing.Point(35, 80);
+            this.btnUpdateEmployee.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUpdateEmployee.Name = "btnUpdateEmployee";
-            this.btnUpdateEmployee.Size = new System.Drawing.Size(94, 23);
+            this.btnUpdateEmployee.Size = new System.Drawing.Size(125, 28);
             this.btnUpdateEmployee.TabIndex = 4;
             this.btnUpdateEmployee.Text = "Çalışan Güncelle";
             this.btnUpdateEmployee.UseVisualStyleBackColor = true;
@@ -194,9 +206,10 @@
             // 
             // btnUpdateBuilding
             // 
-            this.btnUpdateBuilding.Location = new System.Drawing.Point(26, 36);
+            this.btnUpdateBuilding.Location = new System.Drawing.Point(35, 44);
+            this.btnUpdateBuilding.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUpdateBuilding.Name = "btnUpdateBuilding";
-            this.btnUpdateBuilding.Size = new System.Drawing.Size(94, 23);
+            this.btnUpdateBuilding.Size = new System.Drawing.Size(125, 28);
             this.btnUpdateBuilding.TabIndex = 5;
             this.btnUpdateBuilding.Text = "Bina Güncelle";
             this.btnUpdateBuilding.UseVisualStyleBackColor = true;
@@ -208,18 +221,20 @@
             this.tabPage4.Controls.Add(this.label13);
             this.tabPage4.Controls.Add(this.lstReportResults);
             this.tabPage4.Controls.Add(this.flpReportButtons);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(896, 542);
+            this.tabPage4.Size = new System.Drawing.Size(1197, 670);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Raporlar";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // btnExitReport
             // 
-            this.btnExitReport.Location = new System.Drawing.Point(18, 164);
+            this.btnExitReport.Location = new System.Drawing.Point(24, 202);
+            this.btnExitReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExitReport.Name = "btnExitReport";
-            this.btnExitReport.Size = new System.Drawing.Size(75, 23);
+            this.btnExitReport.Size = new System.Drawing.Size(100, 28);
             this.btnExitReport.TabIndex = 45;
             this.btnExitReport.Text = "İptal";
             this.btnExitReport.UseVisualStyleBackColor = true;
@@ -229,18 +244,21 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label13.Location = new System.Drawing.Point(17, 23);
+            this.label13.Location = new System.Drawing.Point(23, 28);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(106, 23);
+            this.label13.Size = new System.Drawing.Size(136, 28);
             this.label13.TabIndex = 43;
             this.label13.Text = "RAPORLAR";
             // 
             // lstReportResults
             // 
             this.lstReportResults.FormattingEnabled = true;
-            this.lstReportResults.Location = new System.Drawing.Point(18, 233);
+            this.lstReportResults.ItemHeight = 16;
+            this.lstReportResults.Location = new System.Drawing.Point(24, 287);
+            this.lstReportResults.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstReportResults.Name = "lstReportResults";
-            this.lstReportResults.Size = new System.Drawing.Size(858, 251);
+            this.lstReportResults.Size = new System.Drawing.Size(1143, 308);
             this.lstReportResults.TabIndex = 3;
             this.lstReportResults.DoubleClick += new System.EventHandler(this.lstReportResults_DoubleClick);
             // 
@@ -252,16 +270,18 @@
             this.flpReportButtons.Controls.Add(this.btnLocationReport);
             this.flpReportButtons.Controls.Add(this.btnMevcutFuarlar);
             this.flpReportButtons.Controls.Add(this.btnFuarOdemeleri);
-            this.flpReportButtons.Location = new System.Drawing.Point(18, 73);
+            this.flpReportButtons.Location = new System.Drawing.Point(24, 90);
+            this.flpReportButtons.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flpReportButtons.Name = "flpReportButtons";
-            this.flpReportButtons.Size = new System.Drawing.Size(634, 62);
+            this.flpReportButtons.Size = new System.Drawing.Size(845, 76);
             this.flpReportButtons.TabIndex = 2;
             // 
             // btnEmployeeReport
             // 
-            this.btnEmployeeReport.Location = new System.Drawing.Point(3, 3);
+            this.btnEmployeeReport.Location = new System.Drawing.Point(4, 4);
+            this.btnEmployeeReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnEmployeeReport.Name = "btnEmployeeReport";
-            this.btnEmployeeReport.Size = new System.Drawing.Size(105, 23);
+            this.btnEmployeeReport.Size = new System.Drawing.Size(140, 28);
             this.btnEmployeeReport.TabIndex = 0;
             this.btnEmployeeReport.Text = "Çalışan Raporu";
             this.btnEmployeeReport.UseVisualStyleBackColor = true;
@@ -269,9 +289,10 @@
             // 
             // btnServiceReport
             // 
-            this.btnServiceReport.Location = new System.Drawing.Point(114, 3);
+            this.btnServiceReport.Location = new System.Drawing.Point(152, 4);
+            this.btnServiceReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnServiceReport.Name = "btnServiceReport";
-            this.btnServiceReport.Size = new System.Drawing.Size(105, 23);
+            this.btnServiceReport.Size = new System.Drawing.Size(140, 28);
             this.btnServiceReport.TabIndex = 1;
             this.btnServiceReport.Text = "Hizmet Raporu";
             this.btnServiceReport.UseVisualStyleBackColor = true;
@@ -279,9 +300,10 @@
             // 
             // btnBuildingReport
             // 
-            this.btnBuildingReport.Location = new System.Drawing.Point(225, 3);
+            this.btnBuildingReport.Location = new System.Drawing.Point(300, 4);
+            this.btnBuildingReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBuildingReport.Name = "btnBuildingReport";
-            this.btnBuildingReport.Size = new System.Drawing.Size(105, 23);
+            this.btnBuildingReport.Size = new System.Drawing.Size(140, 28);
             this.btnBuildingReport.TabIndex = 1;
             this.btnBuildingReport.Text = "Bina Raporu";
             this.btnBuildingReport.UseVisualStyleBackColor = true;
@@ -289,28 +311,21 @@
             // 
             // btnLocationReport
             // 
-            this.btnLocationReport.Location = new System.Drawing.Point(336, 3);
+            this.btnLocationReport.Location = new System.Drawing.Point(448, 4);
+            this.btnLocationReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLocationReport.Name = "btnLocationReport";
-            this.btnLocationReport.Size = new System.Drawing.Size(105, 23);
+            this.btnLocationReport.Size = new System.Drawing.Size(140, 28);
             this.btnLocationReport.TabIndex = 1;
             this.btnLocationReport.Text = "Lokasyon Raporu";
             this.btnLocationReport.UseVisualStyleBackColor = true;
             this.btnLocationReport.Click += new System.EventHandler(this.btnLocationReport_Click);
             // 
-            // tabPage5
-            // 
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(896, 542);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Gecikme Yönetimi";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
             // btnMevcutFuarlar
             // 
-            this.btnMevcutFuarlar.Location = new System.Drawing.Point(447, 3);
+            this.btnMevcutFuarlar.Location = new System.Drawing.Point(596, 4);
+            this.btnMevcutFuarlar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMevcutFuarlar.Name = "btnMevcutFuarlar";
-            this.btnMevcutFuarlar.Size = new System.Drawing.Size(89, 23);
+            this.btnMevcutFuarlar.Size = new System.Drawing.Size(119, 28);
             this.btnMevcutFuarlar.TabIndex = 2;
             this.btnMevcutFuarlar.Text = "Mevcut Fuarlar";
             this.btnMevcutFuarlar.UseVisualStyleBackColor = true;
@@ -318,22 +333,35 @@
             // 
             // btnFuarOdemeleri
             // 
-            this.btnFuarOdemeleri.Location = new System.Drawing.Point(542, 3);
+            this.btnFuarOdemeleri.Location = new System.Drawing.Point(723, 4);
+            this.btnFuarOdemeleri.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnFuarOdemeleri.Name = "btnFuarOdemeleri";
-            this.btnFuarOdemeleri.Size = new System.Drawing.Size(87, 23);
+            this.btnFuarOdemeleri.Size = new System.Drawing.Size(116, 28);
             this.btnFuarOdemeleri.TabIndex = 3;
             this.btnFuarOdemeleri.Text = "Fuar Ödemeleri";
             this.btnFuarOdemeleri.UseVisualStyleBackColor = true;
             this.btnFuarOdemeleri.Click += new System.EventHandler(this.btnFuarOdemeleri_Click);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(1197, 670);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Gecikme Yönetimi";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
             // EmployeeDashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(946, 649);
+            this.ClientSize = new System.Drawing.Size(1261, 799);
             this.Controls.Add(this.tbcEmployeeDashboard);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "EmployeeDashboard";
             this.Text = "EmployeeDashboard";
+
             this.tbcEmployeeDashboard.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

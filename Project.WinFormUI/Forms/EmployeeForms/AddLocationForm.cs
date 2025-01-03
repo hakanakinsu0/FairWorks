@@ -30,7 +30,7 @@ namespace Project.WinFormUI.Forms
         private void btnAddLocation_Click(object sender, EventArgs e)
         {
             // Şehir ve ilçe alanlarının boş olup olmadığını kontrol eder
-            if (txtCity.Text=="" || txtDistrict.Text=="")
+            if (txtCity.Text == "" || txtDistrict.Text == "")
             {
                 MessageBox.Show("Lütfen şehir ve ilçe bilgilerini doldurun.");
                 return;

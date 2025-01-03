@@ -22,9 +22,9 @@ namespace Project.WinFormUI.Forms
         Employee _selectedEmployee;
 
 
-
         public UpdateDeleteEmployeeForm()
         {
+
             // Repository nesnelerini başlat
             _ProfileRepository = new EmployeeProfileRepository();
             _employeRepository = new EmployeeRepository();
@@ -38,7 +38,6 @@ namespace Project.WinFormUI.Forms
             // Aktif Profilleri yükle
             lstEmployees.DataSource = _ProfileRepository.GetActives();// Aktif profilleri getir
             lstEmployees.DisplayMember = "ToString"; // Listeleme için ToString özelliğini kullan
-
         }
 
 
@@ -135,10 +134,7 @@ namespace Project.WinFormUI.Forms
             }
         }
 
-        private void UpdateDeleteEmployeeForm_Load(object sender, EventArgs e)
-        {
-
-        }
+   
 
         private void btnUpdateEmployee_Click(object sender, EventArgs e)
         {
