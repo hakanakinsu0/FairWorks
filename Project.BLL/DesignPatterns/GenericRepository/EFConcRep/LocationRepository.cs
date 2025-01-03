@@ -46,8 +46,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                 .ToList();
         }
 
+        public List<string> LoadDistricts(string city)
+        {
+            return GetDistrictsByCity(city);
+        }
 
-
+        public List<string> GetSortedUniqueCities()
+        {
+            return GetUniqueCities().OrderBy(city => city).ToList();
+        }
 
     }
 }

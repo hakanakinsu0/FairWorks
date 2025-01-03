@@ -23,5 +23,19 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return Where(f => f.CustomerId == customerId && f.IsDelayed == true);
         }
 
+        public Fair AddFair(Fair fair)
+        {
+            Add(fair);
+            Save(); // Kaydı veritabanına işle
+            return FirstOrDefault(f => f.Id == fair.Id); // Eklenen fuarı geri döndür
+        }
+
+        public decimal CalculateFinalOffer(decimal totalCost, decimal customerOffer)
+        {
+            decimal discountedPrice = totalCost * 0.9m;
+            return discountedPrice >= customerOffer
+                ? discountedPrice
+                : (discountedPrice + customerOffer) / 2;
+        }
     }
 }

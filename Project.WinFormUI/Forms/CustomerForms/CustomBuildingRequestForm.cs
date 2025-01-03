@@ -72,24 +72,40 @@ namespace Project.WinFormUI.Forms
 
         private bool ValidateInputs()
         {
+            if (!IsCitySelected()) return false;
+            if (!IsFloorSizeValid()) return false;
+            if (!AreFloorAndRoomCountsValid()) return false;
+
+            return true;
+        }
+
+        private bool IsCitySelected()
+        {
             if (cmbLocations.SelectedIndex == -1)
             {
                 ShowMessage("Lütfen bir şehir seçiniz.", "Geçersiz Giriş");
                 return false;
             }
+            return true;
+        }
 
+        private bool IsFloorSizeValid()
+        {
             if (nudFloorSize.Value < 50)
             {
                 ShowMessage("Kat metrekare değeri 50'den küçük olamaz.", "Geçersiz Giriş");
                 return false;
             }
+            return true;
+        }
 
+        private bool AreFloorAndRoomCountsValid()
+        {
             if (nudNumberOfFloor.Value <= 0 || nudRoomPerFloor.Value <= 0)
             {
                 ShowMessage("Kat sayısı ve oda sayısı sıfırdan büyük olmalıdır.", "Geçersiz Giriş");
                 return false;
             }
-
             return true;
         }
 
@@ -148,27 +164,32 @@ namespace Project.WinFormUI.Forms
         {
             try
             {
-                var cities = _locationRepository.GetUniqueCities();
+                // Şehir listesini repository'den al
+                var cities = _locationRepository.GetSortedUniqueCities();
 
-                if (cities.Any())
+                if (cities != null && cities.Any())
                 {
+                    // Şehirleri ComboBox'a yükle
                     cmbLocations.DataSource = cities;
                 }
                 else
                 {
+                    // Şehirler bulunamazsa ComboBox'u temizle
                     cmbLocations.DataSource = null;
-                    ShowMessage("Şehir verileri yüklenemedi.", "Hata");
+                    ShowMessage("Şehir verileri bulunamadı.", "Hata");
                 }
             }
             catch (Exception ex)
             {
+                // Hata durumunda ComboBox'u temizle ve mesaj göster
+                cmbLocations.DataSource = null;
                 ShowMessage($"Şehirler yüklenirken bir hata oluştu: {ex.Message}", "Hata");
             }
         }
 
-        private void ShowMessage(string message, string caption)
+        private void ShowMessage(string message, string caption, MessageBoxIcon icon = MessageBoxIcon.Information)
         {
-            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, caption, MessageBoxButtons.OK, icon);
         }
 
     }

@@ -77,5 +77,10 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             basePreparationDays += building.RoomPerFloor * 3;  // Her oda için 1 gün
             return basePreparationDays;
         }
+
+        public List<Building> SearchBuildings(string city, string district, DateTime startDate, DateTime endDate)
+        {
+            return GetAvailableBuildings(city, district, startDate, endDate);
+        }
     }
 }

@@ -45,17 +45,17 @@ namespace Project.WinFormUI.Forms
                 return;
             }
 
-            if (dtpEndDate.Value <= dtpStartDate.Value)
+            if (!IsValidDateRange(dtpStartDate.Value, dtpEndDate.Value, out string errorMessage))
             {
-                MessageBox.Show("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
+                MessageBox.Show(errorMessage);
                 return;
             }
 
-            List<Building> availableBuildings = _buildingRepository.GetAvailableBuildings(
+            List<Building> availableBuildings = _buildingRepository.SearchBuildings(
                 cmbCity.SelectedItem.ToString(),
                 cmbDistrict.SelectedItem.ToString(),
-                dtpEndDate.Value,
-                dtpStartDate.Value
+                dtpStartDate.Value,
+                dtpEndDate.Value
             );
 
             if (availableBuildings.Any())
@@ -68,6 +68,19 @@ namespace Project.WinFormUI.Forms
             {
                 MessageBox.Show("Seçilen tarihlerde uygun bina bulunamadı. İsterseniz talep oluşturabilirsiniz.");
             }
+        }
+
+
+
+        private bool IsValidDateRange(DateTime startDate, DateTime endDate, out string errorMessage)
+        {
+            if (endDate <= startDate)
+            {
+                errorMessage = "Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.";
+                return false;
+            }
+            errorMessage = string.Empty;
+            return true;
         }
 
         private void btnConfirmFair_Click(object sender, EventArgs e)
@@ -109,11 +122,12 @@ namespace Project.WinFormUI.Forms
         private void btnRequestBuilding_Click(object sender, EventArgs e)
         {
             // Tarih aralığının kontrolü
-            if (dtpEndDate.Value <= dtpStartDate.Value)
+            if (!IsValidDateRange(dtpStartDate.Value, dtpEndDate.Value, out string errorMessage))
             {
-                MessageBox.Show("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
+                MessageBox.Show(errorMessage);
                 return;
             }
+
 
             // Fuar ismi kontrolü
             if (txtFairName.Text == "")
@@ -135,7 +149,7 @@ namespace Project.WinFormUI.Forms
             if (cmbCity.SelectedItem != null)
             {
                 // Seçilen şehir için ilçeleri al
-                List<string> districts = _locationRepository.GetDistrictsByCity(cmbCity.SelectedItem.ToString());
+                List<string> districts = _locationRepository.LoadDistricts(cmbCity.SelectedItem.ToString());
 
                 if (districts != null && districts.Any()) //İlçeler bulunursa ComboBox'a bağlanır
                 {

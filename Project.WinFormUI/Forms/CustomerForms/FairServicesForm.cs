@@ -88,38 +88,58 @@ namespace Project.WinFormUI.Forms
 
         private void LoadServiceOffers(string serviceName, ListBox targetListBox)
         {
-            var serviceValue = _serviceValueRepository.FirstOrDefault(sv => sv.Name == serviceName);
-
-            if (serviceValue == null)
+            try
             {
-                MessageBox.Show($"{serviceName} hizmeti bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                // İlgili hizmet değerlerini alıyoruz
+                var serviceValues = _serviceValueRepository
+                    .Where(sv => sv.Name == serviceName)
+                    .ToList();
 
-            var relatedServiceProviders = _providerServiceValueRepository
-                .Where(psv => psv.ServiceValueId == serviceValue.Id)
-                .Select(psv => new
+                if (!serviceValues.Any())
                 {
-                    ProviderName = psv.ServiceProvider.ProviderName,
-                    Cost = psv.ServiceValue.Cost,
-                    ServiceValueId = psv.ServiceValueId
-                })
-                .ToList();
+                    MessageBox.Show($"{serviceName} hizmeti için sağlayıcı bulunamadı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    targetListBox.Items.Clear();
+                    return;
+                }
 
-            if (!relatedServiceProviders.Any())
-            {
-                MessageBox.Show($"{serviceName} için uygun sağlayıcı bulunamadı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+                // İlgili sağlayıcı-hizmet ilişkilerini alıyoruz
+                var serviceValueIds = serviceValues.Select(sv => sv.Id).ToList();
+                var providerServiceValues = _providerServiceValueRepository
+                    .Where(psv => serviceValueIds.Contains(psv.ServiceValueId))
+                    .ToList();
 
-            targetListBox.Items.Clear();
-            foreach (var provider in relatedServiceProviders)
-            {
-                var item = new ListViewItem($"{provider.ProviderName} - Teklif: {provider.Cost:C2}")
+                // Sağlayıcı bilgilerini alıyoruz
+                var serviceProviders = providerServiceValues
+                    .Select(psv => psv.ServiceProvider)
+                    .Where(sp => sp != null)
+                    .Distinct()
+                    .ToList();
+
+                // ListBox'ı temizle ve yeni değerleri yükle
+                targetListBox.Items.Clear();
+                foreach (var serviceValue in serviceValues)
                 {
-                    Tag = provider.ServiceValueId // ID'yi burada sakla
-                };
-                targetListBox.Items.Add(item);
+                    var relatedProviders = providerServiceValues
+                        .Where(psv => psv.ServiceValueId == serviceValue.Id)
+                        .Select(psv => psv.ServiceProvider)
+                        .ToList();
+
+                    foreach (var provider in relatedProviders)
+                    {
+                        if (provider != null)
+                        {
+                            var item = new ListViewItem($"{provider.ProviderName} - Maliyet: {serviceValue.Cost:C2}")
+                            {
+                                Tag = serviceValue.Id // Tag içine ServiceValue ID ekliyoruz
+                            };
+                            targetListBox.Items.Add(item);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hizmet teklifleri yüklenirken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

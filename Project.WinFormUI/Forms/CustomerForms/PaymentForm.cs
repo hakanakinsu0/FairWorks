@@ -67,15 +67,18 @@ namespace Project.WinFormUI.Forms.CustomerForms
             try
             {
                 PaymentRepository paymentRepo = new PaymentRepository();
-                paymentRepo.Add(payment); // Ödeme kaydediliyor
-
-                MessageBox.Show("Ödeme başarıyla tamamlandı.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                if (paymentRepo.ProcessPayment(payment, out string errorMessage))
+                {
+                    MessageBox.Show("Ödeme başarıyla tamamlandı.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show($"Ödeme sırasında bir hata oluştu: {errorMessage}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                // Hata durumunda işlem başarısız olarak işaretlenir
-                payment.PaymentStatus = PaymentStatus.Failed;
                 MessageBox.Show($"Ödeme sırasında bir hata oluştu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}",
                                 "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

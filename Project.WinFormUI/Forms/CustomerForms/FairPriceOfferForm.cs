@@ -144,13 +144,11 @@ namespace Project.WinFormUI.Forms.CustomerForms
                 return;
             }
 
-            // %10 indirimli fiyat
-            decimal discountedPrice = TotalCost * 0.9m;
+            // FairRepository'yi başlat
+            FairRepository fairRepo = new FairRepository();
 
             // Yeni teklif hesaplama
-            decimal finalOffer = discountedPrice >= customerOffer
-                ? discountedPrice
-                : (discountedPrice + customerOffer) / 2;
+            decimal finalOffer = fairRepo.CalculateFinalOffer(TotalCost, customerOffer);
 
             lblNewOffer.Text = $"Yeni Teklif Edilen Fiyat: {finalOffer:C2}";
 
@@ -160,11 +158,12 @@ namespace Project.WinFormUI.Forms.CustomerForms
 
             if (result == DialogResult.Yes)
             {
+                // Yeni fuar nesnesini oluştur
                 Fair newFair = new Fair
                 {
                     Name = string.IsNullOrWhiteSpace(FairName)
-                       ? "Belirtilmemiş Fuar" // Eğer müşteri bir isim belirtmezse
-                       : FairName,            // CustomerDashboard'dan gelen değer
+                        ? "Belirtilmemiş Fuar" // Eğer müşteri bir isim belirtmezse
+                        : FairName,            // CustomerDashboard'dan gelen değer
                     RequestedStartDate = StartDate,
                     CalculatedStartDate = StartDate,
                     EndDate = EndDate,
@@ -176,17 +175,17 @@ namespace Project.WinFormUI.Forms.CustomerForms
                     IsDelayed = false
                 };
 
-                FairRepository fairRepo = new FairRepository();
-                fairRepo.Add(newFair);
+                // Fuarı ekle
+                SelectedFair = fairRepo.AddFair(newFair);
 
-                SelectedFair = fairRepo.FirstOrDefault(f => f.Name == newFair.Name && f.CustomerId == LoggedInCustomer.Id);
-
+                // Eklenen fuarın kontrolü
                 if (SelectedFair == null || SelectedFair.Id == 0)
                 {
                     MessageBox.Show("Fuar kaydı alınamadı. İşlem iptal edildi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
+                // Ödeme formunu aç
                 PaymentForm paymentForm = new PaymentForm
                 {
                     LoggedInCustomer = LoggedInCustomer,

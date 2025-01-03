@@ -43,7 +43,7 @@ namespace Project.WinFormUI.Forms
                 summaryDetails.AppendLine($"- Adres: {SelectedBuilding.Address}");
                 summaryDetails.AppendLine($"- Kat Sayısı: {SelectedBuilding.NumberOfFloor}");
                 summaryDetails.AppendLine($"- Oda Başına Kat: {SelectedBuilding.RoomPerFloor}");
-                summaryDetails.AppendLine($"- Bina Maliyeti: {SelectedBuilding.FloorSize * 1000:C2}");
+                //summaryDetails.AppendLine($"- Bina Maliyeti: {SelectedBuilding.FloorSize * 1000:C2}");
                 summaryDetails.AppendLine();
             }
 
@@ -53,7 +53,8 @@ namespace Project.WinFormUI.Forms
                 summaryDetails.AppendLine("Seçilen Ek Hizmetler:");
                 foreach (var service in SelectedServices)
                 {
-                    summaryDetails.AppendLine($"- {service}");
+                    // Hizmet isimlerini göster, maliyet bilgisi ekleme
+                    summaryDetails.AppendLine($"- {service.Split('-')[0].Trim()}");
                 }
                 summaryDetails.AppendLine();
             }
@@ -61,6 +62,7 @@ namespace Project.WinFormUI.Forms
             {
                 summaryDetails.AppendLine("Hiçbir Ek Hizmet Seçilmedi.");
             }
+            
 
             // Tarih bilgileri
             summaryDetails.AppendLine("Tarih Bilgileri:");
@@ -69,10 +71,11 @@ namespace Project.WinFormUI.Forms
             summaryDetails.AppendLine();
 
             // Toplam maliyet
-            summaryDetails.AppendLine($"Toplam Maliyet: {TotalCost:C2}");
+            //summaryDetails.AppendLine($"Toplam Maliyet: {TotalCost:C2}");
 
             // Bilgileri label'a ata
-            lblSummaryDetails.Text = summaryDetails.ToString();
+            txtSummaryDetails.Text = summaryDetails.ToString();
+
         }
 
         private void btnConfirmSelections_Click(object sender, EventArgs e)

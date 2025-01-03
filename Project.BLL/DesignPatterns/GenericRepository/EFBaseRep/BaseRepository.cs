@@ -30,7 +30,7 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFBaseRep
             Save(); // Değişiklikler veritabanına kaydedilir.
         }
 
-        private void Save()
+        protected void Save()
         {
             _db.SaveChanges(); // EF'nin değişiklikleri veritabanına işlemesi sağlanır.
         }

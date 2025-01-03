@@ -28,19 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblSummaryDetails = new System.Windows.Forms.Label();
             this.btnConfirmSelections = new System.Windows.Forms.Button();
             this.btnGoBack = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
+            this.txtSummaryDetails = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // lblSummaryDetails
-            // 
-            this.lblSummaryDetails.BackColor = System.Drawing.Color.White;
-            this.lblSummaryDetails.Location = new System.Drawing.Point(22, 57);
-            this.lblSummaryDetails.Name = "lblSummaryDetails";
-            this.lblSummaryDetails.Size = new System.Drawing.Size(365, 371);
-            this.lblSummaryDetails.TabIndex = 0;
             // 
             // btnConfirmSelections
             // 
@@ -72,15 +64,24 @@
             this.label13.TabIndex = 16;
             this.label13.Text = "FUAR ÖZETİ";
             // 
+            // txtSummaryDetails
+            // 
+            this.txtSummaryDetails.Location = new System.Drawing.Point(25, 57);
+            this.txtSummaryDetails.Multiline = true;
+            this.txtSummaryDetails.Name = "txtSummaryDetails";
+            this.txtSummaryDetails.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSummaryDetails.Size = new System.Drawing.Size(360, 367);
+            this.txtSummaryDetails.TabIndex = 17;
+            // 
             // FairSummaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(547, 450);
+            this.Controls.Add(this.txtSummaryDetails);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.btnConfirmSelections);
-            this.Controls.Add(this.lblSummaryDetails);
             this.Name = "FairSummaryForm";
             this.Text = "FairSummaryForm";
             this.Load += new System.EventHandler(this.FairSummaryForm_Load);
@@ -90,10 +91,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblSummaryDetails;
         private System.Windows.Forms.Button btnConfirmSelections;
         private System.Windows.Forms.Button btnGoBack;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtSummaryDetails;
     }
 }
