@@ -14,12 +14,12 @@ namespace Project.WinFormUI.Forms
 {
     public partial class CustomBuildingRequestForm : Form
     {
-        string _fairName; // Fuar adı bilgisi
-        DateTime _startDate; // Fuarın başlangıç tarihi
-        DateTime _endDate; // Fuarın bitiş tarihi
+        private readonly string _fairName;
+        private readonly DateTime _startDate;
+        private readonly DateTime _endDate;
 
-        LocationRepository _locationRepository; // Lokasyon veritabanı işlemleri için repository
-        BuildingRepository _buildingRepository;// Bina veritabanı işlemleri için repository
+        private readonly LocationRepository _locationRepository;
+        private readonly BuildingRepository _buildingRepository;
 
         public Customer LoggedInCustomer { get; set; }
 
@@ -29,137 +29,103 @@ namespace Project.WinFormUI.Forms
         {
             InitializeComponent();
 
-            _fairName = fairName; // Fuar adını al
-            _startDate = startDate; // Başlangıç tarihini al
-            _endDate = endDate; // Bitiş tarihini al
+            _fairName = fairName;
+            _startDate = startDate;
+            _endDate = endDate;
 
-            _locationRepository = new LocationRepository(); // Lokasyon repository örneği oluştur
-            _buildingRepository = new BuildingRepository(); // Bina repository örneği oluştur
+            _locationRepository = new LocationRepository();
+            _buildingRepository = new BuildingRepository();
             LoggedInCustomer = loggedInCustomer;
         }
 
         // Form yüklendiğinde çalışacak olay
         private void CustomBuildingRequestForm_Load(object sender, EventArgs e)
         {
-            // Fuar bilgilerini ilgili label'da göster
-            lblFairDetails.Text = $"Fuar Adı: {_fairName}\nTarih Aralığı: {_startDate.ToShortDateString()} - {_endDate.ToShortDateString()}";
-
-            LoadLocations(); // Şehirleri yükle
+            lblFairDetails.Text = $"Fuar Adı: {_fairName}\nTarih Aralığı: {_startDate:dd/MM/yyyy} - {_endDate:dd/MM/yyyy}";
+            nudFloorSize.Minimum = 49; // Minimum değeri 50 olarak ayarla
+            LoadLocations();
         }
 
         // Binaları aramak için butona tıklama olayı
         private void btnSearchBuildings_Click(object sender, EventArgs e)
         {
-            // Eğer şehir seçilmemişse hata mesajı göster
-            if (cmbLocations.SelectedItem == null)
-            {
-                MessageBox.Show("Lütfen bir şehir seçiniz.");
-                return;
-            }
+            if (!ValidateInputs()) return;
 
-            // Kullanıcının bina kriterlerini kontrol et
-            if (nudFloorSize.Value <= 0 || nudNumberOfFloor.Value <= 0 || nudRoomPerFloor.Value <= 0)
-            {
-                MessageBox.Show("Lütfen geçerli değerler giriniz.");
-                return;
-            }
-
-            // Kullanıcıdan alınan kriterleri değişkenlere ata
-            int requestedFloors = (int)nudNumberOfFloor.Value;
-            int requestedSize = (int)nudFloorSize.Value;
-            int requestedRooms = (int)nudRoomPerFloor.Value;
-
-            // Bina kriterlerinin doğruluğunu kontrol et
-            if (AlanlariKontrolEt())
-            {
-                MessageBox.Show("Lütfen tüm alanları doldurunuz!");
-                return;
-            }
-
-            // Kat sayısının geçerli aralıkta olup olmadığı kontrol edilir
-            if (!_buildingRepository.IsFloorCountValid((int)nudNumberOfFloor.Value))
-            {
-                MessageBox.Show("Kat sayısı 1 ile 5 arasında olmalıdır.");
-                return;
-            }
-
-            // Kat boyutunun geçerli aralıkta olup olmadığı kontrol edilir
-            if (!_buildingRepository.IsFloorSizeValid((int)nudFloorSize.Value))
-            {
-                MessageBox.Show("Kat boyutu 50 ile 300 metrekare arasında olmalıdır.");
-                return;
-            }
-
-            // Oda sayısının geçerli aralıkta olup olmadığı kontrol edilir
-            if (!_buildingRepository.IsRoomCountValid((int)nudRoomPerFloor.Value))
-            {
-                MessageBox.Show("Kat başına oda sayısı 1 ile 6 arasında olmalıdır.");
-                return;
-            }
-
-            // Seçilen şehir bilgisini al
             string selectedCity = cmbLocations.SelectedItem.ToString();
+            int requestedFloors = (int)nudNumberOfFloor.Value;
+            int requestedRooms = (int)nudRoomPerFloor.Value;
+            int requestedSize = (int)nudFloorSize.Value;
 
-            // Şartları sağlayan binaları filtrele
-            List<Building> suitableBuildings = _buildingRepository.GetBuildingsByCriteria(selectedCity, requestedFloors, requestedRooms, requestedSize);
+            var suitableBuildings = _buildingRepository.GetBuildingsByCriteria(selectedCity, requestedFloors, requestedRooms, requestedSize);
 
-            // Uygun bina varsa listeyi güncelle, yoksa kullanıcıya bilgi ver
             if (suitableBuildings.Any())
             {
-                lstAvailableBuildings.DataSource = suitableBuildings; // ListBox'a uygun binaları ata
-                lstAvailableBuildings.DisplayMember = "ToString"; // Görüntülenecek alan olarak ToString kullan
+                lstAvailableBuildings.DataSource = suitableBuildings;
+                lstAvailableBuildings.DisplayMember = "ToString";
             }
             else
             {
-                lstAvailableBuildings.DataSource = null; // Listeyi temizle
-                MessageBox.Show("Kriterlere uygun bina bulunamadı."); // Uygun bina bulunamadı mesajı
+                lstAvailableBuildings.DataSource = null;
+                ShowMessage("Kriterlere uygun bina bulunamadı.", "Bilgi");
+            }
+        }
+
+        private bool ValidateInputs()
+        {
+            if (cmbLocations.SelectedIndex == -1)
+            {
+                ShowMessage("Lütfen bir şehir seçiniz.", "Geçersiz Giriş");
+                return false;
             }
 
-            // Varsayılan olarak seçim yapılmamış şekilde ayarla
-            lstAvailableBuildings.SelectedIndex = -1;
+            if (nudFloorSize.Value < 50)
+            {
+                ShowMessage("Kat metrekare değeri 50'den küçük olamaz.", "Geçersiz Giriş");
+                return false;
+            }
+
+            if (nudNumberOfFloor.Value <= 0 || nudRoomPerFloor.Value <= 0)
+            {
+                ShowMessage("Kat sayısı ve oda sayısı sıfırdan büyük olmalıdır.", "Geçersiz Giriş");
+                return false;
+            }
+
+            return true;
         }
 
         // Seçilen binanın detaylarını gösteren olay
         private void lstAvailableBuildings_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Eğer bir bina seçilmişse detaylarını göster
-            if (lstAvailableBuildings.SelectedItem != null)
+            if (lstAvailableBuildings.SelectedItem is Building selectedBuilding)
             {
-                Building selectedBuilding = SecilenBinayiAl(); // Seçilen binayı al
-
-                // Seçilen binanın detaylarını ilgili label'da göster
                 lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\nKat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\nKat Başına Oda: {selectedBuilding.RoomPerFloor}";
             }
-            else lblBuildingDetails.Text = "Bina seçilmedi."; // Hiçbir bina seçilmediyse
+            else
+            {
+                lblBuildingDetails.Text = "Bina seçilmedi.";
+            }
         }
 
         // Bina seçimini onaylama butonu
         private void btnConfirmSelection_Click(object sender, EventArgs e)
         {
-            // Eğer bir bina seçilmemişse hata mesajı göster
-            if (lstAvailableBuildings.SelectedItem == null)
+            if (!(lstAvailableBuildings.SelectedItem is Building selectedBuilding))
             {
-                MessageBox.Show("Lütfen bir bina seçiniz.");
+                ShowMessage("Lütfen bir bina seçiniz.", "Hata");
                 return;
             }
 
-            // Seçilen binayı al
-            Building selectedBuilding = SecilenBinayiAl();
-
-            // Binanın maliyetini hesapla
             decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding, _startDate, _endDate);
 
-            // Onay mesajı göster
-            MessageBox.Show($"Seçilen bina onaylandı: {selectedBuilding.Name}");
+            ShowMessage($"Seçilen bina onaylandı: {selectedBuilding.Name}", "Bilgi");
 
-            // Ek hizmetler formunu aç
             FairServicesForm fairServicesForm = new FairServicesForm
             {
-                LoggedInCustomer = LoggedInCustomer, // Giriş yapan müşteri bilgisi
-                SelectedBuilding = selectedBuilding, // Seçilen bina bilgisi
-                BuildingCost = buildingCost,         // Hesaplanan bina maliyeti
-                StartDate = _startDate,              // Başlangıç tarihi
-                EndDate = _endDate                   // Bitiş tarihi
+                LoggedInCustomer = LoggedInCustomer,
+                SelectedBuilding = selectedBuilding,
+                BuildingCost = buildingCost,
+                StartDate = _startDate,
+                EndDate = _endDate
             };
 
             fairServicesForm.ShowDialog();
@@ -168,7 +134,7 @@ namespace Project.WinFormUI.Forms
         // Şehir seçildiğinde listeyi temizleyen olay
         private void cmbLocations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lstAvailableBuildings.DataSource = null; // Lokasyon değiştiğinde bina listesini temizle
+            lstAvailableBuildings.DataSource = null;
         }
 
         // Formu kapatma butonu
@@ -177,33 +143,32 @@ namespace Project.WinFormUI.Forms
             Close(); // Formu kapat
         }
 
-        // Seçilen binayı döndüren metot
-        private Building SecilenBinayiAl()
-        {
-            return (Building)lstAvailableBuildings.SelectedItem; // Seçilen binayı döndür
-        }
-
-        // Şehirleri yükleyen metot
         private void LoadLocations()
         {
-            // Benzersiz şehir isimlerini al
-            List<string> cities = _locationRepository.GetUniqueCities();
+            try
+            {
+                var cities = _locationRepository.GetUniqueCities();
 
-            // Eğer şehirler varsa ComboBox'a yükle, yoksa hata mesajı göster
-            if (cities != null && cities.Any())
-            {
-                cmbLocations.DataSource = cities; // Şehirleri ComboBox'a ata
+                if (cities.Any())
+                {
+                    cmbLocations.DataSource = cities;
+                }
+                else
+                {
+                    cmbLocations.DataSource = null;
+                    ShowMessage("Şehir verileri yüklenemedi.", "Hata");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                cmbLocations.DataSource = null; // ComboBox'u temizle
-                MessageBox.Show("Şehir verileri yüklenemedi."); // Hata mesajı
+                ShowMessage($"Şehirler yüklenirken bir hata oluştu: {ex.Message}", "Hata");
             }
         }
-        // Formdaki tüm alanların dolu olup olmadığını kontrol eder
-        private bool AlanlariKontrolEt()
+
+        private void ShowMessage(string message, string caption)
         {
-            return nudNumberOfFloor.Value <= 0 || nudFloorSize.Value <= 0 || nudRoomPerFloor.Value <= 0 || cmbLocations.SelectedIndex == -1;
+            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }

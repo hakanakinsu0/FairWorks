@@ -1,4 +1,5 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFConcRep;
+using Project.ENTITIES.Enums;
 using Project.ENTITIES.Models;
 using Project.WinFormUI.Forms.CustomerForms;
 using System;
@@ -21,8 +22,6 @@ namespace Project.WinFormUI.Forms
 
         public Customer LoggedInCustomer { get; set; }
 
-
-
         public CustomerDashboard()
         {
             InitializeComponent();
@@ -36,34 +35,37 @@ namespace Project.WinFormUI.Forms
             ClearFields();
         }
 
-
         private void btnSearchBuildings_Click(object sender, EventArgs e)
         {
-            // Fuar ismi, şehir ve ilçe seçiminin kontrolü
             if (cmbCity.SelectedIndex == -1 || cmbDistrict.SelectedIndex == -1 || txtFairName.Text == "")
             {
                 MessageBox.Show("Lütfen fuar ismini, şehiri ve ilçeyi seçiniz.");
                 return;
             }
 
-            // Tarih aralığının kontrolü
             if (dtpEndDate.Value <= dtpStartDate.Value)
             {
                 MessageBox.Show("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
                 return;
             }
 
-            // Uygun binaları arama işlemi
-            List<Building> availableBuildings = _buildingRepository.GetAvailableBuildings(cmbCity.SelectedItem.ToString(), cmbDistrict.SelectedItem.ToString(), dtpEndDate.Value, dtpStartDate.Value);
+            List<Building> availableBuildings = _buildingRepository.GetAvailableBuildings(
+                cmbCity.SelectedItem.ToString(),
+                cmbDistrict.SelectedItem.ToString(),
+                dtpEndDate.Value,
+                dtpStartDate.Value
+            );
 
-            if (availableBuildings.Any()) // Eğer uygun bina bulunursa
+            if (availableBuildings.Any())
             {
                 lstBuildings.DataSource = availableBuildings;
                 lstBuildings.DisplayMember = "ToString";
                 lstBuildings.SelectedIndex = -1;
             }
-            // Uygun bina bulunamazsa mesaj gösterilir
-            else MessageBox.Show("Seçilen tarihlerde uygun bina bulunamadı. İsterseniz talep olusturabilirsiniz.");
+            else
+            {
+                MessageBox.Show("Seçilen tarihlerde uygun bina bulunamadı. İsterseniz talep oluşturabilirsiniz.");
+            }
         }
 
         private void btnConfirmFair_Click(object sender, EventArgs e)
@@ -78,21 +80,19 @@ namespace Project.WinFormUI.Forms
 
             try
             {
-                // Tarih aralığını hesaplamaya dahil ederek maliyeti hesapla
                 decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding, dtpStartDate.Value, dtpEndDate.Value);
 
-                // FairServicesForm yerine FairPriceOfferForm'u başlatıyoruz
-                FairPriceOfferForm offerForm = new FairPriceOfferForm
+                // FairServicesForm'u başlatıyoruz
+                FairServicesForm servicesForm = new FairServicesForm
                 {
                     LoggedInCustomer = LoggedInCustomer,
                     SelectedBuilding = selectedBuilding,
-                    TotalCost = buildingCost,
+                    BuildingCost = buildingCost,
                     StartDate = dtpStartDate.Value,
-                    EndDate = dtpEndDate.Value,
-                    FairName = txtFairName.Text // CustomerDashboard'daki değeri aktarıyoruz
+                    EndDate = dtpEndDate.Value
                 };
 
-                offerForm.ShowDialog();
+                servicesForm.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -151,7 +151,7 @@ namespace Project.WinFormUI.Forms
                 Building selectedBuilding = lstBuildings.SelectedItem as Building;
 
                 // Binanın detaylarını Label'a yazar
-                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\nKat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\nKat Başına Oda: {selectedBuilding.RoomPerFloor}\nGün Sayısı: {(dtpEndDate.Value - dtpStartDate.Value).Days + 2}";
+                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\nKat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\nKat Başına Oda: {selectedBuilding.RoomPerFloor}\nGün Sayısı: {(dtpEndDate.Value - dtpStartDate.Value).Days + 1}";
             }
             else lblBuildingDetails.Text = "Bina seçilmedi."; // Seçim yapılmamışsa mesaj gösterilir
         }
@@ -190,30 +190,34 @@ namespace Project.WinFormUI.Forms
             lstBuildings.DataSource = null;
         }
 
-        private void LoadFairs()
+        private void LoadFairs(bool showDelayed = false)
         {
             try
             {
-                // Giriş yapan müşteriye ait fuarları almak için repository'deki özel metodu kullanın
                 FairRepository fairRepo = new FairRepository();
-                List<Fair> customerFairs = fairRepo.GetFairsByCustomer(LoggedInCustomer.Id);
 
-                if (customerFairs.Any())
+                // Giriş yapan müşteriye ait fuarları getir
+                var customerFairs = fairRepo.Where(f =>
+                    f.CustomerId == LoggedInCustomer.Id &&
+                    (!showDelayed || f.IsDelayed) && // Gecikmiş fuarları göster seçeneği
+                    f.Status != DataStatus.Deleted).ToList();
+
+                // Fuarları DataGridView'e yükle
+                dgvFairs.DataSource = customerFairs.Select(f => new
                 {
-                    dgvFairs.DataSource = customerFairs.Select(f => new
-                    {
-                        FuarAdı = f.Name,
-                        BaşlangıçTarihi = f.RequestedStartDate.ToShortDateString(),
-                        BitişTarihi = f.EndDate.ToShortDateString(),
-                        ToplamMaliyet = f.TotalCost.ToString("C"),
-                        HazırlıkSüresi = $"{f.PreparationDays} gün",
-                        GecikmeDurumu = f.IsDelayed ? "Gecikmiş" : "Zamanında"
-                    }).ToList();
-                }
-                else
+                    FuarAdı = f.Name,
+                    BaşlangıçTarihi = f.RequestedStartDate.ToShortDateString(),
+                    BitişTarihi = f.EndDate.ToShortDateString(),
+                    ToplamMaliyet = f.TotalCost.ToString("C"),
+                    HazırlıkSüresi = $"{f.PreparationDays} gün",
+                    GecikmeDurumu = f.IsDelayed ? "Gecikmiş" : "Zamanında"
+                }).ToList();
+
+                // Eğer fuar yoksa DataGridView temizlenir
+                if (!customerFairs.Any())
                 {
-                    dgvFairs.DataSource = null; // Eğer fuar yoksa DataGridView'i temizle
-                    MessageBox.Show("Henüz bu kullanıcıya ait fuar bulunmamaktadır.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dgvFairs.DataSource = null;
+                    MessageBox.Show("Henüz fuar bulunmamaktadır.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -221,8 +225,6 @@ namespace Project.WinFormUI.Forms
                 MessageBox.Show($"Fuarlar yüklenirken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-       
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {

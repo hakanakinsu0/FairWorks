@@ -37,19 +37,20 @@
             this.btnSubmitNewOffer = new System.Windows.Forms.Button();
             this.btnCancelNewOffer = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPriceOfferDetails
             // 
             this.lblPriceOfferDetails.BackColor = System.Drawing.Color.White;
-            this.lblPriceOfferDetails.Location = new System.Drawing.Point(183, 74);
+            this.lblPriceOfferDetails.Location = new System.Drawing.Point(22, 71);
             this.lblPriceOfferDetails.Name = "lblPriceOfferDetails";
             this.lblPriceOfferDetails.Size = new System.Drawing.Size(352, 67);
             this.lblPriceOfferDetails.TabIndex = 0;
             // 
             // btnAcceptOffer
             // 
-            this.btnAcceptOffer.Location = new System.Drawing.Point(459, 155);
+            this.btnAcceptOffer.Location = new System.Drawing.Point(298, 152);
             this.btnAcceptOffer.Name = "btnAcceptOffer";
             this.btnAcceptOffer.Size = new System.Drawing.Size(76, 23);
             this.btnAcceptOffer.TabIndex = 1;
@@ -59,7 +60,7 @@
             // 
             // btnDeclineOffer
             // 
-            this.btnDeclineOffer.Location = new System.Drawing.Point(378, 155);
+            this.btnDeclineOffer.Location = new System.Drawing.Point(217, 152);
             this.btnDeclineOffer.Name = "btnDeclineOffer";
             this.btnDeclineOffer.Size = new System.Drawing.Size(75, 23);
             this.btnDeclineOffer.TabIndex = 1;
@@ -69,7 +70,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(297, 155);
+            this.btnCancel.Location = new System.Drawing.Point(136, 152);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -79,7 +80,7 @@
             // 
             // txtCustomerOffer
             // 
-            this.txtCustomerOffer.Location = new System.Drawing.Point(297, 229);
+            this.txtCustomerOffer.Location = new System.Drawing.Point(136, 226);
             this.txtCustomerOffer.Name = "txtCustomerOffer";
             this.txtCustomerOffer.Size = new System.Drawing.Size(100, 20);
             this.txtCustomerOffer.TabIndex = 2;
@@ -87,14 +88,14 @@
             // lblNewOffer
             // 
             this.lblNewOffer.BackColor = System.Drawing.Color.White;
-            this.lblNewOffer.Location = new System.Drawing.Point(186, 269);
+            this.lblNewOffer.Location = new System.Drawing.Point(25, 266);
             this.lblNewOffer.Name = "lblNewOffer";
             this.lblNewOffer.Size = new System.Drawing.Size(349, 23);
             this.lblNewOffer.TabIndex = 3;
             // 
             // btnSubmitNewOffer
             // 
-            this.btnSubmitNewOffer.Location = new System.Drawing.Point(417, 315);
+            this.btnSubmitNewOffer.Location = new System.Drawing.Point(256, 312);
             this.btnSubmitNewOffer.Name = "btnSubmitNewOffer";
             this.btnSubmitNewOffer.Size = new System.Drawing.Size(117, 23);
             this.btnSubmitNewOffer.TabIndex = 4;
@@ -104,7 +105,7 @@
             // 
             // btnCancelNewOffer
             // 
-            this.btnCancelNewOffer.Location = new System.Drawing.Point(323, 315);
+            this.btnCancelNewOffer.Location = new System.Drawing.Point(162, 312);
             this.btnCancelNewOffer.Name = "btnCancelNewOffer";
             this.btnCancelNewOffer.Size = new System.Drawing.Size(88, 23);
             this.btnCancelNewOffer.TabIndex = 5;
@@ -115,17 +116,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(183, 232);
+            this.label1.Location = new System.Drawing.Point(22, 229);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(91, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Talep Edilen Fiyat";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label13.Location = new System.Drawing.Point(21, 24);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(148, 23);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "FUAR OLUŞTUR";
             // 
             // FairPriceOfferForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancelNewOffer);
             this.Controls.Add(this.btnSubmitNewOffer);
@@ -154,5 +166,6 @@
         private System.Windows.Forms.Button btnSubmitNewOffer;
         private System.Windows.Forms.Button btnCancelNewOffer;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label13;
     }
 }

@@ -50,21 +50,26 @@
             // 
             // nudNumberOfFloor
             // 
-            this.nudNumberOfFloor.Location = new System.Drawing.Point(79, 150);
+            this.nudNumberOfFloor.Location = new System.Drawing.Point(84, 131);
             this.nudNumberOfFloor.Name = "nudNumberOfFloor";
             this.nudNumberOfFloor.Size = new System.Drawing.Size(120, 20);
             this.nudNumberOfFloor.TabIndex = 0;
             // 
             // nudFloorSize
             // 
-            this.nudFloorSize.Location = new System.Drawing.Point(79, 176);
+            this.nudFloorSize.Location = new System.Drawing.Point(84, 157);
+            this.nudFloorSize.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.nudFloorSize.Name = "nudFloorSize";
             this.nudFloorSize.Size = new System.Drawing.Size(120, 20);
             this.nudFloorSize.TabIndex = 0;
             // 
             // nudRoomPerFloor
             // 
-            this.nudRoomPerFloor.Location = new System.Drawing.Point(79, 202);
+            this.nudRoomPerFloor.Location = new System.Drawing.Point(84, 183);
             this.nudRoomPerFloor.Name = "nudRoomPerFloor";
             this.nudRoomPerFloor.Size = new System.Drawing.Size(120, 20);
             this.nudRoomPerFloor.TabIndex = 0;
@@ -80,7 +85,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(119, 261);
+            this.btnCancel.Location = new System.Drawing.Point(12, 261);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -90,7 +95,7 @@
             // 
             // btnSearchBuildings
             // 
-            this.btnSearchBuildings.Location = new System.Drawing.Point(200, 261);
+            this.btnSearchBuildings.Location = new System.Drawing.Point(93, 261);
             this.btnSearchBuildings.Name = "btnSearchBuildings";
             this.btnSearchBuildings.Size = new System.Drawing.Size(75, 23);
             this.btnSearchBuildings.TabIndex = 3;
@@ -100,7 +105,7 @@
             // 
             // btnConfirmSelection
             // 
-            this.btnConfirmSelection.Location = new System.Drawing.Point(654, 294);
+            this.btnConfirmSelection.Location = new System.Drawing.Point(654, 287);
             this.btnConfirmSelection.Name = "btnConfirmSelection";
             this.btnConfirmSelection.Size = new System.Drawing.Size(88, 23);
             this.btnConfirmSelection.TabIndex = 3;
@@ -111,7 +116,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 152);
+            this.label1.Location = new System.Drawing.Point(12, 131);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 4;
@@ -120,7 +125,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 178);
+            this.label2.Location = new System.Drawing.Point(12, 159);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 4;
@@ -129,7 +134,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 204);
+            this.label3.Location = new System.Drawing.Point(12, 185);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 4;
@@ -138,16 +143,16 @@
             // lblBuildingDetails
             // 
             this.lblBuildingDetails.BackColor = System.Drawing.Color.White;
-            this.lblBuildingDetails.Location = new System.Drawing.Point(316, 294);
+            this.lblBuildingDetails.Location = new System.Drawing.Point(320, 290);
             this.lblBuildingDetails.Name = "lblBuildingDetails";
-            this.lblBuildingDetails.Size = new System.Drawing.Size(332, 112);
+            this.lblBuildingDetails.Size = new System.Drawing.Size(332, 87);
             this.lblBuildingDetails.TabIndex = 4;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label13.Location = new System.Drawing.Point(127, 25);
+            this.label13.Location = new System.Drawing.Point(12, 20);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(266, 23);
             this.label13.TabIndex = 15;
@@ -158,13 +163,13 @@
             this.lblFairDetails.BackColor = System.Drawing.Color.White;
             this.lblFairDetails.Location = new System.Drawing.Point(12, 72);
             this.lblFairDetails.Name = "lblFairDetails";
-            this.lblFairDetails.Size = new System.Drawing.Size(263, 64);
+            this.lblFairDetails.Size = new System.Drawing.Size(258, 44);
             this.lblFairDetails.TabIndex = 4;
             // 
             // cmbLocations
             // 
             this.cmbLocations.FormattingEnabled = true;
-            this.cmbLocations.Location = new System.Drawing.Point(79, 228);
+            this.cmbLocations.Location = new System.Drawing.Point(84, 209);
             this.cmbLocations.Name = "cmbLocations";
             this.cmbLocations.Size = new System.Drawing.Size(121, 21);
             this.cmbLocations.TabIndex = 16;
@@ -173,7 +178,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 231);
+            this.label4.Location = new System.Drawing.Point(12, 212);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 4;
@@ -183,7 +188,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 426);
+            this.ClientSize = new System.Drawing.Size(767, 403);
             this.Controls.Add(this.cmbLocations);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.lblFairDetails);
@@ -200,7 +205,7 @@
             this.Controls.Add(this.nudFloorSize);
             this.Controls.Add(this.nudNumberOfFloor);
             this.Name = "CustomBuildingRequestForm";
-            this.Text = "CustomBuildingRequestForm";
+            this.Text = "ÖZEL BİNA TALEBİ OLUŞTUR";
             this.Load += new System.EventHandler(this.CustomBuildingRequestForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudNumberOfFloor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFloorSize)).EndInit();
