@@ -42,9 +42,8 @@
             this.btnUpdateEmployee = new System.Windows.Forms.Button();
             this.btnUpdateBuilding = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnExitReport = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.cmbReportFilters = new System.Windows.Forms.ComboBox();
             this.lstReportResults = new System.Windows.Forms.ListBox();
             this.flpReportButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.btnEmployeeReport = new System.Windows.Forms.Button();
@@ -52,7 +51,8 @@
             this.btnBuildingReport = new System.Windows.Forms.Button();
             this.btnLocationReport = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.btnExitReport = new System.Windows.Forms.Button();
+            this.btnMevcutFuarlar = new System.Windows.Forms.Button();
+            this.btnFuarOdemeleri = new System.Windows.Forms.Button();
             this.tbcEmployeeDashboard.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -82,7 +82,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(696, 349);
+            this.tabPage1.Size = new System.Drawing.Size(896, 542);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Ekle";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(696, 349);
+            this.tabPage2.Size = new System.Drawing.Size(896, 542);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Güncelle / Sil";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -205,9 +205,7 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.btnExitReport);
-            this.tabPage4.Controls.Add(this.label1);
             this.tabPage4.Controls.Add(this.label13);
-            this.tabPage4.Controls.Add(this.cmbReportFilters);
             this.tabPage4.Controls.Add(this.lstReportResults);
             this.tabPage4.Controls.Add(this.flpReportButtons);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -217,14 +215,15 @@
             this.tabPage4.Text = "Raporlar";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // btnExitReport
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 148);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
-            this.label1.TabIndex = 44;
-            this.label1.Text = "Filtreleme :";
+            this.btnExitReport.Location = new System.Drawing.Point(18, 164);
+            this.btnExitReport.Name = "btnExitReport";
+            this.btnExitReport.Size = new System.Drawing.Size(75, 23);
+            this.btnExitReport.TabIndex = 45;
+            this.btnExitReport.Text = "İptal";
+            this.btnExitReport.UseVisualStyleBackColor = true;
+            this.btnExitReport.Click += new System.EventHandler(this.btnExitReport_Click);
             // 
             // label13
             // 
@@ -235,14 +234,6 @@
             this.label13.Size = new System.Drawing.Size(106, 23);
             this.label13.TabIndex = 43;
             this.label13.Text = "RAPORLAR";
-            // 
-            // cmbReportFilters
-            // 
-            this.cmbReportFilters.FormattingEnabled = true;
-            this.cmbReportFilters.Location = new System.Drawing.Point(84, 141);
-            this.cmbReportFilters.Name = "cmbReportFilters";
-            this.cmbReportFilters.Size = new System.Drawing.Size(161, 21);
-            this.cmbReportFilters.TabIndex = 4;
             // 
             // lstReportResults
             // 
@@ -259,9 +250,11 @@
             this.flpReportButtons.Controls.Add(this.btnServiceReport);
             this.flpReportButtons.Controls.Add(this.btnBuildingReport);
             this.flpReportButtons.Controls.Add(this.btnLocationReport);
+            this.flpReportButtons.Controls.Add(this.btnMevcutFuarlar);
+            this.flpReportButtons.Controls.Add(this.btnFuarOdemeleri);
             this.flpReportButtons.Location = new System.Drawing.Point(18, 73);
             this.flpReportButtons.Name = "flpReportButtons";
-            this.flpReportButtons.Size = new System.Drawing.Size(227, 62);
+            this.flpReportButtons.Size = new System.Drawing.Size(634, 62);
             this.flpReportButtons.TabIndex = 2;
             // 
             // btnEmployeeReport
@@ -286,7 +279,7 @@
             // 
             // btnBuildingReport
             // 
-            this.btnBuildingReport.Location = new System.Drawing.Point(3, 32);
+            this.btnBuildingReport.Location = new System.Drawing.Point(225, 3);
             this.btnBuildingReport.Name = "btnBuildingReport";
             this.btnBuildingReport.Size = new System.Drawing.Size(105, 23);
             this.btnBuildingReport.TabIndex = 1;
@@ -296,7 +289,7 @@
             // 
             // btnLocationReport
             // 
-            this.btnLocationReport.Location = new System.Drawing.Point(114, 32);
+            this.btnLocationReport.Location = new System.Drawing.Point(336, 3);
             this.btnLocationReport.Name = "btnLocationReport";
             this.btnLocationReport.Size = new System.Drawing.Size(105, 23);
             this.btnLocationReport.TabIndex = 1;
@@ -308,20 +301,30 @@
             // 
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(696, 349);
+            this.tabPage5.Size = new System.Drawing.Size(896, 542);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Gecikme Yönetimi";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // btnExitReport
+            // btnMevcutFuarlar
             // 
-            this.btnExitReport.Location = new System.Drawing.Point(18, 180);
-            this.btnExitReport.Name = "btnExitReport";
-            this.btnExitReport.Size = new System.Drawing.Size(75, 23);
-            this.btnExitReport.TabIndex = 45;
-            this.btnExitReport.Text = "İptal";
-            this.btnExitReport.UseVisualStyleBackColor = true;
-            this.btnExitReport.Click += new System.EventHandler(this.btnExitReport_Click);
+            this.btnMevcutFuarlar.Location = new System.Drawing.Point(447, 3);
+            this.btnMevcutFuarlar.Name = "btnMevcutFuarlar";
+            this.btnMevcutFuarlar.Size = new System.Drawing.Size(89, 23);
+            this.btnMevcutFuarlar.TabIndex = 2;
+            this.btnMevcutFuarlar.Text = "Mevcut Fuarlar";
+            this.btnMevcutFuarlar.UseVisualStyleBackColor = true;
+            this.btnMevcutFuarlar.Click += new System.EventHandler(this.btnMevcutFuarlar_Click);
+            // 
+            // btnFuarOdemeleri
+            // 
+            this.btnFuarOdemeleri.Location = new System.Drawing.Point(542, 3);
+            this.btnFuarOdemeleri.Name = "btnFuarOdemeleri";
+            this.btnFuarOdemeleri.Size = new System.Drawing.Size(87, 23);
+            this.btnFuarOdemeleri.TabIndex = 3;
+            this.btnFuarOdemeleri.Text = "Fuar Ödemeleri";
+            this.btnFuarOdemeleri.UseVisualStyleBackColor = true;
+            this.btnFuarOdemeleri.Click += new System.EventHandler(this.btnFuarOdemeleri_Click);
             // 
             // EmployeeDashboard
             // 
@@ -358,15 +361,15 @@
         private System.Windows.Forms.Button btnUpdateLocation;
         private System.Windows.Forms.Button btnUpdateEmployee;
         private System.Windows.Forms.Button btnUpdateBuilding;
-        private System.Windows.Forms.ComboBox cmbReportFilters;
         private System.Windows.Forms.ListBox lstReportResults;
         private System.Windows.Forms.FlowLayoutPanel flpReportButtons;
         private System.Windows.Forms.Button btnEmployeeReport;
         private System.Windows.Forms.Button btnServiceReport;
         private System.Windows.Forms.Button btnBuildingReport;
         private System.Windows.Forms.Button btnLocationReport;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnExitReport;
+        private System.Windows.Forms.Button btnMevcutFuarlar;
+        private System.Windows.Forms.Button btnFuarOdemeleri;
     }
 }

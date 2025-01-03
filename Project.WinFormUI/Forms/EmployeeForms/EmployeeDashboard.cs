@@ -195,9 +195,68 @@ namespace Project.WinFormUI.Forms
             }
         }
 
+
+
+        private void btnMevcutFuarlar_Click(object sender, EventArgs e)
+        {
+            lstReportResults.Items.Clear();
+
+            // Fuar verilerinin alınması için repository kullanıyoruz
+            FairRepository fairRepository = new FairRepository();
+
+            // Mevcut durumdaki fuarları alıyoruz
+            var fairs = fairRepository.Where(f => f.Status != Project.ENTITIES.Enums.DataStatus.Deleted).ToList();
+
+            if (fairs.Any())
+            {
+                foreach (var fair in fairs)
+                {
+                    lstReportResults.Items.Add(
+                        $"Fuar ID: {fair.Id} - Adı: {fair.Name} - Başlangıç Tarihi: {fair.RequestedStartDate:dd/MM/yyyy} - Bitiş Tarihi: {fair.EndDate:dd/MM/yyyy} - Maliyet: {fair.TotalCost:C2}");
+                }
+            }
+            else
+            {
+                lstReportResults.Items.Add("Mevcut durumda hiçbir fuar bulunamadı.");
+            }
+        }
+
         private void btnExitReport_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnFuarOdemeleri_Click(object sender, EventArgs e)
+        {
+            lstReportResults.Items.Clear();
+
+            // Gerekli repository'ler
+            FairRepository fairRepository = new FairRepository();
+            PaymentRepository paymentRepository = new PaymentRepository();
+
+            // Tüm fuarları al
+            var fairs = fairRepository.GetAll();
+
+            if (fairs.Any())
+            {
+                foreach (var fair in fairs)
+                {
+                    // Ödeme bilgilerini Payment tablosundan al
+                    var payment = paymentRepository.FirstOrDefault(p => p.FairId == fair.Id);
+
+                    // Ödeme durumu ve ödeme şekli kontrolü
+                    string paymentStatus = payment?.PaymentStatus.ToString() ?? "Ödenmemiş";
+                    string paymentMethod = payment?.PaymentMethod.ToString() ?? "Belirtilmemiş";
+
+                    // Listeye ekleme
+                    lstReportResults.Items.Add(
+                        $"Fuar Adı: {fair.Name} - Ödeme Durumu: {paymentStatus} - Ödeme Şekli: {paymentMethod}");
+                }
+            }
+            else
+            {
+                lstReportResults.Items.Add("Hiçbir ödeme kaydı bulunamadı.");
+            }
         }
     }
 }
