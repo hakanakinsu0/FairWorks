@@ -21,6 +21,8 @@ namespace Project.WinFormUI.Forms
         LocationRepository _locationRepository; // Lokasyon işlemleri için repository
 
         public Customer LoggedInCustomer { get; set; }
+        public string FairName { get; set; } // FairName özelliği eklendi
+
 
         public CustomerDashboard()
         {
@@ -89,8 +91,12 @@ namespace Project.WinFormUI.Forms
                     SelectedBuilding = selectedBuilding,
                     BuildingCost = buildingCost,
                     StartDate = dtpStartDate.Value,
-                    EndDate = dtpEndDate.Value
+                    EndDate = dtpEndDate.Value,
+                    FairName = txtFairName.Text // Fuar adı eklendi
+
                 };
+
+
 
                 servicesForm.ShowDialog();
             }

@@ -21,6 +21,8 @@ namespace Project.WinFormUI.Forms
         public List<string> SelectedServices { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string FairName { get; set; } // FairName özelliği eklendi
+
 
 
         public FairSummaryForm()
@@ -88,7 +90,8 @@ namespace Project.WinFormUI.Forms
                 TotalCost = TotalCost,
                 StartDate = StartDate,
                 EndDate = EndDate,
-                SelectedServices = SelectedServices
+                SelectedServices = SelectedServices,
+                FairName = FairName // Fuar adını geçiriyoruz
             };
 
             fairPriceOfferForm.ShowDialog();

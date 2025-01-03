@@ -48,8 +48,9 @@ namespace Project.WinFormUI.Forms.CustomerForms
             // Yeni teklif için kontroller başlangıçta gizlenir
             txtCustomerOffer.Visible = false;
             lblNewOffer.Visible = false;
-            btnSubmitNewOffer.Visible = false;
             btnCancelNewOffer.Visible = false;
+            btnGonder.Visible = false;
+            label1.Visible = false;
         }
 
         private void btnAcceptOffer_Click(object sender, EventArgs e)
@@ -115,8 +116,9 @@ namespace Project.WinFormUI.Forms.CustomerForms
             // Müşterinin talep ettiği fiyatı almak için kontrolleri göster
             txtCustomerOffer.Visible = true;
             lblNewOffer.Visible = true;
-            btnSubmitNewOffer.Visible = true;
             btnCancelNewOffer.Visible = true;
+            btnGonder.Visible = true;
+            label1.Visible = true;
 
             MessageBox.Show("Lütfen talep ettiğiniz fiyatı giriniz.", "Teklif Alınıyor", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -127,7 +129,14 @@ namespace Project.WinFormUI.Forms.CustomerForms
             Close();
         }
 
-        private void btnSubmitNewOffer_Click(object sender, EventArgs e)
+
+        private void btnCancelNewOffer_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Yeni teklif süreci iptal edildi. Fuar oluşturulmadı.", "İptal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
+        }
+
+        private void btnGonder_Click(object sender, EventArgs e)
         {
             if (!decimal.TryParse(txtCustomerOffer.Text, out decimal customerOffer) || customerOffer <= 0)
             {
@@ -193,12 +202,6 @@ namespace Project.WinFormUI.Forms.CustomerForms
                 MessageBox.Show("Fuar iptal edildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
-        }
-
-        private void btnCancelNewOffer_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Yeni teklif süreci iptal edildi. Fuar oluşturulmadı.", "İptal", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
         }
     }
 }

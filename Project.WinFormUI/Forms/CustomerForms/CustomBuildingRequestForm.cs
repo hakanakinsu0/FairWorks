@@ -125,7 +125,8 @@ namespace Project.WinFormUI.Forms
                 SelectedBuilding = selectedBuilding,
                 BuildingCost = buildingCost,
                 StartDate = _startDate,
-                EndDate = _endDate
+                EndDate = _endDate,
+                FairName = _fairName // Fuar adını geçiriyoruz
             };
 
             fairServicesForm.ShowDialog();

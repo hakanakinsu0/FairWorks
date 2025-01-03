@@ -17,7 +17,7 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFBaseRep
     //T tipi, BaseEntity sınıfından türeyen bir sınıf olmalıdır. (where T : BaseEntity) Bu sınıf, IRepository<T> arayüzünü uygular ve standart CRUD işlemlerini sağlar.
     public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity // T tipi, BaseEntity sınıfından türeyen bir sınıf olmalıdır.
     {
-        MyContext _db; // Entity Framework veritabanı sınıfından oluşturulan field.
+        protected MyContext _db; // Entity Framework veritabanı sınıfından oluşturulan field.
 
         public BaseRepository()
         {

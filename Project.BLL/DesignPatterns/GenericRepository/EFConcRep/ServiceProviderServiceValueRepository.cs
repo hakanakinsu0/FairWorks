@@ -15,22 +15,29 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return Any(psv => psv.ServiceProviderId == providerId && psv.ServiceValueId == valueId);
         }
 
-        public List<ServiceProviderServiceValue> GetProviderServiceValues()
+        public List<(string ProviderName, decimal Cost, int ServiceValueId)> GetProvidersForService(int serviceValueId)
         {
-            return GetAll().ToList();
+            return Where(psv => psv.ServiceValueId == serviceValueId)
+                .Select(psv => new
+                {
+                    ProviderName = psv.ServiceProvider.ProviderName,
+                    Cost = psv.ServiceValue.Cost,
+                    ServiceValueId = psv.ServiceValueId
+                })
+                .Select(x => (x.ProviderName, x.Cost, x.ServiceValueId))
+                .ToList();
         }
 
         public decimal CalculateTotalCostForServices(List<int> selectedServiceValueIds, int days)
         {
-            // Seçilen hizmet değerlerine göre maliyet hesaplama
-            var selectedServices = GetAll()
-                .Where(psv => selectedServiceValueIds.Contains(psv.ServiceValueId))
+            var selectedServiceValues = Where(psv => selectedServiceValueIds.Contains(psv.ServiceValueId))
                 .Select(psv => psv.ServiceValue.Cost)
                 .ToList();
 
-            // Seçilen gün sayısı ile çarpıp toplamı döndür
-            return selectedServices.Sum() * days;
+            return selectedServiceValues.Sum() * days;
         }
+
+
 
 
 

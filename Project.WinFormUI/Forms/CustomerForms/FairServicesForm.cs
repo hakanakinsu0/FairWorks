@@ -24,6 +24,10 @@ namespace Project.WinFormUI.Forms
 
         public Customer LoggedInCustomer { get; set; }
 
+        public string FairName { get; set; } // FairName özelliği eklendi
+
+
+
 
         public FairServicesForm()
         {
@@ -31,7 +35,6 @@ namespace Project.WinFormUI.Forms
             // Repository'leri başlat
             _serviceValueRepository = new ServiceValueRepository();
             _providerServiceValueRepository = new ServiceProviderServiceValueRepository();
-
 
         }
 
@@ -77,7 +80,12 @@ namespace Project.WinFormUI.Forms
                 lblBuildingDetails.Text = "Bina bilgisi bulunamadı.";
             }
 
+
         }
+
+
+
+
         private void LoadServiceOffers(string serviceName, ListBox targetListBox)
         {
             var serviceValue = _serviceValueRepository.FirstOrDefault(sv => sv.Name == serviceName);
@@ -114,6 +122,8 @@ namespace Project.WinFormUI.Forms
                 targetListBox.Items.Add(item);
             }
         }
+
+
         // Catering Hizmetleri
         private void LoadSabahKahvaltisiOffers() => LoadServiceOffers("Sabah Kahvaltısı", lstSabahKahvaltisiOffers);
         private void LoadOgleYemegiOffers() => LoadServiceOffers("Öğle Yemeği", lstOgleYemegiOffers);
@@ -177,6 +187,8 @@ namespace Project.WinFormUI.Forms
 
             lblSecilenler.Text = secimler.ToString();
         }
+
+
 
         private void btnCancel_Click_1(object sender, EventArgs e)
         {
@@ -244,10 +256,12 @@ namespace Project.WinFormUI.Forms
                 TotalCost = finalCost,
                 SelectedServices = selectedServices,
                 StartDate = StartDate,
-                EndDate = EndDate
+                EndDate = EndDate,
+                FairName = FairName // Fuar adı aktarılıyor
             };
 
             summaryForm.ShowDialog();
         }
+
     }
 }

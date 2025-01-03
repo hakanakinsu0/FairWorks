@@ -64,5 +64,18 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                               b.FloorSize >= minFloorSize)
                 .ToList();
         }
+
+        /// <summary>
+        /// Binanın hazırlık süresini hesaplar.
+        /// </summary>
+        /// <param name="building">Bina bilgisi</param>
+        /// <returns>Hazırlık süresi (gün olarak)</returns>
+        public int CalculatePreparationDaysForBuilding(Building building)
+        {
+            int basePreparationDays = 5; // Minimum hazırlık süresi
+            basePreparationDays += building.NumberOfFloor * 3; // Her kat için 1 gün
+            basePreparationDays += building.RoomPerFloor * 3;  // Her oda için 1 gün
+            return basePreparationDays;
+        }
     }
 }
