@@ -33,6 +33,7 @@
             this.btnPay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTotalCost
@@ -81,11 +82,22 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Ödeme Şekli :";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label13.Location = new System.Drawing.Point(23, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(144, 23);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "FUAR ÖDEMESİ";
+            // 
             // PaymentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 234);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnPay);
@@ -106,5 +118,6 @@
         private System.Windows.Forms.Button btnPay;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label13;
     }
 }

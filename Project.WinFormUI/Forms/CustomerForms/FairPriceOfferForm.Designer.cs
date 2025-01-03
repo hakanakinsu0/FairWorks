@@ -116,7 +116,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label13.Location = new System.Drawing.Point(21, 24);
+            this.label13.Location = new System.Drawing.Point(131, 26);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(148, 23);
             this.label13.TabIndex = 15;

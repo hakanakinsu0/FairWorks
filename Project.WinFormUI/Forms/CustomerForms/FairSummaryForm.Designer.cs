@@ -31,6 +31,7 @@
             this.lblSummaryDetails = new System.Windows.Forms.Label();
             this.btnConfirmSelections = new System.Windows.Forms.Button();
             this.btnGoBack = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblSummaryDetails
@@ -61,11 +62,22 @@
             this.btnGoBack.UseVisualStyleBackColor = true;
             this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label13.Location = new System.Drawing.Point(21, 20);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(117, 23);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "FUAR ÖZETİ";
+            // 
             // FairSummaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(547, 450);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.btnConfirmSelections);
             this.Controls.Add(this.lblSummaryDetails);
@@ -73,6 +85,7 @@
             this.Text = "FairSummaryForm";
             this.Load += new System.EventHandler(this.FairSummaryForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -81,5 +94,6 @@
         private System.Windows.Forms.Label lblSummaryDetails;
         private System.Windows.Forms.Button btnConfirmSelections;
         private System.Windows.Forms.Button btnGoBack;
+        private System.Windows.Forms.Label label13;
     }
 }
