@@ -26,6 +26,10 @@ namespace Project.WinFormUI.Forms
 
         public string FairName { get; set; } // FairName özelliği eklendi
 
+        public List<ServiceValue> SelectedServices { get; set; } = new List<ServiceValue>();
+
+        public DateTime CalculatedStartDate { get; set; }
+
 
 
 
@@ -37,6 +41,49 @@ namespace Project.WinFormUI.Forms
             _providerServiceValueRepository = new ServiceProviderServiceValueRepository();
 
         }
+
+        private int CalculatePreparationDays()
+        {
+            int preparationDays = 0;
+
+            // Bina hazırlık süresi
+            if (SelectedBuilding != null)
+            {
+                preparationDays += SelectedBuilding.NumberOfFloor * 3; // Kat başına 3 gün
+                preparationDays += SelectedBuilding.RoomPerFloor * 2;  // Oda başına 2 gün
+            }
+
+            // Ek hizmetlerin hazırlık ve tampon sürelerini ekle
+            foreach (var serviceValue in SelectedServices)
+            {
+                preparationDays += serviceValue.PreparationTime; // Hizmet için hazırlık süresi
+                preparationDays += serviceValue.BufferTime;      // Hizmet için tampon süre
+            }
+
+            return preparationDays;
+        }
+        private void CheckPreparationDate()
+        {
+            int preparationDays = CalculatePreparationDays();
+            DateTime today = DateTime.Now.Date; // Bugünün tarihi
+            DateTime earliestStartDate = today.AddDays(preparationDays); // Hazırlık süresine göre önerilen başlangıç tarihi
+
+            // Kullanıcı başlangıç tarihi kontrolü
+            if (StartDate < earliestStartDate)
+            {
+                MessageBox.Show($"Seçilen tarih uygun değil. En erken başlanabilecek tarih: {earliestStartDate.ToShortDateString()}",
+                                "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Kullanıcı başlangıç tarihini önerilen başlangıç tarihine ayarlıyoruz
+                StartDate = earliestStartDate;
+            }
+
+            // CalculatedStartDate ve EndDate hesaplama
+            CalculatedStartDate = StartDate;
+            EndDate = CalculatedStartDate.AddDays((EndDate - StartDate).Days); // Kullanıcının belirttiği süre kadar ileri
+        }
+
+
 
         private void FairServicesForm_Load(object sender, EventArgs e)
         {
@@ -217,16 +264,19 @@ namespace Project.WinFormUI.Forms
 
         private void btnConfirmAll_Click(object sender, EventArgs e)
         {
+            CheckPreparationDate();
+
             if (StartDate == default || EndDate == default)
             {
                 MessageBox.Show("Tarih bilgisi eksik!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            int days = (EndDate - StartDate).Days + 1;
+            // Kullanıcı gün sayısını belirttiği varsayılarak bitiş tarihi hesaplanır
+            int fairDuration = (EndDate - StartDate).Days; // Kullanıcının belirttiği süre
+            EndDate = CalculatedStartDate.AddDays(fairDuration); // Bitiş tarihi hesaplanır
 
-            var selectedServices = new List<string>();
-            var selectedServiceValueIds = new List<int>();
+            SelectedServices.Clear(); // Listeyi sıfırla
 
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
@@ -240,16 +290,14 @@ namespace Project.WinFormUI.Forms
                             {
                                 foreach (var selectedItem in listBox.SelectedItems)
                                 {
-                                    // selectedItem bir ListBoxItem'dır ve Tag özelliğinde ServiceValueId saklıdır.
                                     if (selectedItem is ListViewItem listViewItem && listViewItem.Tag is int serviceValueId)
                                     {
-                                        selectedServiceValueIds.Add(serviceValueId);
-                                        selectedServices.Add(listViewItem.Text); // Seçilen hizmetleri listeye ekle
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Bir veya daha fazla hizmet doğru formatta değil.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        return;
+                                        var serviceValue = _serviceValueRepository.GetById(serviceValueId);
+
+                                        if (serviceValue != null)
+                                        {
+                                            SelectedServices.Add(serviceValue); // Seçilen hizmeti listeye ekle
+                                        }
                                     }
                                 }
                             }
@@ -258,14 +306,15 @@ namespace Project.WinFormUI.Forms
                 }
             }
 
-            if (!selectedServiceValueIds.Any())
+            if (!SelectedServices.Any())
             {
                 MessageBox.Show("Hiçbir hizmet seçilmedi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Toplam maliyeti hesapla
-            var totalServiceCost = _providerServiceValueRepository.CalculateTotalCostForServices(selectedServiceValueIds, days);
+            int days = (EndDate - CalculatedStartDate).Days; // Yeni hesaplanan gün sayısı
+            var totalServiceCost = SelectedServices.Sum(s => s.Cost * days);
             var finalCost = BuildingCost + totalServiceCost;
 
             // Yeni formu aç
@@ -274,10 +323,10 @@ namespace Project.WinFormUI.Forms
                 LoggedInCustomer = LoggedInCustomer,
                 SelectedBuilding = SelectedBuilding,
                 TotalCost = finalCost,
-                SelectedServices = selectedServices,
-                StartDate = StartDate,
+                SelectedServices = SelectedServices.Select(s => s.Name).ToList(), // Sadece isimleri geç
+                StartDate = CalculatedStartDate,
                 EndDate = EndDate,
-                FairName = FairName // Fuar adı aktarılıyor
+                FairName = FairName
             };
 
             summaryForm.ShowDialog();

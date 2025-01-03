@@ -150,6 +150,14 @@ namespace Project.WinFormUI.Forms.CustomerForms
             // Yeni teklif hesaplama
             decimal finalOffer = fairRepo.CalculateFinalOffer(TotalCost, customerOffer);
 
+            // Kullanıcı tarafından girilen teklif, sistemin önerdiği fiyatın üzerinde olmamalı
+            if (customerOffer > finalOffer)
+            {
+                MessageBox.Show("Girdiğiniz fiyat, önerilen fiyatın üzerinde olamaz. Lütfen daha düşük bir fiyat giriniz.",
+                                "Geçersiz Teklif", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             lblNewOffer.Text = $"Yeni Teklif Edilen Fiyat: {finalOffer:C2}";
 
             // Müşteri onaylarsa ödeme ekranına yönlendirme

@@ -70,6 +70,24 @@ namespace Project.WinFormUI.Forms.CustomerForms
                 if (paymentRepo.ProcessPayment(payment, out string errorMessage))
                 {
                     MessageBox.Show("Ödeme başarıyla tamamlandı.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Belirtilen formları kapat
+                    CloseSpecificForms<FairServicesForm>();
+                    CloseSpecificForms<FairSummaryForm>();
+                    CloseSpecificForms<FairPriceOfferForm>();
+                    CloseSpecificForms<PaymentForm>();
+
+                    // Eğer CustomerDashboard zaten açık değilse, yeni bir tane aç
+                    if (!Application.OpenForms.OfType<CustomerDashboard>().Any())
+                    {
+                        CustomerDashboard customerDashboard = new CustomerDashboard
+                        {
+                            LoggedInCustomer = LoggedInCustomer
+                        };
+                        customerDashboard.Show();
+                    }
+
+                    // Bu formu da kapat
                     this.Close();
                 }
                 else
@@ -81,6 +99,15 @@ namespace Project.WinFormUI.Forms.CustomerForms
             {
                 MessageBox.Show($"Ödeme sırasında bir hata oluştu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}",
                                 "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CloseSpecificForms<T>() where T : Form
+        {
+            var form = Application.OpenForms.OfType<T>().FirstOrDefault();
+            if (form != null)
+            {
+                form.Close();
             }
         }
 

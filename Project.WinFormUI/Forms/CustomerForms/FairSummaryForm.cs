@@ -22,6 +22,7 @@ namespace Project.WinFormUI.Forms
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string FairName { get; set; } // FairName özelliği eklendi
+        public DateTime CalculatedStartDate { get; set; }
 
 
 
@@ -43,7 +44,6 @@ namespace Project.WinFormUI.Forms
                 summaryDetails.AppendLine($"- Adres: {SelectedBuilding.Address}");
                 summaryDetails.AppendLine($"- Kat Sayısı: {SelectedBuilding.NumberOfFloor}");
                 summaryDetails.AppendLine($"- Oda Başına Kat: {SelectedBuilding.RoomPerFloor}");
-                //summaryDetails.AppendLine($"- Bina Maliyeti: {SelectedBuilding.FloorSize * 1000:C2}");
                 summaryDetails.AppendLine();
             }
 
@@ -51,18 +51,18 @@ namespace Project.WinFormUI.Forms
             if (SelectedServices != null && SelectedServices.Count > 0)
             {
                 summaryDetails.AppendLine("Seçilen Ek Hizmetler:");
+
                 foreach (var service in SelectedServices)
                 {
-                    // Hizmet isimlerini göster, maliyet bilgisi ekleme
-                    summaryDetails.AppendLine($"- {service.Split('-')[0].Trim()}");
+                    summaryDetails.AppendLine($"- {service}");
                 }
+
                 summaryDetails.AppendLine();
             }
             else
             {
                 summaryDetails.AppendLine("Hiçbir Ek Hizmet Seçilmedi.");
             }
-            
 
             // Tarih bilgileri
             summaryDetails.AppendLine("Tarih Bilgileri:");
@@ -70,10 +70,7 @@ namespace Project.WinFormUI.Forms
             summaryDetails.AppendLine($"- Bitiş Tarihi: {EndDate.ToShortDateString()}");
             summaryDetails.AppendLine();
 
-            // Toplam maliyet
-            //summaryDetails.AppendLine($"Toplam Maliyet: {TotalCost:C2}");
-
-            // Bilgileri label'a ata
+            // Bilgileri TextBox'a ata
             txtSummaryDetails.Text = summaryDetails.ToString();
 
         }
