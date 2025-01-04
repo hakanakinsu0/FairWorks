@@ -14,29 +14,37 @@ namespace Project.WinFormUI.Forms
 {
     public partial class CustomBuildingRequestForm : Form
     {
+        // Özel alanlar: Fuar adı, başlangıç ve bitiş tarihi bilgilerini saklar.
         private readonly string _fairName;
         private readonly DateTime _startDate;
         private readonly DateTime _endDate;
 
+        // Repository nesneleri: Konum ve bina bilgileri ile ilgili işlemler için kullanılır.
         private readonly LocationRepository _locationRepository;
         private readonly BuildingRepository _buildingRepository;
 
+        // Giriş yapan müşteri bilgisi (public property).
         public Customer LoggedInCustomer { get; set; }
 
 
-        // Constructor: Formun başlatılması ve gerekli değerlerin alınması
+        // Constructor: Formun başlatılması ve gerekli değerlerin alınması.
         public CustomBuildingRequestForm(string fairName, DateTime startDate, DateTime endDate, Customer loggedInCustomer)
         {
-            InitializeComponent();
+            InitializeComponent(); // Formun bileşenlerini başlatır.
 
+            // Parametrelerden alınan değerler özel alanlara atanır.
             _fairName = fairName;
             _startDate = startDate;
             _endDate = endDate;
 
+            // Repository nesneleri oluşturulur.
             _locationRepository = new LocationRepository();
             _buildingRepository = new BuildingRepository();
+
+            // Giriş yapan müşteri bilgisi atanır.
             LoggedInCustomer = loggedInCustomer;
         }
+
 
         // Form yüklendiğinde çalışacak olay
         private void CustomBuildingRequestForm_Load(object sender, EventArgs e)
@@ -49,15 +57,19 @@ namespace Project.WinFormUI.Forms
         // Binaları aramak için butona tıklama olayı
         private void btnSearchBuildings_Click(object sender, EventArgs e)
         {
+            // Kullanıcı girişi doğrulaması yapılır.
             if (!ValidateInputs()) return;
 
+            // Kullanıcının seçtiği şehir ve bina kriterleri alınır.
             string selectedCity = cmbLocations.SelectedItem.ToString();
             int requestedFloors = (int)nudNumberOfFloor.Value;
             int requestedRooms = (int)nudRoomPerFloor.Value;
             int requestedSize = (int)nudFloorSize.Value;
 
+            // Kriterlere uygun binalar repository üzerinden getirilir.
             var suitableBuildings = _buildingRepository.GetBuildingsByCriteria(selectedCity, requestedFloors, requestedRooms, requestedSize);
 
+            // Eğer uygun binalar varsa listeye eklenir, aksi halde bilgi mesajı gösterilir.
             if (suitableBuildings.Any())
             {
                 lstAvailableBuildings.DataSource = suitableBuildings;
@@ -72,14 +84,20 @@ namespace Project.WinFormUI.Forms
 
         private bool ValidateInputs()
         {
+            // Şehir seçimi doğrulanır.
             if (!IsCitySelected()) return false;
+
+            // Kat boyutlarının geçerliliği kontrol edilir.
             if (!IsFloorSizeValid()) return false;
+
+            // Kat ve oda sayılarının doğruluğu kontrol edilir.
             if (!AreFloorAndRoomCountsValid()) return false;
 
-            return true;
+            return true; // Tüm doğrulamalardan geçtiyse true döner.
         }
 
-        private bool IsCitySelected()
+        private bool IsCitySelected()// Şehir seçiminin doğruluğunu kontrol eder.
+
         {
             if (cmbLocations.SelectedIndex == -1)
             {
@@ -89,7 +107,8 @@ namespace Project.WinFormUI.Forms
             return true;
         }
 
-        private bool IsFloorSizeValid()
+        private bool IsFloorSizeValid()// Kat metrekare boyutunun doğruluğunu kontrol eder.
+
         {
             if (nudFloorSize.Value < 50)
             {
@@ -99,7 +118,8 @@ namespace Project.WinFormUI.Forms
             return true;
         }
 
-        private bool AreFloorAndRoomCountsValid()
+        private bool AreFloorAndRoomCountsValid()// Kat ve oda sayılarının geçerliliğini kontrol eder.
+
         {
             if (nudNumberOfFloor.Value <= 0 || nudRoomPerFloor.Value <= 0)
             {
@@ -112,6 +132,8 @@ namespace Project.WinFormUI.Forms
         // Seçilen binanın detaylarını gösteren olay
         private void lstAvailableBuildings_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            // Eğer bir bina seçildiyse detaylar gösterilir, aksi takdirde bilgi mesajı gösterilir.
             if (lstAvailableBuildings.SelectedItem is Building selectedBuilding)
             {
                 lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\nKat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\nKat Başına Oda: {selectedBuilding.RoomPerFloor}";
@@ -125,27 +147,31 @@ namespace Project.WinFormUI.Forms
         // Bina seçimini onaylama butonu
         private void btnConfirmSelection_Click(object sender, EventArgs e)
         {
+            // Eğer bir bina seçilmemişse hata mesajı gösterilir.
             if (!(lstAvailableBuildings.SelectedItem is Building selectedBuilding))
             {
                 ShowMessage("Lütfen bir bina seçiniz.", "Hata");
                 return;
             }
 
+            // Seçilen binanın maliyeti hesaplanır.
             decimal buildingCost = _buildingRepository.CalculateFairCost(selectedBuilding, _startDate, _endDate);
 
+            // Seçim onaylandığında bilgi mesajı gösterilir.
             ShowMessage($"Seçilen bina onaylandı: {selectedBuilding.Name}", "Bilgi");
 
+            // Fuar hizmetleri formu oluşturulur ve gösterilir.
             FairServicesForm fairServicesForm = new FairServicesForm
             {
-                LoggedInCustomer = LoggedInCustomer,
-                SelectedBuilding = selectedBuilding,
-                BuildingCost = buildingCost,
-                StartDate = _startDate,
-                EndDate = _endDate,
-                FairName = _fairName // Fuar adını geçiriyoruz
+                LoggedInCustomer = LoggedInCustomer, // Giriş yapan müşteri bilgisi atanır.
+                SelectedBuilding = selectedBuilding, // Seçilen bina atanır.
+                BuildingCost = buildingCost, // Hesaplanan maliyet atanır.
+                StartDate = _startDate, // Başlangıç tarihi atanır.
+                EndDate = _endDate, // Bitiş tarihi atanır.
+                FairName = _fairName // Fuar adı atanır.
             };
 
-            fairServicesForm.ShowDialog();
+            fairServicesForm.ShowDialog(); // Form diyalog penceresi olarak açılır.
         }
 
         // Şehir seçildiğinde listeyi temizleyen olay
@@ -187,10 +213,12 @@ namespace Project.WinFormUI.Forms
             }
         }
 
+        // Mesaj kutusu gösterme metodu.
         private void ShowMessage(string message, string caption, MessageBoxIcon icon = MessageBoxIcon.Information)
         {
-            MessageBox.Show(message, caption, MessageBoxButtons.OK, icon);
+            MessageBox.Show(message, caption, MessageBoxButtons.OK, icon); // Belirtilen mesaj, başlık ve ikon ile gösterilir.
         }
+
 
     }
 }

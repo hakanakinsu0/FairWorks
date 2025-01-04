@@ -15,9 +15,9 @@ namespace Project.WinFormUI.Forms.CustomerForms
 {
     public partial class PaymentForm : Form
     {
-        public Customer LoggedInCustomer { get; set; }
-        public Fair SelectedFair { get; set; }
-        public decimal TotalCost { get; set; }
+        public Customer LoggedInCustomer { get; set; }  // Giriş yapan müşteri bilgisi
+        public Fair SelectedFair { get; set; }  // Seçilen fuar bilgisi
+        public decimal TotalCost { get; set; }  // Toplam maliyet bilgisi
 
         public PaymentForm()
         {
@@ -104,10 +104,10 @@ namespace Project.WinFormUI.Forms.CustomerForms
 
         private void CloseSpecificForms<T>() where T : Form
         {
-            var form = Application.OpenForms.OfType<T>().FirstOrDefault();
-            if (form != null)
+            var form = Application.OpenForms.OfType<T>().FirstOrDefault();  // Uygulamadaki açık formlar arasında, türü T olan ilk formu bulur
+            if (form != null)  // Eğer form mevcutsa
             {
-                form.Close();
+                form.Close();  // Formu kapatır
             }
         }
 

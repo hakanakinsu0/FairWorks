@@ -282,12 +282,14 @@ namespace Project.WinFormUI.Forms
 
         private void btnSaveDelay_Click(object sender, EventArgs e)
         {
+            // Kullanıcı bir satır seçmemişse uyarı mesajı gösterilir ve işlem sonlandırılır.
             if (dgvFairs.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Lütfen bir fuar seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Seçilen satır alınır ve Id değerinin geçerli bir tamsayı olup olmadığı kontrol edilir.
             var selectedRow = dgvFairs.SelectedRows[0];
             if (!int.TryParse(selectedRow.Cells["Id"].Value.ToString(), out int selectedFairId))
             {
@@ -295,27 +297,33 @@ namespace Project.WinFormUI.Forms
                 return;
             }
 
+            // Repository kullanılarak seçilen fuar bilgisi veritabanından alınır.
             var fairRepository = new FairRepository();
             var fair = fairRepository.GetById(selectedFairId);
 
+            // Seçilen fuar bulunamazsa kullanıcı bilgilendirilir ve işlem sonlandırılır.
             if (fair == null)
             {
                 MessageBox.Show("Seçilen fuar bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            // Kullanıcıdan gecikme süresi ve nedeni bilgisi alınır.
             int delayDuration = (int)nudDelayDuration.Value;
             string delayReason = txtDelayReason.Text.Trim();
 
+            // Gecikme süresi veya nedeni eksik girilmişse uyarı mesajı gösterilir ve işlem sonlandırılır.
             if (delayDuration <= 0 || string.IsNullOrWhiteSpace(delayReason))
             {
                 MessageBox.Show("Gecikme süresi ve nedeni girilmelidir.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Yeni başlangıç ve bitiş tarihleri hesaplanır.
             DateTime newStartDate = fair.CalculatedStartDate.AddDays(delayDuration);
             DateTime newEndDate = fair.EndDate.AddDays(delayDuration);
 
+            // Gecikme bilgisi için yeni bir kayıt oluşturulur.
             var fairDelay = new FairDelay
             {
                 FairId = fair.Id,
@@ -326,46 +334,58 @@ namespace Project.WinFormUI.Forms
                 CreatedDate = DateTime.Now
             };
 
+            // Gecikme bilgisi veritabanına kaydedilir.
             var fairDelayRepository = new FairDelayRepository();
             fairDelayRepository.Add(fairDelay);
 
+            // Fuarın tarihleri ve durum bilgisi güncellenir.
             fair.CalculatedStartDate = newStartDate;
             fair.EndDate = newEndDate;
             fair.IsDelayed = true;
 
+            // Güncellenmiş fuar bilgisi veritabanına kaydedilir.
             fairRepository.Update(fair);
-
+            
+            // İşlem başarıyla tamamlandığında kullanıcı bilgilendirilir.
             MessageBox.Show("Gecikme bilgisi başarıyla kaydedildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoadDelayHistory(fair.Id);
-            ClearFields();
-            LoadFairs();
+
+            // Ekran elemanları güncellenir.
+            LoadDelayHistory(fair.Id); // Gecikme geçmişi yenilenir.
+            ClearFields();            // Kullanıcı giriş alanları temizlenir.
+            LoadFairs();              // Fuar listesi güncellenir.
         }
 
         private void btnViewDelays_Click(object sender, EventArgs e)
         {
+            // Kullanıcı bir satır seçmemişse uyarı mesajı gösterilir ve işlem sonlandırılır.
             if (dgvFairs.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Lütfen bir fuar seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Seçilen satırın Id değeri alınır ve gecikme geçmişi yüklenir.
             int selectedFairId = (int)dgvFairs.SelectedRows[0].Cells["Id"].Value;
             LoadDelayHistory(selectedFairId);
         }
 
         private void LoadDelayHistory(int fairId)
         {
+            // Gecikme bilgilerini veritabanından almak için repository oluşturulur.
             var fairDelayRepository = new FairDelayRepository();
             var delays = fairDelayRepository.Where(fd => fd.FairId == fairId).ToList();
 
+            // Gecikme geçmişi listesi temizlenir.
             lstDelayHistory.Items.Clear();
 
+            // Eğer gecikme bilgisi yoksa kullanıcı bilgilendirilir ve işlem sonlandırılır.
             if (!delays.Any())
             {
                 lstDelayHistory.Items.Add("Bu fuar için gecikme bilgisi bulunmamaktadır.");
                 return;
             }
 
+            // Her bir gecikme bilgisi listeye eklenir.
             foreach (var delay in delays)
             {
                 lstDelayHistory.Items.Add($"Gecikme Süresi: {delay.DelayDuration} gün - " +
@@ -377,40 +397,50 @@ namespace Project.WinFormUI.Forms
 
         private void ClearFields()
         {
+            // Gecikme süresi sıfırlanır.
             nudDelayDuration.Value = 0;
+
+            // Gecikme sebebi metin kutusu temizlenir.
             txtDelayReason.Clear();
+
+            // Gecikme geçmişi listesi temizlenir.
             lstDelayHistory.Items.Clear();
         }
 
         private void LoadFairs()
         {
+            // Fuar bilgilerini almak için repository oluşturulur.
             var fairRepository = new FairRepository();
             var fairs = fairRepository.GetAll().Select(f => new
             {
                 f.Id, // ID kolonunun mevcut olduğundan emin olun
-                FuarAdı = f.Name,
-                HesaplananBaşlangıç = f.CalculatedStartDate.ToShortDateString(),
-                BitişTarihi = f.EndDate.ToShortDateString(),
-                ToplamMaliyet = f.TotalCost.ToString("C"),
-                GecikmeDurumu = f.IsDelayed ? "Evet" : "Hayır"
+                FuarAdı = f.Name, // Fuar adı bilgisi.
+                HesaplananBaşlangıç = f.CalculatedStartDate.ToShortDateString(), // Hesaplanan başlangıç tarihi.
+                BitişTarihi = f.EndDate.ToShortDateString(), // Bitiş tarihi.
+                ToplamMaliyet = f.TotalCost.ToString("C"), // Toplam maliyet, para birimi formatında.
+                GecikmeDurumu = f.IsDelayed ? "Evet" : "Hayır" // Gecikme durumu bilgisi.
             }).ToList();
 
+            // Elde edilen liste DataGridView'e atanır.
             dgvFairs.DataSource = fairs;
         }
 
         private void dgvFairs_SelectionChanged(object sender, EventArgs e)
         {
-            UpdateSelectedFairDetails();
+            UpdateSelectedFairDetails();// Seçilen fuar detaylarını günceller.
         }
 
         private void UpdateSelectedFairDetails()
         {
+
+            // Eğer hiçbir satır seçilmemişse kullanıcı bilgilendirilir.
             if (dgvFairs.SelectedRows.Count == 0)
             {
                 lblSelectedFairDetails.Text = "Seçilen bir fuar yok.";
                 return;
             }
 
+            // Seçilen satırdan Id değeri alınır ve doğruluğu kontrol edilir.
             var selectedRow = dgvFairs.SelectedRows[0];
 
             if (!int.TryParse(selectedRow.Cells["Id"].Value.ToString(), out int selectedFairId))
@@ -419,16 +449,18 @@ namespace Project.WinFormUI.Forms
                 return;
             }
 
+            // Repository kullanılarak fuar bilgisi alınır.
             var fairRepository = new FairRepository();
             var fair = fairRepository.GetById(selectedFairId);
 
+            // Eğer fuar bulunamazsa kullanıcı bilgilendirilir.
             if (fair == null)
             {
                 lblSelectedFairDetails.Text = "Fuar bilgisi bulunamadı.";
                 return;
             }
 
-            // Fuar bilgilerini etiket kontrolüne yazdır
+            // Fuar bilgileri detay etiketi üzerinde gösterilir.
             lblSelectedFairDetails.Text = $"Fuar Adı: {fair.Name}\n" +
                                           $"Hesaplanan Başlangıç: {fair.CalculatedStartDate.ToShortDateString()}\n" +
                                           $"Bitiş Tarihi: {fair.EndDate.ToShortDateString()}\n" +

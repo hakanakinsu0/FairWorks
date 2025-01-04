@@ -13,6 +13,6 @@ namespace Project.ENTITIES.Enums
         None = 1,        // İade durumu yok
         Requested = 2,   // İade talep edildi
         Processed = 3,    // İade tamamlandı
-        Refunded = 4     // İade edildi (Eklendi)
+        Refunded = 4
     }
 }

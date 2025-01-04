@@ -15,24 +15,25 @@ namespace Project.WinFormUI.Forms
 {
     public partial class FairServicesForm : Form
     {
+        //repositoryler
         private ServiceValueRepository _serviceValueRepository;
         private ServiceProviderServiceValueRepository _providerServiceValueRepository;
 
-        public Building SelectedBuilding { get; set; }
-        public decimal BuildingCost { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public Building SelectedBuilding { get; set; }  // Seçilen bina bilgisi
+        public decimal BuildingCost { get; set; }  // Bina maliyeti
+        public DateTime StartDate { get; set; }  // Fuarın başlangıç tarihi
+        public DateTime EndDate { get; set; }  // Fuarın bitiş tarihi
 
-        public Customer LoggedInCustomer { get; set; }
+        public Customer LoggedInCustomer { get; set; }  // Giriş yapan müşteri bilgisi
 
-        public string FairName { get; set; } // FairName özelliği eklendi
+        public string FairName { get; set; }  // Fuar adı
 
-        public List<ServiceValue> SelectedServices { get; set; } = new List<ServiceValue>();
+        public List<ServiceValue> SelectedServices { get; set; } = new List<ServiceValue>();  // Seçilen hizmetlerin listesi
 
-        public DateTime CalculatedStartDate { get; set; }
+        public DateTime CalculatedStartDate { get; set; }  // Hesaplanan başlangıç tarihi
 
-        public decimal FixedWaterCost { get; set; } = 2000m;  // Su tesisatı maliyeti
-        public decimal FixedElectricityCost { get; set; } = 2000m;  // Elektrik tesisatı maliyeti
+        public decimal FixedWaterCost { get; set; } = 2000m;  // Su tesisatı maliyeti (sabit)
+        public decimal FixedElectricityCost { get; set; } = 2000m;  // Elektrik tesisatı maliyeti (sabit)
 
 
 
@@ -40,10 +41,10 @@ namespace Project.WinFormUI.Forms
 
         public FairServicesForm()
         {
-            InitializeComponent();
-            // Repository'leri başlat
-            _serviceValueRepository = new ServiceValueRepository();
-            _providerServiceValueRepository = new ServiceProviderServiceValueRepository();
+            InitializeComponent();  // Form bileşenlerini başlatır
+           // Repository'leri başlat
+            _serviceValueRepository = new ServiceValueRepository();  // Hizmet değerleri için repository
+            _providerServiceValueRepository = new ServiceProviderServiceValueRepository();  // Sağlayıcı hizmet değerleri için repository
 
         }
 
@@ -228,49 +229,54 @@ namespace Project.WinFormUI.Forms
 
         private void btnConfirmSelection_Click(object sender, EventArgs e)
         {
-            lblSecilenler.Text = string.Empty;
-            StringBuilder secimler = new StringBuilder();
+            lblSecilenler.Text = string.Empty;  // Seçimlerin görüntüleneceği label'ı temizle
+            StringBuilder secimler = new StringBuilder();  // Seçimleri tutmak için StringBuilder oluştur
 
+            // Her bir sekmeyi (tab) kontrol et
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
-                secimler.AppendLine($"{tabPage.Text}:");
+                secimler.AppendLine($"{tabPage.Text}:");  // Sekme ismini ekle
 
+                // Her bir groupBox'ı kontrol et
                 foreach (Control group in tabPage.Controls)
                 {
-                    if (group is GroupBox groupBox)
+                    if (group is GroupBox groupBox)  // GroupBox olup olmadığını kontrol et
                     {
+                        // GroupBox içinde yer alan kontrol elemanlarını kontrol et
                         foreach (Control control in groupBox.Controls)
                         {
-                            if (control is ListBox listBox && listBox.SelectedItems.Count > 0)
+                            if (control is ListBox listBox && listBox.SelectedItems.Count > 0)  // ListBox seçilmişse
                             {
-                                secimler.AppendLine($"- {groupBox.Text}");
-                                foreach (var selectedItem in listBox.SelectedItems)
+                                secimler.AppendLine($"- {groupBox.Text}");  // GroupBox başlığını ekle
+                                foreach (var selectedItem in listBox.SelectedItems)  // Seçilen elemanları ekle
                                 {
-                                    secimler.AppendLine($"  -- {selectedItem}");
+                                    secimler.AppendLine($"  -- {selectedItem}");  // Her bir seçilen öğeyi alt satıra ekle
                                 }
                             }
                         }
                     }
                 }
 
+                // Eğer hiçbir seçim yapılmamışsa, "Hiçbir seçim yapılmadı." mesajı ekle
                 if (secimler.ToString().Trim() == $"{tabPage.Text}:")
                 {
                     secimler.AppendLine("- Hiçbir seçim yapılmadı.");
                 }
             }
+
             // Sabit hizmetleri ekle
             secimler.AppendLine("\nSabit Hizmetler:");
-            secimler.AppendLine($"- Su Tesisatı: {FixedWaterCost:C2}");
-            secimler.AppendLine($"- Elektrik Tesisatı: {FixedElectricityCost:C2}");
+            secimler.AppendLine($"- Su Tesisatı: {FixedWaterCost:C2}");  // Su tesisatı maliyetini ekle
+            secimler.AppendLine($"- Elektrik Tesisatı: {FixedElectricityCost:C2}");  // Elektrik tesisatı maliyetini ekle
 
-            lblSecilenler.Text = secimler.ToString();
+            lblSecilenler.Text = secimler.ToString();  // Sonuçları label'a ekle
         }
 
 
 
         private void btnCancel_Click_1(object sender, EventArgs e)
         {
-            Close();
+            Close();//formu kapatır
         }
 
 

@@ -14,29 +14,27 @@ namespace Project.WinFormUI.Forms
 {
     public partial class FairSummaryForm : Form
     {
-        public Customer LoggedInCustomer { get; set; }
+        public Customer LoggedInCustomer { get; set; }  // Giriş yapan müşteri bilgisi
+        public Building SelectedBuilding { get; set; }  // Seçilen bina bilgisi
+        public decimal TotalCost { get; set; }  // Toplam maliyet
+        public List<string> SelectedServices { get; set; }  // Seçilen ek hizmetler
+        public DateTime StartDate { get; set; }  // Başlangıç tarihi
+        public DateTime EndDate { get; set; }  // Bitiş tarihi
+        public string FairName { get; set; }  // Fuar adı
+        public DateTime CalculatedStartDate { get; set; }  // Hesaplanan başlangıç tarihi
 
-        public Building SelectedBuilding { get; set; }
-        public decimal TotalCost { get; set; }
-        public List<string> SelectedServices { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string FairName { get; set; } // FairName özelliği eklendi
-        public DateTime CalculatedStartDate { get; set; }
-
-
-
+        // Formun yapıcı metodu
         public FairSummaryForm()
         {
-            InitializeComponent();
+            InitializeComponent();  // Form bileşenlerini başlat
         }
 
         private void FairSummaryForm_Load(object sender, EventArgs e)
-        {
-            // Özet bilgileri oluştur
+        {   
+            // Özet bilgileri oluşturmak için StringBuilder kullanılır
             StringBuilder summaryDetails = new StringBuilder();
 
-            // Bina bilgileri
+            // Bina bilgilerini ekle
             if (SelectedBuilding != null)
             {
                 summaryDetails.AppendLine("Seçilen Bina:");
@@ -47,7 +45,7 @@ namespace Project.WinFormUI.Forms
                 summaryDetails.AppendLine();
             }
 
-            // Ek hizmet bilgileri
+            // Ek hizmet bilgilerini ekle
             if (SelectedServices != null && SelectedServices.Count > 0)
             {
                 summaryDetails.AppendLine("Seçilen Ek Hizmetler:");
@@ -64,39 +62,40 @@ namespace Project.WinFormUI.Forms
                 summaryDetails.AppendLine("Hiçbir Ek Hizmet Seçilmedi.");
             }
 
-            // Tarih bilgileri
+            // Tarih bilgilerini ekle
             summaryDetails.AppendLine("Tarih Bilgileri:");
             summaryDetails.AppendLine($"- Başlangıç Tarihi: {CalculatedStartDate.ToShortDateString()}");
             summaryDetails.AppendLine($"- Bitiş Tarihi: {EndDate.ToShortDateString()}");
             summaryDetails.AppendLine();
 
-            // Bilgileri TextBox'a ata
+            // Bilgileri TextBox'a aktar
             txtSummaryDetails.Text = summaryDetails.ToString();
 
         }
 
         private void btnConfirmSelections_Click(object sender, EventArgs e)
         {
-            if (SelectedBuilding == null)
+            if (SelectedBuilding == null)  // Eğer bina seçilmemişse uyarı ver
             {
                 MessageBox.Show("Bina seçimi yapılmadı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            // Fuar fiyat teklifi formunu başlat
             var fairPriceOfferForm = new FairPriceOfferForm
             {
-                LoggedInCustomer = LoggedInCustomer,
-                SelectedBuilding = SelectedBuilding,
-                TotalCost = TotalCost,
-                StartDate = StartDate,
-                EndDate = EndDate,
-                SelectedServices = SelectedServices,
-                FairName = FairName,
-                CalculatedStartDate = CalculatedStartDate // Aktarımı sağladık
+                LoggedInCustomer = LoggedInCustomer,  // Giriş yapan müşteri bilgisi
+                SelectedBuilding = SelectedBuilding,  // Seçilen bina
+                TotalCost = TotalCost,  // Toplam maliyet
+                StartDate = StartDate,  // Başlangıç tarihi
+                EndDate = EndDate,  // Bitiş tarihi
+                SelectedServices = SelectedServices,  // Seçilen hizmetler
+                FairName = FairName,  // Fuar adı
+                CalculatedStartDate = CalculatedStartDate // Hesaplanan başlangıç tarihi
             };
 
-            fairPriceOfferForm.ShowDialog();
-            this.Close();
+            fairPriceOfferForm.ShowDialog();  // Fuar fiyat teklifi formunu göster
+            this.Close();  // Bu formu kapat
         }
 
         private void btnGoBack_Click(object sender, EventArgs e)
