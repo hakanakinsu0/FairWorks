@@ -16,28 +16,19 @@ namespace Project.WinFormUI.Forms
     public partial class FairServicesForm : Form
     {
         //repositoryler
-        private ServiceValueRepository _serviceValueRepository;
-        private ServiceProviderServiceValueRepository _providerServiceValueRepository;
+        ServiceValueRepository _serviceValueRepository;
+        ServiceProviderServiceValueRepository _providerServiceValueRepository;
 
         public Building SelectedBuilding { get; set; }  // Seçilen bina bilgisi
         public decimal BuildingCost { get; set; }  // Bina maliyeti
         public DateTime StartDate { get; set; }  // Fuarın başlangıç tarihi
         public DateTime EndDate { get; set; }  // Fuarın bitiş tarihi
-
         public Customer LoggedInCustomer { get; set; }  // Giriş yapan müşteri bilgisi
-
         public string FairName { get; set; }  // Fuar adı
-
         public List<ServiceValue> SelectedServices { get; set; } = new List<ServiceValue>();  // Seçilen hizmetlerin listesi
-
         public DateTime CalculatedStartDate { get; set; }  // Hesaplanan başlangıç tarihi
-
         public decimal FixedWaterCost { get; set; } = 2000m;  // Su tesisatı maliyeti (sabit)
         public decimal FixedElectricityCost { get; set; } = 2000m;  // Elektrik tesisatı maliyeti (sabit)
-
-
-
-
 
         public FairServicesForm()
         {
@@ -45,7 +36,6 @@ namespace Project.WinFormUI.Forms
            // Repository'leri başlat
             _serviceValueRepository = new ServiceValueRepository();  // Hizmet değerleri için repository
             _providerServiceValueRepository = new ServiceProviderServiceValueRepository();  // Sağlayıcı hizmet değerleri için repository
-
         }
 
         private int CalculatePreparationDays()
@@ -68,30 +58,6 @@ namespace Project.WinFormUI.Forms
 
             return preparationDays;
         }
-
-
-        private void CheckPreparationDate()
-        {
-            int preparationDays = CalculatePreparationDays();
-            DateTime today = DateTime.Now.Date; // Bugünün tarihi
-            DateTime earliestStartDate = today.AddDays(preparationDays); // Hazırlık süresine göre önerilen başlangıç tarihi
-
-            // Kullanıcı başlangıç tarihi kontrolü
-            if (StartDate < earliestStartDate)
-            {
-                MessageBox.Show($"Seçilen tarih uygun değil. En erken başlanabilecek tarih: {earliestStartDate.ToShortDateString()}",
-                                "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                // Kullanıcı başlangıç tarihini önerilen başlangıç tarihine ayarlıyoruz
-                StartDate = earliestStartDate;
-            }
-
-            // CalculatedStartDate ve EndDate hesaplama
-            CalculatedStartDate = StartDate;
-            EndDate = CalculatedStartDate.AddDays((EndDate - StartDate).Days); // Kullanıcının belirttiği süre kadar ileri
-        }
-
-
 
         private void FairServicesForm_Load(object sender, EventArgs e)
         {
@@ -125,20 +91,13 @@ namespace Project.WinFormUI.Forms
             // Bina bilgisi
             if (SelectedBuilding != null)
             {
-                lblBuildingDetails.Text = $"Seçilen Bina: {SelectedBuilding.Name}\n" +
-                                          $"Adres: {SelectedBuilding.Address}\n" +
-                                          $"Kat Sayısı: {SelectedBuilding.NumberOfFloor}\n" +
-                                          $"Bina Maliyeti: {BuildingCost:C2}";
+                lblBuildingDetails.Text = $"Seçilen Bina: {SelectedBuilding.Name}\nAdres: {SelectedBuilding.Address}\nKat Sayısı: {SelectedBuilding.NumberOfFloor}";
             }
             else
             {
                 lblBuildingDetails.Text = "Bina bilgisi bulunamadı.";
             }
-
-
         }
-
-
 
 
         private void LoadServiceOffers(string serviceName, ListBox targetListBox)
@@ -146,7 +105,7 @@ namespace Project.WinFormUI.Forms
             try
             {
                 // İlgili hizmet değerlerini alıyoruz
-                var serviceValues = _serviceValueRepository
+                List<ServiceValue> serviceValues = _serviceValueRepository
                     .Where(sv => sv.Name == serviceName)
                     .ToList();
 
@@ -158,13 +117,13 @@ namespace Project.WinFormUI.Forms
                 }
 
                 // İlgili sağlayıcı-hizmet ilişkilerini alıyoruz
-                var serviceValueIds = serviceValues.Select(sv => sv.Id).ToList();
-                var providerServiceValues = _providerServiceValueRepository
+                List<int> serviceValueIds = serviceValues.Select(sv => sv.Id).ToList();
+                List<ServiceProviderServiceValue> providerServiceValues = _providerServiceValueRepository
                     .Where(psv => serviceValueIds.Contains(psv.ServiceValueId))
                     .ToList();
 
                 // Sağlayıcı bilgilerini alıyoruz
-                var serviceProviders = providerServiceValues
+                List<ServiceProvider> serviceProviders = providerServiceValues
                     .Select(psv => psv.ServiceProvider)
                     .Where(sp => sp != null)
                     .Distinct()
@@ -172,18 +131,18 @@ namespace Project.WinFormUI.Forms
 
                 // ListBox'ı temizle ve yeni değerleri yükle
                 targetListBox.Items.Clear();
-                foreach (var serviceValue in serviceValues)
+                foreach (ServiceValue serviceValue in serviceValues)
                 {
-                    var relatedProviders = providerServiceValues
+                    List<ServiceProvider> relatedProviders = providerServiceValues
                         .Where(psv => psv.ServiceValueId == serviceValue.Id)
                         .Select(psv => psv.ServiceProvider)
                         .ToList();
 
-                    foreach (var provider in relatedProviders)
+                    foreach (ServiceProvider provider in relatedProviders)
                     {
                         if (provider != null)
                         {
-                            var item = new ListViewItem($"{provider.ProviderName} - Maliyet: {serviceValue.Cost:C2}")
+                            ListViewItem item = new ListViewItem($"{provider.ProviderName} - Maliyet: {serviceValue.Cost:C2}")
                             {
                                 Tag = serviceValue.Id // Tag içine ServiceValue ID ekliyoruz
                             };
@@ -229,47 +188,43 @@ namespace Project.WinFormUI.Forms
 
         private void btnConfirmSelection_Click(object sender, EventArgs e)
         {
-            lblSecilenler.Text = string.Empty;  // Seçimlerin görüntüleneceği label'ı temizle
-            StringBuilder secimler = new StringBuilder();  // Seçimleri tutmak için StringBuilder oluştur
+            lblSecilenler.Text = ""; // Label'ı temizle
+            List<string> secimler = new List<string>(); // Seçimleri tutmak için bir liste oluştur
 
-            // Her bir sekmeyi (tab) kontrol et
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
-                secimler.AppendLine($"{tabPage.Text}:");  // Sekme ismini ekle
+                secimler.Add($"{tabPage.Text}:"); // Sekme ismini listeye ekle
 
-                // Her bir groupBox'ı kontrol et
                 foreach (Control group in tabPage.Controls)
                 {
-                    if (group is GroupBox groupBox)  // GroupBox olup olmadığını kontrol et
+                    if (group is GroupBox groupBox)
                     {
-                        // GroupBox içinde yer alan kontrol elemanlarını kontrol et
                         foreach (Control control in groupBox.Controls)
                         {
-                            if (control is ListBox listBox && listBox.SelectedItems.Count > 0)  // ListBox seçilmişse
+                            if (control is ListBox listBox && listBox.SelectedItems.Count > 0)
                             {
-                                secimler.AppendLine($"- {groupBox.Text}");  // GroupBox başlığını ekle
-                                foreach (var selectedItem in listBox.SelectedItems)  // Seçilen elemanları ekle
+                                secimler.Add($"- {groupBox.Text}");
+                                foreach (var selectedItem in listBox.SelectedItems)
                                 {
-                                    secimler.AppendLine($"  -- {selectedItem}");  // Her bir seçilen öğeyi alt satıra ekle
+                                    secimler.Add($"  -- {selectedItem}");
                                 }
                             }
                         }
                     }
                 }
 
-                // Eğer hiçbir seçim yapılmamışsa, "Hiçbir seçim yapılmadı." mesajı ekle
-                if (secimler.ToString().Trim() == $"{tabPage.Text}:")
+                if (secimler.Last() == $"{tabPage.Text}:")
                 {
-                    secimler.AppendLine("- Hiçbir seçim yapılmadı.");
+                    secimler.Add("- Hiçbir seçim yapılmadı.");
                 }
             }
 
             // Sabit hizmetleri ekle
-            secimler.AppendLine("\nSabit Hizmetler:");
-            secimler.AppendLine($"- Su Tesisatı: {FixedWaterCost:C2}");  // Su tesisatı maliyetini ekle
-            secimler.AppendLine($"- Elektrik Tesisatı: {FixedElectricityCost:C2}");  // Elektrik tesisatı maliyetini ekle
+            secimler.Add("\nSabit Hizmetler:");
+            secimler.Add($"- Su Tesisatı: {FixedWaterCost:C2}");
+            secimler.Add($"- Elektrik Tesisatı: {FixedElectricityCost:C2}");
 
-            lblSecilenler.Text = secimler.ToString();  // Sonuçları label'a ekle
+            lblSecilenler.Text = string.Join(Environment.NewLine, secimler); // Listeyi birleştir ve label'a ata
         }
 
 

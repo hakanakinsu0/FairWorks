@@ -27,8 +27,8 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
         public Fair AddFair(Fair fair)
         {
             Add(fair);
-            Save(); // Kaydı veritabanına işle
-            return FirstOrDefault(f => f.Id == fair.Id); // Eklenen fuarı geri döndür
+            Save();
+            return fair; // Eklenen fuar zaten parametre olarak gelen nesnedir.
         }
 
         public decimal CalculateFinalOffer(decimal totalCost, decimal customerOffer)
@@ -38,6 +38,5 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                 ? discountedPrice
                 : (discountedPrice + customerOffer) / 2;
         }
-
     }
 }

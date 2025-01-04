@@ -62,14 +62,14 @@ namespace Project.WinFormUI
             // E-posta ve şifre kontrolü
             if (txtEmail.Text == "" || txtPassword.Text == "")
             {
-                MessageBox.Show("Lütfen e-posta ve şifre giriniz.");
+                ShowError("Lütfen e-posta ve şifre giriniz.");
                 return;
             }
 
             // E-posta formatının doğruluğunu kontrol eder
             if (!_customerRepository.IsValidEmailFormat(txtEmail.Text))
             {
-                MessageBox.Show("Geçersiz e-posta formatı. Lütfen doğru bir e-posta adresi giriniz.");
+                ShowError("Geçersiz e-posta formatı. Lütfen doğru bir e-posta adresi giriniz.");
                 return;
             }
 
@@ -98,7 +98,7 @@ namespace Project.WinFormUI
                 return;
             }
             // Eğer hiçbir eşleşme bulunamazsa hata mesajı gösterilir
-            MessageBox.Show("E-posta veya şifre hatalı.");
+            ShowError("E-posta veya şifre hatalı.");
         }
 
         // Şifre göster/gizle checkbox'ının kontrol edildiğinde davranışı
@@ -112,6 +112,12 @@ namespace Project.WinFormUI
         {
             txtEmail.Text = "";
             txtPassword.Text = "";
+        }
+
+        //Kullanıcıya bir hata mesajı göstermek için kullanılan yardımcı metot.
+        private void ShowError(string message)
+        {
+            MessageBox.Show(message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

@@ -88,5 +88,22 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                     f.EndDate > calculatedStartDate)) // Tarih çakışması kontrolü
                 .ToList();
         }
+
+        /// <summary>
+        /// Başlangıç ve bitiş tarihlerinin geçerli olup olmadığını kontrol eder.
+        /// </summary>
+        /// <param name="startDate">Başlangıç tarihi</param>
+        /// <param name="endDate">Bitiş tarihi</param>
+        /// <returns>Geçerli ise true, aksi takdirde false döner</returns>
+        public bool IsValidDateRange(DateTime startDate, DateTime endDate, out string errorMessage)
+        {
+            if (endDate <= startDate)
+            {
+                errorMessage = "Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.";
+                return false;
+            }
+            errorMessage = string.Empty;
+            return true;
+        }
     }
 }

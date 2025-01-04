@@ -46,16 +46,17 @@ namespace Project.WinFormUI.Forms
             // Eğer zorunlu alanlardan biri boşsa hata mesajı göster
             if (txtFirstName.Text == "" || txtLastName.Text == "" || txtCompanyName.Text == "" || txtContactEMail.Text == "")
             {
-                MessageBox.Show("Lütfen tüm alanları doldurunuz.");
+                ShowError("Lütfen tüm alanları doldurunuz.");
                 return;
             }
 
             // Girilen bilgilerin doğruluğunu kontrol et
-            if (!ValidateCustomerInfo())
+            if (!_customerDetailRepository.ValidateCustomerDetails(txtFirstName.Text, txtLastName.Text, txtCompanyName.Text, txtContactEMail.Text))
             {
-                MessageBox.Show("Girdiğiniz bilgiler doğru değil. Lütfen kontrol ediniz.");
+                ShowError("Girdiğiniz bilgiler doğru değil. Lütfen kontrol ediniz.");
                 return;
             }
+
             else KontrolleriGizle(true); // Kontroller doğruysa şifre giriş alanlarını görünür hale getir
         }
 
@@ -65,14 +66,14 @@ namespace Project.WinFormUI.Forms
             // Eğer şifre alanlarından biri boşsa hata mesajı göster
             if (txtPassword.Text == "" || txtConfirmPassword.Text == "")
             {
-                MessageBox.Show("Lütfen tüm alanları doldurunuz.");
+                ShowError("Lütfen tüm alanları doldurunuz.");
                 return;
             }
 
             // Şifrelerin birbirine eşit olup olmadığını kontrol eder
             if (txtPassword.Text != txtConfirmPassword.Text)
             {
-                MessageBox.Show("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
+                ShowError("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
                 txtConfirmPassword.Text = ""; // Uyum olmadığında şifreyi temizler
                 return;
             }
@@ -80,7 +81,7 @@ namespace Project.WinFormUI.Forms
             // Şifre formatını kontrol eder (örneğin en az 8 karakter)
             if (!_customerRepository.IsValidPassword(txtPassword.Text))
             {
-                MessageBox.Show("Geçersiz şifre formatı. Lütfen en az 8 karakterli şifre belirleyiniz.");
+                ShowError("Geçersiz şifre formatı. Lütfen en az 8 karakterli şifre belirleyiniz.");
                 return;
             }
 
@@ -90,24 +91,25 @@ namespace Project.WinFormUI.Forms
             // Eğer müşteri bulunamazsa hata mesajı göster
             if (_customer == null)
             {
-                MessageBox.Show("Müşteri bulunamadı. Lütfen tekrar deneyiniz.");
+                ShowError("Müşteri bulunamadı. Lütfen tekrar deneyiniz.");
                 return;
             }
 
             // Yeni şifreyi şifreleyerek kaydeder
             _customer.Password = PasswordEncryptor.Encode(txtPassword.Text);
 
+            // Kullanıcının şifresini günceller ve işlem sonucunda bilgilendirme mesajı gösterir.
             try
             {
-                // Güncellenen müşteri bilgilerini veri tabanına kaydeder
-                _customerRepository.Update(_customer);
-                MessageBox.Show("Şifre başarılı bir şekilde güncellenmiştir.");
+                _customerRepository.UpdatePassword(txtContactEMail.Text, txtPassword.Text);
+                ShowInfo("Şifre başarılı bir şekilde güncellenmiştir.");
                 Close();
             }
+
+            // Şifre güncelleme sırasında bir hata oluşursa, hata mesajını kullanıcıya bildirir.
             catch (Exception ex)
             {
-                // Hata mesajını gösterir
-                MessageBox.Show(ex.Message);
+                ShowError(ex.Message);
             }
         }
 
@@ -122,10 +124,17 @@ namespace Project.WinFormUI.Forms
             btnSave.Visible = visiable;
         }
 
-        // Kullanıcı tarafından girilen bilgileri kontrol eder
-        private bool ValidateCustomerInfo()
+        //Kullanıcıya bir hata mesajı göstermek için kullanılan yardımcı metot.
+        private void ShowError(string message)
         {
-            return _customerDetailRepository.IsFirstNameRegistered(txtFirstName.Text) && _customerDetailRepository.IsLastNameRegistered(txtLastName.Text) && _customerDetailRepository.IsCompanyNameRegistered(txtCompanyName.Text) && _customerRepository.IsEmailRegistered(txtContactEMail.Text);
+            MessageBox.Show(message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        //Kullanıcıya bilgilendirme mesajı göstermek için kullanılan yardımcı metot.
+        private void ShowInfo(string message)
+        {
+            MessageBox.Show(message, "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
     }
 }

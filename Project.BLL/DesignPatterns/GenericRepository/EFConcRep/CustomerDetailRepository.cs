@@ -10,6 +10,12 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class CustomerDetailRepository : BaseRepository<CustomerDetail>
     {
+        CustomerRepository _customerRepository;
+
+        public CustomerDetailRepository()
+        {
+            _customerRepository = new CustomerRepository();
+        }
         public bool IsValidPhoneNumber(string phoneNumber)
         {
             if (phoneNumber.Length != 11) return false;
@@ -32,6 +38,14 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
         public bool IsCompanyNameRegistered(string companyName)
         {
             return Any(x => x.CompanyName == companyName);
+        }
+
+        public bool ValidateCustomerDetails(string firstName, string lastName, string companyName, string email)
+        {
+            return IsFirstNameRegistered(firstName) &&
+                   IsLastNameRegistered(lastName) &&
+                   IsCompanyNameRegistered(companyName) &&
+                   _customerRepository.IsEmailRegistered(email);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFBaseRep;
 using Project.ENTITIES.Models;
+using Sifrelemeler.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,8 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class CustomerRepository : BaseRepository<Customer>
     {
-        CustomerDetailRepository _customerDetailRepository;
         public CustomerRepository()
         {
-            _customerDetailRepository = new CustomerDetailRepository();
         }
 
         public bool IsValidEmailFormat(string email)
@@ -41,6 +40,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return FirstOrDefault(x => x.ContactEMail == email);
         }
 
+        public void UpdatePassword(string email, string newPassword)
+        {
+            var customer = GetByEmail(email);
+            if (customer == null)
+                throw new Exception("Müşteri bulunamadı.");
+
+            customer.Password = PasswordEncryptor.Encode(newPassword);
+            Update(customer);
+        }
 
 
     }

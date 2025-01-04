@@ -26,7 +26,7 @@ namespace Project.WinFormUI.Forms
         public RegisterForm()
         {
             InitializeComponent();
-
+            
             _customerRepository = new CustomerRepository();
             _customerDetailRepository = new CustomerDetailRepository();
         }
@@ -43,35 +43,35 @@ namespace Project.WinFormUI.Forms
             // Tüm alanların doldurulup doldurulmadığını kontrol eder.
             if (IsAllFieldsFilled()) //Eger herhangi bir textboximiz bos ise bu bloga girer
             {
-                MessageBox.Show("Lütfen tüm alanları doldurunuz.");
+                ShowError("Lütfen tüm alanları doldurunuz.");
                 return;
             }
 
             // Girilen e-posta formatını doğrular.
             if (!_customerRepository.IsValidEmailFormat(txtContactEMail.Text))
             {
-                MessageBox.Show("Geçersiz e-posta formatı. Lütfen doğru bir e-posta adresi giriniz.");
+                ShowError("Geçersiz e-posta formatı. Lütfen doğru bir e-posta adresi giriniz.");
                 return;
             }
 
             // Girilen telefon numarasının formatını doğrular.
             if (!_customerDetailRepository.IsValidPhoneNumber(txtContactPhoneNumber.Text))
             {
-                MessageBox.Show("Geçersiz telefon numarası formatı. Lütfen doğru bir telefon numarası giriniz.");
+                ShowError("Geçersiz telefon numarası formatı. Lütfen doğru bir telefon numarası giriniz.");
                 return;
             }
 
             // Şifrenin geçerli bir formatta olup olmadığını kontrol eder.
             if (!_customerRepository.IsValidPassword(txtPassword.Text))
             {
-                MessageBox.Show("Geçersiz şifre formatı. Lütfen en az 8 karakterli şifre belirleyiniz.");
+                ShowError("Geçersiz şifre formatı. Lütfen en az 8 karakterli şifre belirleyiniz.");
                 return;
             }
 
             // Girilen e-postanın zaten kayıtlı olup olmadığını kontrol eder.
             if (_customerRepository.IsEmailRegistered(txtContactEMail.Text))
             {
-                MessageBox.Show("Bu email sistemde kayıtlıdır. Lütfen geçerli bir email giriniz.");
+                ShowError("Bu email sistemde kayıtlıdır. Lütfen geçerli bir email giriniz.");
                 txtContactEMail.Text = "";
                 return;
             }
@@ -79,7 +79,7 @@ namespace Project.WinFormUI.Forms
             // Girilen şifrelerin birbirine eşit olup olmadığını kontrol eder.
             if (txtPassword.Text != txtConfirmPassword.Text)
             {
-                MessageBox.Show("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
+                ShowError("Şifreler birbiri ile uyuşmamaktadır. Lütfen kontrol ediniz.");
                 txtConfirmPassword.Text = "";
                 return;
             }
@@ -107,12 +107,12 @@ namespace Project.WinFormUI.Forms
                 _customerDetail.Id = _customer.Id;
                 _customerDetailRepository.Add(_customerDetail);
 
-                MessageBox.Show("Kayıt başarılı bir şekilde tamamlanmıştır.");
+                ShowInfo("Kayıt başarılı bir şekilde tamamlanmıştır.");
                 Close(); // İşlem tamamlandıktan sonra formu kapatır.
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message); // Hata mesajını kullanıcıya gösterir.
+                ShowError(ex.Message); // Hata mesajını kullanıcıya gösterir.
             }
         }
 
@@ -122,9 +122,16 @@ namespace Project.WinFormUI.Forms
             return txtFirstName.Text == "" || txtLastName.Text == "" || txtCompanyName.Text == "" || txtContactPhoneNumber.Text == "" || txtContactEMail.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "";
         }
 
-        private void RegisterForm_Load(object sender, EventArgs e)
+        //Kullanıcıya bir hata mesajı göstermek için kullanılan yardımcı metot.
+        private void ShowError(string message)
         {
+            MessageBox.Show(message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
 
+        //Kullanıcıya bilgilendirme mesajı göstermek için kullanılan yardımcı metot.
+        private void ShowInfo(string message)
+        {
+            MessageBox.Show(message, "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

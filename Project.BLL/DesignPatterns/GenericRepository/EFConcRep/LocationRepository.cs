@@ -10,35 +10,19 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class LocationRepository:BaseRepository<Location>
     {
+        /// <summary>
+        /// Şehir ve ilçe eşsiz mi kontrol eder.
+        /// </summary>
         public bool IsLocationUnique(string city, string district)
         {
             return !Any(x => x.City.ToLower() == city.ToLower() &&
                              x.District.ToLower() == district.ToLower());
         }
 
-        // Tüm şehirleri döndürür, tekrarlayan şehirleri kaldırır
+        /// <summary>
+        /// Tüm şehirleri benzersiz olarak getir.
+        /// </summary>
         public List<string> GetAllCities()
-        {
-            //return GetAll() // Tüm lokasyonları al
-            //    .Select(x => x.City) // Sadece City alanını seç
-            //    .Distinct() // Tekrarlayan şehirleri kaldır
-            //    .ToList(); // Listeye dönüştür
-
-            return GetAll().Select(location => location.City).Distinct().ToList();
-
-        }
-
-        // Seçilen şehre göre ilçeleri döndürür
-        public List<string> GetDistrictsByCity(string city)
-        {
-            // Şehre göre ilçeleri filtreleyip benzersiz olarak döndür
-            return GetAll().Where(location => location.City == city)
-                           .Select(location => location.District)
-                           .Distinct()
-                           .ToList();
-        }
-
-        public List<string> GetUniqueCities()
         {
             return GetAll()
                 .Select(location => location.City)
@@ -46,14 +30,24 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                 .ToList();
         }
 
-        public List<string> LoadDistricts(string city)
+        /// <summary>
+        /// Seçilen şehre göre ilçeleri getir.
+        /// </summary>
+        public List<string> GetDistrictsByCity(string city)
         {
-            return GetDistrictsByCity(city);
+            return GetAll()
+                .Where(location => location.City == city)
+                .Select(location => location.District)
+                .Distinct()
+                .ToList();
         }
 
+        /// <summary>
+        /// Şehirleri alfabetik sıraya göre getir.
+        /// </summary>
         public List<string> GetSortedUniqueCities()
         {
-            return GetUniqueCities().OrderBy(city => city).ToList();
+            return GetAllCities().OrderBy(city => city).ToList();
         }
 
     }
