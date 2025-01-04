@@ -1,4 +1,5 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFConcRep;
+using Project.ENTITIES.Enums;
 using Project.ENTITIES.Models;
 using System;
 using System.Collections.Generic;
@@ -264,20 +265,22 @@ namespace Project.WinFormUI.Forms
 
         private void btnConfirmAll_Click(object sender, EventArgs e)
         {
-            CheckPreparationDate();
 
-            if (StartDate == default || EndDate == default)
-            {
-                MessageBox.Show("Tarih bilgisi eksik!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            // CustomerDashboard'dan gelen başlangıç tarihi RequestedStartDate olarak ayarlanır
+            DateTime requestedStartDate = StartDate;
 
-            // Kullanıcı gün sayısını belirttiği varsayılarak bitiş tarihi hesaplanır
-            int fairDuration = (EndDate - StartDate).Days; // Kullanıcının belirttiği süre
-            EndDate = CalculatedStartDate.AddDays(fairDuration); // Bitiş tarihi hesaplanır
+            // Toplam hazırlık süresini hesapla
+            int preparationDays = CalculatePreparationDays();
 
-            SelectedServices.Clear(); // Listeyi sıfırla
+            // CalculatedStartDate, RequestedStartDate'e hazırlık süresi eklenerek hesaplanır
+            CalculatedStartDate = requestedStartDate.AddDays(preparationDays);
 
+            // Kullanıcının belirttiği süre kadar bitiş tarihi hesaplanır
+            int fairDuration = (EndDate - StartDate).Days; // Kullanıcının belirttiği gün sayısı
+            EndDate = CalculatedStartDate.AddDays(fairDuration); // Hesaplanan bitiş tarihi
+
+            // Seçilen hizmetleri topla
+            SelectedServices.Clear();
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
                 foreach (Control group in tabPage.Controls)
@@ -313,9 +316,35 @@ namespace Project.WinFormUI.Forms
             }
 
             // Toplam maliyeti hesapla
-            int days = (EndDate - CalculatedStartDate).Days; // Yeni hesaplanan gün sayısı
-            var totalServiceCost = SelectedServices.Sum(s => s.Cost * days);
+            int totalDays = (EndDate - CalculatedStartDate).Days; // Yeni hesaplanan toplam süre
+            var totalServiceCost = SelectedServices.Sum(s => s.Cost * totalDays);
             var finalCost = BuildingCost + totalServiceCost;
+
+            // Tabloda güncellenen tarihleri ve maliyeti göster
+            MessageBox.Show($"RequestedStartDate: {requestedStartDate.ToShortDateString()}\n" +
+                            $"CalculatedStartDate: {CalculatedStartDate.ToShortDateString()}\n" +
+                            $"EndDate: {EndDate.ToShortDateString()}\n" +
+                            $"Toplam Maliyet: {finalCost:C2}",
+                            "Hesaplanan Tarihler ve Maliyet", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Veritabanına kaydet
+            FairRepository fairRepo = new FairRepository();
+            Fair fair = new Fair
+            {
+                Name = FairName,
+                RequestedStartDate = requestedStartDate, // Dashboard'dan gelen başlangıç tarihi
+                CalculatedStartDate = CalculatedStartDate, // Hazırlık süresi sonrası başlangıç tarihi
+                EndDate = EndDate, // Hesaplanan bitiş tarihi
+                TotalCost = finalCost,
+                PreparationDays = preparationDays,
+                CustomerId = LoggedInCustomer.Id,
+                BuildingId = SelectedBuilding.Id,
+                CreatedDate = DateTime.Now,
+                Status = DataStatus.Inserted
+            };
+
+            fairRepo.Add(fair);
+            //fairRepo.SaveChanges();
 
             // Yeni formu aç
             FairSummaryForm summaryForm = new FairSummaryForm
@@ -324,9 +353,9 @@ namespace Project.WinFormUI.Forms
                 SelectedBuilding = SelectedBuilding,
                 TotalCost = finalCost,
                 SelectedServices = SelectedServices.Select(s => s.Name).ToList(), // Sadece isimleri geç
-                StartDate = CalculatedStartDate,
-                EndDate = EndDate,
-                FairName = FairName
+                StartDate = CalculatedStartDate, // Hesaplanan başlangıç tarihi
+                EndDate = EndDate,               // Hesaplanan bitiş tarihi
+                FairName = FairName              // Kullanıcının belirttiği fuar adı
             };
 
             summaryForm.ShowDialog();

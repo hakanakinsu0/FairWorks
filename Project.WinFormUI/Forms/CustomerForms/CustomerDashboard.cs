@@ -17,8 +17,8 @@ namespace Project.WinFormUI.Forms
     public partial class CustomerDashboard : Form
     {
         // Repository sınıfları
-        BuildingRepository _buildingRepository; // Bina işlemleri için repository
-        LocationRepository _locationRepository; // Lokasyon işlemleri için repository
+        private readonly BuildingRepository _buildingRepository;
+        private readonly LocationRepository _locationRepository;
 
         public Customer LoggedInCustomer { get; set; }
         public string FairName { get; set; } // FairName özelliği eklendi
@@ -39,7 +39,7 @@ namespace Project.WinFormUI.Forms
 
         private void btnSearchBuildings_Click(object sender, EventArgs e)
         {
-            if (cmbCity.SelectedIndex == -1 || cmbDistrict.SelectedIndex == -1 || txtFairName.Text == "")
+            if (cmbCity.SelectedIndex == -1 || cmbDistrict.SelectedIndex == -1 || string.IsNullOrWhiteSpace(txtFairName.Text))
             {
                 MessageBox.Show("Lütfen fuar ismini, şehiri ve ilçeyi seçiniz.");
                 return;
@@ -69,7 +69,6 @@ namespace Project.WinFormUI.Forms
                 MessageBox.Show("Seçilen tarihlerde uygun bina bulunamadı. İsterseniz talep oluşturabilirsiniz.");
             }
         }
-
 
 
         private bool IsValidDateRange(DateTime startDate, DateTime endDate, out string errorMessage)
@@ -103,13 +102,10 @@ namespace Project.WinFormUI.Forms
                     LoggedInCustomer = LoggedInCustomer,
                     SelectedBuilding = selectedBuilding,
                     BuildingCost = buildingCost,
-                    StartDate = dtpStartDate.Value,
-                    EndDate = dtpEndDate.Value,
-                    FairName = txtFairName.Text // Fuar adı eklendi
-
+                    StartDate = dtpStartDate.Value, // RequestedStartDate olarak kullanılacak
+                    EndDate = dtpEndDate.Value,    // Kullanıcının belirttiği bitiş tarihi
+                    FairName = txtFairName.Text   // Fuar adı
                 };
-
-
 
                 servicesForm.ShowDialog();
             }
@@ -121,25 +117,19 @@ namespace Project.WinFormUI.Forms
 
         private void btnRequestBuilding_Click(object sender, EventArgs e)
         {
-            // Tarih aralığının kontrolü
             if (!IsValidDateRange(dtpStartDate.Value, dtpEndDate.Value, out string errorMessage))
             {
                 MessageBox.Show(errorMessage);
                 return;
             }
 
-
-            // Fuar ismi kontrolü
-            if (txtFairName.Text == "")
+            if (string.IsNullOrWhiteSpace(txtFairName.Text))
             {
                 MessageBox.Show("Lütfen fuar ismini giriniz.");
                 return;
             }
 
-            // Fuar adı, başlangıç ve bitiş tarihlerini alıp talep formunu açar
-            CustomBuildingRequestForm requestForm = new CustomBuildingRequestForm(txtFairName.Text, dtpStartDate.Value, dtpEndDate.Value, LoggedInCustomer)
-            {
-            };
+            CustomBuildingRequestForm requestForm = new CustomBuildingRequestForm(txtFairName.Text, dtpStartDate.Value, dtpEndDate.Value, LoggedInCustomer);
             requestForm.ShowDialog();
         }
 
@@ -165,15 +155,17 @@ namespace Project.WinFormUI.Forms
 
         private void lstBuildings_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Liste kutusunda seçilen bina değiştiğinde detaylarını gösterir
-            if (lstBuildings.SelectedItem != null)
+            if (lstBuildings.SelectedItem is Building selectedBuilding)
             {
-                Building selectedBuilding = lstBuildings.SelectedItem as Building;
-
-                // Binanın detaylarını Label'a yazar
-                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\nKat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\nKat Başına Oda: {selectedBuilding.RoomPerFloor}\nGün Sayısı: {(dtpEndDate.Value - dtpStartDate.Value).Days + 1}";
+                lblBuildingDetails.Text = $"Bina Adı: {selectedBuilding.Name}\nAdres: {selectedBuilding.Address}\n" +
+                                          $"Kat Sayısı: {selectedBuilding.NumberOfFloor}\nKat Metrekare: {selectedBuilding.FloorSize}\n" +
+                                          $"Kat Başına Oda: {selectedBuilding.RoomPerFloor}\n" +
+                                          $"Gün Sayısı: {(dtpEndDate.Value - dtpStartDate.Value).Days + 1}";
             }
-            else lblBuildingDetails.Text = "Bina seçilmedi."; // Seçim yapılmamışsa mesaj gösterilir
+            else
+            {
+                lblBuildingDetails.Text = "Bina seçilmedi.";
+            }
         }
 
 
@@ -215,14 +207,11 @@ namespace Project.WinFormUI.Forms
             try
             {
                 FairRepository fairRepo = new FairRepository();
-
-                // Giriş yapan müşteriye ait fuarları getir
                 var customerFairs = fairRepo.Where(f =>
                     f.CustomerId == LoggedInCustomer.Id &&
-                    (!showDelayed || f.IsDelayed) && // Gecikmiş fuarları göster seçeneği
+                    (!showDelayed || f.IsDelayed) &&
                     f.Status != DataStatus.Deleted).ToList();
 
-                // Fuarları DataGridView'e yükle
                 dgvFairs.DataSource = customerFairs.Select(f => new
                 {
                     FuarAdı = f.Name,
@@ -232,17 +221,10 @@ namespace Project.WinFormUI.Forms
                     HazırlıkSüresi = $"{f.PreparationDays} gün",
                     GecikmeDurumu = f.IsDelayed ? "Gecikmiş" : "Zamanında"
                 }).ToList();
-
-                // Eğer fuar yoksa DataGridView temizlenir
-                if (!customerFairs.Any())
-                {
-                    dgvFairs.DataSource = null;
-                    MessageBox.Show("Henüz fuar bulunmamaktadır.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Fuarlar yüklenirken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Fuarlar yüklenirken bir hata oluştu: {ex.Message}");
             }
         }
 
