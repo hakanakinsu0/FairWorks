@@ -21,11 +21,10 @@ namespace Project.WinFormUI.Forms.CustomerForms
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<string> SelectedServices { get; set; }
+        public string FairName { get; set; }
+        public DateTime CalculatedStartDate { get; set; } // Eksik olan özelliği tanımladık
 
-        public string FairName { get; set; } // CustomerDashboard'dan alınacak fuar ismi
-
-
-        public Fair SelectedFair { get; set; } // Fuar bilgisi ödeme ekranına aktarılacak
+        public Fair SelectedFair { get; set; }
 
 
         public FairPriceOfferForm()
@@ -53,32 +52,70 @@ namespace Project.WinFormUI.Forms.CustomerForms
             label1.Visible = false;
         }
 
+        private int CalculatePreparationDays()
+        {
+            int preparationDays = 0;
+
+            // Bina hazırlık süresi
+            if (SelectedBuilding != null)
+            {
+                preparationDays += SelectedBuilding.NumberOfFloor * 3; // Kat başına 3 gün
+                preparationDays += SelectedBuilding.RoomPerFloor * 2;  // Oda başına 2 gün
+            }
+
+            // Ek hizmetlerin hazırlık ve tampon sürelerini ekle
+            if (SelectedServices != null && SelectedServices.Any())
+            {
+                foreach (var serviceName in SelectedServices)
+                {
+                    // Burada hizmetlerin hazırlık sürelerini almanız gerekecek
+                    // Örneğin: ServiceValueRepository'den süreleri alarak ekleme yapabilirsiniz
+                    var serviceValueRepo = new ServiceValueRepository();
+                    var serviceValue = serviceValueRepo.FirstOrDefault(sv => sv.Name == serviceName);
+                    if (serviceValue != null)
+                    {
+                        preparationDays += serviceValue.PreparationTime; // Hizmet için hazırlık süresi
+                        preparationDays += serviceValue.BufferTime;      // Hizmet için tampon süre
+                    }
+                }
+            }
+
+            return preparationDays;
+        }
+
         private void btnAcceptOffer_Click(object sender, EventArgs e)
         {
             try
             {
-                // Fuar nesnesi oluşturuluyor
+                // Bina doluluk kontrolü
+                if (!IsBuildingAvailable(SelectedBuilding, CalculatedStartDate, EndDate))
+                {
+                    MessageBox.Show("Seçilen tarihlerde bina başka bir fuar için rezerve edilmiştir.", "Tarih Çakışması", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Toplam hazırlık süresini hesapla
+                int preparationDays = CalculatePreparationDays();
+
+                // Yeni fuar nesnesi oluştur
                 Fair newFair = new Fair
                 {
-                    Name = string.IsNullOrWhiteSpace(FairName)
-                       ? "Belirtilmemiş Fuar" // Eğer müşteri bir isim belirtmezse
-                       : FairName,            // CustomerDashboard'dan gelen değer
+                    Name = string.IsNullOrWhiteSpace(FairName) ? "Belirtilmemiş Fuar" : FairName,
                     RequestedStartDate = StartDate,
-                    CalculatedStartDate = StartDate,
+                    CalculatedStartDate = CalculatedStartDate,
                     EndDate = EndDate,
                     TotalCost = TotalCost,
-                    BasePreparationTime = 5,
-                    PreparationDays = (EndDate - StartDate).Days,
+                    BasePreparationTime = preparationDays,
+                    PreparationDays = preparationDays,
                     CustomerId = LoggedInCustomer.Id,
                     BuildingId = SelectedBuilding.Id,
                     IsDelayed = false
                 };
 
-                // Repository üzerinden ekleme işlemi yapılır
                 FairRepository fairRepo = new FairRepository();
                 fairRepo.Add(newFair);
 
-                // Eklenen fuarı veritabanından tekrar al
+                // Eklenen fuarı tekrar al
                 SelectedFair = fairRepo.FirstOrDefault(f => f.Name == newFair.Name && f.CustomerId == LoggedInCustomer.Id);
 
                 if (SelectedFair == null || SelectedFair.Id == 0)
@@ -87,15 +124,14 @@ namespace Project.WinFormUI.Forms.CustomerForms
                     return;
                 }
 
-                // Kullanıcıya başarılı mesajı gösteriliyor
                 MessageBox.Show("Teklif kabul edildi ve fuar oluşturuldu! Ödeme ekranına yönlendiriliyorsunuz.",
                                 "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // PaymentForm açılıyor
+                // Ödeme formunu aç
                 PaymentForm paymentForm = new PaymentForm
                 {
                     LoggedInCustomer = LoggedInCustomer,
-                    SelectedFair = SelectedFair, // Seçilen fuar aktarılıyor
+                    SelectedFair = SelectedFair,
                     TotalCost = TotalCost
                 };
 
@@ -108,7 +144,25 @@ namespace Project.WinFormUI.Forms.CustomerForms
                                 "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-      
+
+        private bool IsBuildingAvailable(Building building, DateTime calculatedStartDate, DateTime endDate)
+        {
+            FairRepository fairRepo = new FairRepository();
+
+            // Binadaki mevcut fuarları al
+            var existingFairs = fairRepo.Where(f => f.BuildingId == building.Id).ToList();
+
+            foreach (var fair in existingFairs)
+            {
+                // Hesaplanan başlangıç ve bitiş tarihleri ile çakışma kontrolü
+                if (calculatedStartDate < fair.EndDate && endDate > fair.CalculatedStartDate)
+                {
+                    return false; // Çakışma var
+                }
+            }
+
+            return true; // Çakışma yok
+        }
 
 
         private void btnDeclineOffer_Click(object sender, EventArgs e)
@@ -144,13 +198,10 @@ namespace Project.WinFormUI.Forms.CustomerForms
                 return;
             }
 
-            // FairRepository'yi başlat
-            FairRepository fairRepo = new FairRepository();
-
             // Yeni teklif hesaplama
+            FairRepository fairRepo = new FairRepository();
             decimal finalOffer = fairRepo.CalculateFinalOffer(TotalCost, customerOffer);
 
-            // Kullanıcı tarafından girilen teklif, sistemin önerdiği fiyatın üzerinde olmamalı
             if (customerOffer > finalOffer)
             {
                 MessageBox.Show("Girdiğiniz fiyat, önerilen fiyatın üzerinde olamaz. Lütfen daha düşük bir fiyat giriniz.",
@@ -160,49 +211,56 @@ namespace Project.WinFormUI.Forms.CustomerForms
 
             lblNewOffer.Text = $"Yeni Teklif Edilen Fiyat: {finalOffer:C2}";
 
-            // Müşteri onaylarsa ödeme ekranına yönlendirme
             DialogResult result = MessageBox.Show($"Yeni teklif sunuldu: {finalOffer:C2}\nOnaylıyor musunuz?",
                                                    "Yeni Teklif", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                // Yeni fuar nesnesini oluştur
-                Fair newFair = new Fair
+                try
                 {
-                    Name = string.IsNullOrWhiteSpace(FairName)
-                        ? "Belirtilmemiş Fuar" // Eğer müşteri bir isim belirtmezse
-                        : FairName,            // CustomerDashboard'dan gelen değer
-                    RequestedStartDate = StartDate,
-                    CalculatedStartDate = StartDate,
-                    EndDate = EndDate,
-                    TotalCost = finalOffer,
-                    BasePreparationTime = 5,
-                    PreparationDays = (EndDate - StartDate).Days,
-                    CustomerId = LoggedInCustomer.Id,
-                    BuildingId = SelectedBuilding.Id,
-                    IsDelayed = false
-                };
+                    // Toplam hazırlık süresini hesapla
+                    int preparationDays = CalculatePreparationDays();
 
-                // Fuarı ekle
-                SelectedFair = fairRepo.AddFair(newFair);
+                    // Yeni fuar nesnesini oluştur
+                    Fair newFair = new Fair
+                    {
+                        Name = string.IsNullOrWhiteSpace(FairName) ? "Belirtilmemiş Fuar" : FairName,
+                        RequestedStartDate = StartDate,
+                        CalculatedStartDate = StartDate,
+                        EndDate = EndDate,
+                        TotalCost = finalOffer,
+                        BasePreparationTime = preparationDays, // Bina + Ek Hizmetler
+                        PreparationDays = preparationDays,    // Aynı hazırlık süresi kaydediliyor
+                        CustomerId = LoggedInCustomer.Id,
+                        BuildingId = SelectedBuilding.Id,
+                        IsDelayed = false
+                    };
 
-                // Eklenen fuarın kontrolü
-                if (SelectedFair == null || SelectedFair.Id == 0)
-                {
-                    MessageBox.Show("Fuar kaydı alınamadı. İşlem iptal edildi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    // Fuarı ekle
+                    SelectedFair = fairRepo.AddFair(newFair);
+
+                    if (SelectedFair == null || SelectedFair.Id == 0)
+                    {
+                        MessageBox.Show("Fuar kaydı alınamadı. İşlem iptal edildi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Ödeme formunu aç
+                    PaymentForm paymentForm = new PaymentForm
+                    {
+                        LoggedInCustomer = LoggedInCustomer,
+                        SelectedFair = SelectedFair,
+                        TotalCost = finalOffer
+                    };
+
+                    paymentForm.ShowDialog();
+                    this.Close();
                 }
-
-                // Ödeme formunu aç
-                PaymentForm paymentForm = new PaymentForm
+                catch (Exception ex)
                 {
-                    LoggedInCustomer = LoggedInCustomer,
-                    SelectedFair = SelectedFair, // Seçilen fuar aktarılıyor
-                    TotalCost = finalOffer
-                };
-
-                paymentForm.ShowDialog();
-                this.Close();
+                    MessageBox.Show($"Fuar oluşturulurken bir hata oluştu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}",
+                                    "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {

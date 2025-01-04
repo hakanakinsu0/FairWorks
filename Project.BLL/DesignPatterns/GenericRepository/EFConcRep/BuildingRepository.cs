@@ -78,9 +78,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return basePreparationDays;
         }
 
-        public List<Building> SearchBuildings(string city, string district, DateTime startDate, DateTime endDate)
+        public List<Building> SearchBuildings(string city, string district, DateTime calculatedStartDate, DateTime calculatedEndDate)
         {
-            return GetAvailableBuildings(city, district, startDate, endDate);
+            return _db.Buildings
+                .Where(b => b.Location.City == city && b.Location.District == district) // Şehir ve ilçe kontrolü
+                .Where(b => !_db.Fairs.Any(f =>
+                    f.BuildingId == b.Id &&
+                    f.CalculatedStartDate < calculatedEndDate &&
+                    f.EndDate > calculatedStartDate)) // Tarih çakışması kontrolü
+                .ToList();
         }
     }
 }

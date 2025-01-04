@@ -66,7 +66,7 @@ namespace Project.WinFormUI.Forms
 
             // Tarih bilgileri
             summaryDetails.AppendLine("Tarih Bilgileri:");
-            summaryDetails.AppendLine($"- Başlangıç Tarihi: {StartDate.ToShortDateString()}");
+            summaryDetails.AppendLine($"- Başlangıç Tarihi: {CalculatedStartDate.ToShortDateString()}");
             summaryDetails.AppendLine($"- Bitiş Tarihi: {EndDate.ToShortDateString()}");
             summaryDetails.AppendLine();
 
@@ -91,10 +91,12 @@ namespace Project.WinFormUI.Forms
                 StartDate = StartDate,
                 EndDate = EndDate,
                 SelectedServices = SelectedServices,
-                FairName = FairName // Fuar adını geçiriyoruz
+                FairName = FairName,
+                CalculatedStartDate = CalculatedStartDate // Aktarımı sağladık
             };
 
             fairPriceOfferForm.ShowDialog();
+            this.Close();
         }
 
         private void btnGoBack_Click(object sender, EventArgs e)

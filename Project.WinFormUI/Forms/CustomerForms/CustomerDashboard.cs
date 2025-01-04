@@ -215,7 +215,7 @@ namespace Project.WinFormUI.Forms
                 dgvFairs.DataSource = customerFairs.Select(f => new
                 {
                     FuarAdı = f.Name,
-                    BaşlangıçTarihi = f.RequestedStartDate.ToShortDateString(),
+                    BaşlangıçTarihi = f.CalculatedStartDate.ToShortDateString(),
                     BitişTarihi = f.EndDate.ToShortDateString(),
                     ToplamMaliyet = f.TotalCost.ToString("C"),
                     HazırlıkSüresi = $"{f.PreparationDays} gün",

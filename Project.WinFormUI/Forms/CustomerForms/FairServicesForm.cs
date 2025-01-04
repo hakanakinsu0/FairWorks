@@ -31,6 +31,10 @@ namespace Project.WinFormUI.Forms
 
         public DateTime CalculatedStartDate { get; set; }
 
+        public decimal FixedWaterCost { get; set; } = 2000m;  // Su tesisatı maliyeti
+        public decimal FixedElectricityCost { get; set; } = 2000m;  // Elektrik tesisatı maliyeti
+
+
 
 
 
@@ -63,6 +67,8 @@ namespace Project.WinFormUI.Forms
 
             return preparationDays;
         }
+
+
         private void CheckPreparationDate()
         {
             int preparationDays = CalculatePreparationDays();
@@ -252,6 +258,10 @@ namespace Project.WinFormUI.Forms
                     secimler.AppendLine("- Hiçbir seçim yapılmadı.");
                 }
             }
+            // Sabit hizmetleri ekle
+            secimler.AppendLine("\nSabit Hizmetler:");
+            secimler.AppendLine($"- Su Tesisatı: {FixedWaterCost:C2}");
+            secimler.AppendLine($"- Elektrik Tesisatı: {FixedElectricityCost:C2}");
 
             lblSecilenler.Text = secimler.ToString();
         }
@@ -263,24 +273,47 @@ namespace Project.WinFormUI.Forms
             Close();
         }
 
-        private void btnConfirmAll_Click(object sender, EventArgs e)
+
+        private bool IsBuildingAvailable(Building building, DateTime calculatedStartDate, DateTime endDate)
         {
+            FairRepository fairRepo = new FairRepository();
 
-            // CustomerDashboard'dan gelen başlangıç tarihi RequestedStartDate olarak ayarlanır
-            DateTime requestedStartDate = StartDate;
+            // Binadaki mevcut fuarları al
+            var existingFairs = fairRepo.Where(f => f.BuildingId == building.Id).ToList();
 
-            // Toplam hazırlık süresini hesapla
-            int preparationDays = CalculatePreparationDays();
+            foreach (var fair in existingFairs)
+            {
+                // Hesaplanan başlangıç ve bitiş tarihleri ile çakışma kontrolü
+                if (calculatedStartDate < fair.EndDate && endDate > fair.CalculatedStartDate)
+                {
+                    return false; // Çakışma var
+                }
+            }
 
-            // CalculatedStartDate, RequestedStartDate'e hazırlık süresi eklenerek hesaplanır
-            CalculatedStartDate = requestedStartDate.AddDays(preparationDays);
+            return true; // Çakışma yok
+        }
 
-            // Kullanıcının belirttiği süre kadar bitiş tarihi hesaplanır
-            int fairDuration = (EndDate - StartDate).Days; // Kullanıcının belirttiği gün sayısı
-            EndDate = CalculatedStartDate.AddDays(fairDuration); // Hesaplanan bitiş tarihi
+        private decimal CalculateTotalCost()
+        {
+            int totalDays = (EndDate - CalculatedStartDate).Days+1; // Toplam gün sayısı
 
-            // Seçilen hizmetleri topla
-            SelectedServices.Clear();
+            // Seçilen hizmetlerin toplam maliyeti
+            decimal totalServiceCost = SelectedServices.Sum(s => s.Cost * totalDays);
+
+            // Sabit hizmet maliyetlerini ekle
+            decimal fixedServicesCost = (FixedWaterCost + FixedElectricityCost) * totalDays;
+
+            // Toplam bina maliyeti + hizmet maliyetleri
+            decimal totalCost = BuildingCost + totalServiceCost + fixedServicesCost;
+
+            return totalCost;
+        }
+
+        private void UpdateSelectedServices()
+        {
+            SelectedServices.Clear(); // Önce listeyi temizliyoruz
+
+            // TabPage'leri dolaşarak seçilen hizmetleri listeye ekle
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
                 foreach (Control group in tabPage.Controls)
@@ -296,10 +329,9 @@ namespace Project.WinFormUI.Forms
                                     if (selectedItem is ListViewItem listViewItem && listViewItem.Tag is int serviceValueId)
                                     {
                                         var serviceValue = _serviceValueRepository.GetById(serviceValueId);
-
                                         if (serviceValue != null)
                                         {
-                                            SelectedServices.Add(serviceValue); // Seçilen hizmeti listeye ekle
+                                            SelectedServices.Add(serviceValue); // Ek hizmet listeye ekleniyor
                                         }
                                     }
                                 }
@@ -312,50 +344,78 @@ namespace Project.WinFormUI.Forms
             if (!SelectedServices.Any())
             {
                 MessageBox.Show("Hiçbir hizmet seçilmedi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
+        private void btnConfirmAll_Click(object sender, EventArgs e)
+        {
+
+            UpdateSelectedServices(); // Seçilen hizmetleri güncelle
+
+            int preparationDays = CalculatePreparationDays(); // Hazırlık günlerini yeniden hesapla
+            DateTime calculatedStartDate = StartDate.AddDays(preparationDays); // Güncellenmiş hazırlık süresini kullan
+
+            if (calculatedStartDate <= StartDate)
+            {
+                CalculatedStartDate = StartDate;
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    $"Hazırlık süresi nedeniyle önerilen başlangıç tarihi: {calculatedStartDate.ToShortDateString()}.\n" +
+                    $"Talep edilen başlangıç tarihi: {StartDate.ToShortDateString()}.\n\n" +
+                    $"Hesaplanan tarihi kabul etmek istiyor musunuz?",
+                    "Başlangıç Tarihi Onayı",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    CalculatedStartDate = calculatedStartDate;
+                }
+                else
+                {
+                    MessageBox.Show("İşlem iptal edildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+
+            // Sabit hizmetlerin maliyetlerini hesapla
+            int fairDuration = (EndDate - StartDate).Days+1;
+            decimal fixedServicesCost = (FixedWaterCost + FixedElectricityCost) * fairDuration;
+
+            MessageBox.Show(
+                $"Sabit Hizmetler Maliyeti:\n" +
+                $"- Su Tesisatı: {FixedWaterCost:C2}\n" +
+                $"- Elektrik Tesisatı: {FixedElectricityCost:C2}\n\n" +
+                $"Bu hizmetlerin toplam maliyeti: {fixedServicesCost:C2}",
+                "Sabit Hizmetler",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+            // Toplam süreyi hesapla ve bitiş tarihini güncelle
+            EndDate = CalculatedStartDate.AddDays(fairDuration);
+
+            // Bina doluluk kontrolü
+            if (!IsBuildingAvailable(SelectedBuilding, CalculatedStartDate, EndDate))
+            {
+                MessageBox.Show("Seçilen tarihlerde bina başka bir fuar için rezerve edilmiştir.", "Tarih Çakışması", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Toplam maliyeti hesapla
-            int totalDays = (EndDate - CalculatedStartDate).Days; // Yeni hesaplanan toplam süre
-            var totalServiceCost = SelectedServices.Sum(s => s.Cost * totalDays);
-            var finalCost = BuildingCost + totalServiceCost;
-
-            // Tabloda güncellenen tarihleri ve maliyeti göster
-            MessageBox.Show($"RequestedStartDate: {requestedStartDate.ToShortDateString()}\n" +
-                            $"CalculatedStartDate: {CalculatedStartDate.ToShortDateString()}\n" +
-                            $"EndDate: {EndDate.ToShortDateString()}\n" +
-                            $"Toplam Maliyet: {finalCost:C2}",
-                            "Hesaplanan Tarihler ve Maliyet", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Veritabanına kaydet
-            FairRepository fairRepo = new FairRepository();
-            Fair fair = new Fair
-            {
-                Name = FairName,
-                RequestedStartDate = requestedStartDate, // Dashboard'dan gelen başlangıç tarihi
-                CalculatedStartDate = CalculatedStartDate, // Hazırlık süresi sonrası başlangıç tarihi
-                EndDate = EndDate, // Hesaplanan bitiş tarihi
-                TotalCost = finalCost,
-                PreparationDays = preparationDays,
-                CustomerId = LoggedInCustomer.Id,
-                BuildingId = SelectedBuilding.Id,
-                CreatedDate = DateTime.Now,
-                Status = DataStatus.Inserted
-            };
-
-            fairRepo.Add(fair);
-            //fairRepo.SaveChanges();
-
-            // Yeni formu aç
+            // Özet formunu aç
             FairSummaryForm summaryForm = new FairSummaryForm
             {
                 LoggedInCustomer = LoggedInCustomer,
                 SelectedBuilding = SelectedBuilding,
-                TotalCost = finalCost,
-                SelectedServices = SelectedServices.Select(s => s.Name).ToList(), // Sadece isimleri geç
-                StartDate = CalculatedStartDate, // Hesaplanan başlangıç tarihi
-                EndDate = EndDate,               // Hesaplanan bitiş tarihi
-                FairName = FairName              // Kullanıcının belirttiği fuar adı
+                TotalCost = CalculateTotalCost(),
+                SelectedServices = SelectedServices.Select(s => s.Name).ToList(),
+                StartDate = StartDate,
+                EndDate = EndDate,
+                CalculatedStartDate = CalculatedStartDate,
+                FairName = FairName
             };
 
             summaryForm.ShowDialog();
