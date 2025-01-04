@@ -49,7 +49,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblFairDetails = new System.Windows.Forms.Label();
+            this.btnViewFairDetails = new System.Windows.Forms.Button();
+            this.btnCancelFair = new System.Windows.Forms.Button();
             this.dgvFairs = new System.Windows.Forms.DataGridView();
+            this.btnIptal = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -257,6 +261,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnIptal);
+            this.tabPage2.Controls.Add(this.lblFairDetails);
+            this.tabPage2.Controls.Add(this.btnViewFairDetails);
+            this.tabPage2.Controls.Add(this.btnCancelFair);
             this.tabPage2.Controls.Add(this.dgvFairs);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -266,6 +274,34 @@
             this.tabPage2.Text = "Fuarlarım";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // lblFairDetails
+            // 
+            this.lblFairDetails.BackColor = System.Drawing.Color.White;
+            this.lblFairDetails.Location = new System.Drawing.Point(19, 277);
+            this.lblFairDetails.Name = "lblFairDetails";
+            this.lblFairDetails.Size = new System.Drawing.Size(235, 78);
+            this.lblFairDetails.TabIndex = 3;
+            // 
+            // btnViewFairDetails
+            // 
+            this.btnViewFairDetails.Location = new System.Drawing.Point(260, 277);
+            this.btnViewFairDetails.Name = "btnViewFairDetails";
+            this.btnViewFairDetails.Size = new System.Drawing.Size(87, 23);
+            this.btnViewFairDetails.TabIndex = 2;
+            this.btnViewFairDetails.Text = "Fuar Detaylari";
+            this.btnViewFairDetails.UseVisualStyleBackColor = true;
+            this.btnViewFairDetails.Click += new System.EventHandler(this.btnViewFairDetails_Click);
+            // 
+            // btnCancelFair
+            // 
+            this.btnCancelFair.Location = new System.Drawing.Point(260, 306);
+            this.btnCancelFair.Name = "btnCancelFair";
+            this.btnCancelFair.Size = new System.Drawing.Size(87, 23);
+            this.btnCancelFair.TabIndex = 1;
+            this.btnCancelFair.Text = "Fuari Iptal Et";
+            this.btnCancelFair.UseVisualStyleBackColor = true;
+            this.btnCancelFair.Click += new System.EventHandler(this.btnCancelFair_Click);
+            // 
             // dgvFairs
             // 
             this.dgvFairs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -273,6 +309,16 @@
             this.dgvFairs.Name = "dgvFairs";
             this.dgvFairs.Size = new System.Drawing.Size(703, 241);
             this.dgvFairs.TabIndex = 0;
+            // 
+            // btnIptal
+            // 
+            this.btnIptal.Location = new System.Drawing.Point(261, 336);
+            this.btnIptal.Name = "btnIptal";
+            this.btnIptal.Size = new System.Drawing.Size(86, 23);
+            this.btnIptal.TabIndex = 4;
+            this.btnIptal.Text = "Iptal";
+            this.btnIptal.UseVisualStyleBackColor = true;
+            this.btnIptal.Click += new System.EventHandler(this.btnIptal_Click);
             // 
             // CustomerDashboard
             // 
@@ -315,5 +361,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblBuildingDetails;
         private System.Windows.Forms.DataGridView dgvFairs;
+        private System.Windows.Forms.Label lblFairDetails;
+        private System.Windows.Forms.Button btnViewFairDetails;
+        private System.Windows.Forms.Button btnCancelFair;
+        private System.Windows.Forms.Button btnIptal;
     }
 }

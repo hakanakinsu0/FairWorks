@@ -3,6 +3,7 @@ using Project.ENTITIES.Enums;
 using Project.ENTITIES.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,5 +38,6 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                 ? discountedPrice
                 : (discountedPrice + customerOffer) / 2;
         }
+
     }
 }

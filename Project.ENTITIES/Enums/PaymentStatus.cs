@@ -12,7 +12,8 @@ namespace Project.ENTITIES.Enums
 
         Paid = 1,        // Ödeme başarılı bir şekilde tamamlandı.
         Negotiation = 2, // Ödeme pazarlık aşamasında.
-        Failed = 3       // Ödeme başarısız oldu.
+        Failed = 3 ,      // Ödeme başarısız oldu.
+        Cancelled = 4    // Ödeme iptal edildi. (Yeni eklendi)
 
     }
 }

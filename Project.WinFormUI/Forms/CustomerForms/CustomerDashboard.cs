@@ -19,7 +19,8 @@ namespace Project.WinFormUI.Forms
         // Repository sınıfları
         private readonly BuildingRepository _buildingRepository;
         private readonly LocationRepository _locationRepository;
-
+        private readonly FairRepository _fairRepository;
+        private readonly PaymentRepository _paymentRepository;
         public Customer LoggedInCustomer { get; set; }
         public string FairName { get; set; } // FairName özelliği eklendi
 
@@ -30,7 +31,12 @@ namespace Project.WinFormUI.Forms
 
             // Repository nesneleri oluşturuluyor
             _buildingRepository = new BuildingRepository();
+            _paymentRepository = new PaymentRepository();
+            _fairRepository = new FairRepository();
+            _paymentRepository = new PaymentRepository();
+
             _locationRepository = new LocationRepository();
+
 
             // Şehirleri yükleme ve alanları temizleme işlemleri
             LoadCities();
@@ -202,31 +208,38 @@ namespace Project.WinFormUI.Forms
             lstBuildings.DataSource = null;
         }
 
-        private void LoadFairs(bool showDelayed = false)
+        private void LoadFairs()
         {
             try
             {
-                FairRepository fairRepo = new FairRepository();
-                var customerFairs = fairRepo.Where(f =>
-                    f.CustomerId == LoggedInCustomer.Id &&
-                    (!showDelayed || f.IsDelayed) &&
-                    f.Status != DataStatus.Deleted).ToList();
+                // DataGridView'i temizleyin
+                dgvFairs.DataSource = null;
 
-                dgvFairs.DataSource = customerFairs.Select(f => new
-                {
-                    FuarAdı = f.Name,
-                    BaşlangıçTarihi = f.CalculatedStartDate.ToShortDateString(),
-                    BitişTarihi = f.EndDate.ToShortDateString(),
-                    ToplamMaliyet = f.TotalCost.ToString("C"),
-                    HazırlıkSüresi = $"{f.PreparationDays} gün",
-                    GecikmeDurumu = f.IsDelayed ? "Gecikmiş" : "Zamanında"
-                }).ToList();
+                // Müşteriye ait fuarları listele
+                var customerFairs = _fairRepository
+                    .Where(f => f.CustomerId == LoggedInCustomer.Id)
+                    .Select(f => new
+                    {
+                        f.Id,
+                        FuarAdı = f.Name,
+                        BaşlangıçTarihi = f.CalculatedStartDate.ToShortDateString(),
+                        BitişTarihi = f.EndDate.ToShortDateString(),
+                        ToplamMaliyet = f.TotalCost.ToString("C"),
+                        Durum = f.Status == DataStatus.Deleted ? "İptal Edildi" : "Aktif"
+                    })
+                    .ToList();
+
+                // Veriyi bağlayın ve yenileyin
+                dgvFairs.DataSource = customerFairs;
+                dgvFairs.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Fuarlar yüklenirken bir hata oluştu: {ex.Message}");
+                MessageBox.Show($"Fuarlar yüklenirken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -234,6 +247,83 @@ namespace Project.WinFormUI.Forms
             {
                 LoadFairs(); // Fuarlar sekmesine geçildiğinde fuarları yükler
             }
+        }
+
+        private void btnCancelFair_Click(object sender, EventArgs e)
+        {
+            if (dgvFairs.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Lütfen iptal etmek istediğiniz fuarı seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Seçili fuarın ID'sini al
+            int selectedFairId = (int)dgvFairs.SelectedRows[0].Cells["Id"].Value;
+            var fair = _fairRepository.GetById(selectedFairId);
+
+            if (fair == null)
+            {
+                MessageBox.Show("Seçilen fuar bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (fair.Status == DataStatus.Deleted)
+            {
+                MessageBox.Show("Bu fuar zaten iptal edilmiş.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Ödeme işlemleri
+            var payment = _paymentRepository.FirstOrDefault(p => p.FairId == fair.Id);
+            if (payment != null)
+            {
+                payment.RefundStatus = RefundStatus.Refunded; // İade durumu tamamlandı
+                _paymentRepository.Update(payment);
+            }
+
+            // Fuarın durumunu güncelle
+            fair.Status = DataStatus.Deleted;
+            _fairRepository.Delete(fair);
+
+            // Güncellenen durumu test edin
+            var updatedFair = _fairRepository.GetById(selectedFairId);
+            MessageBox.Show($"Fuar adı: {updatedFair.Name}, Durumu: {updatedFair.Status}");
+
+            MessageBox.Show("Fuar başarıyla iptal edildi ve ödeme iadesi gerçekleştirildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // DataGridView'i güncelle
+            LoadFairs();
+        }
+
+        private void btnViewFairDetails_Click(object sender, EventArgs e)
+        {
+            if (dgvFairs.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Lütfen görüntülemek istediğiniz fuarı seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Seçili fuar bilgilerini al
+            int selectedFairId = (int)dgvFairs.SelectedRows[0].Cells["Id"].Value;
+            var fair = _fairRepository.GetById(selectedFairId);
+
+            if (fair == null)
+            {
+                MessageBox.Show("Seçilen fuar bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Fuar detaylarını göster
+            lblFairDetails.Text = $"Fuar Adı: {fair.Name}\n" +
+                                  $"Başlangıç Tarihi: {fair.CalculatedStartDate:dd/MM/yyyy}\n" +
+                                  $"Bitiş Tarihi: {fair.EndDate:dd/MM/yyyy}\n" +
+                                  $"Toplam Maliyet: {fair.TotalCost:C2}\n" +
+                                  $"Durum: {(fair.Status == DataStatus.Deleted ? "İptal Edildi" : "Aktif")}";
+        }
+
+        private void btnIptal_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

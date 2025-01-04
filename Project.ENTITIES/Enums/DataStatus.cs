@@ -12,6 +12,6 @@ namespace Project.ENTITIES.Enums
 
         Inserted = 1,  // Kayıt yeni oluşturuldu.
         Updated = 2,   // Kayıt üzerinde değişiklik yapıldı.
-        Deleted = 3    // Kayıt silindi veya işlevsiz hale getirildi.
+        Deleted = 3   // Kayıt silindi veya işlevsiz hale getirildi.
     }
 }

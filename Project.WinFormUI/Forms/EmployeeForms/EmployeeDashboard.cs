@@ -1,4 +1,5 @@
 ﻿using Project.BLL.DesignPatterns.GenericRepository.EFConcRep;
+using Project.ENTITIES.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,6 +34,12 @@ namespace Project.WinFormUI.Forms
             _serviceValueRepository = new ServiceValueRepository(); // Hizmet değeri repository'sini başlat
             _buildingRepository = new BuildingRepository(); // Bina repository'sini başlat
             _locationRepository = new LocationRepository(); // Konum repository'sini başlat
+
+            LoadFairs();
+
+
+            // DataGridView SelectionChanged olayını bağla
+            dgvFairs.SelectionChanged += dgvFairs_SelectionChanged;
         }
 
         #region EkleSekmesi
@@ -273,6 +280,161 @@ namespace Project.WinFormUI.Forms
             }
         }
 
-      
+        private void btnSaveDelay_Click(object sender, EventArgs e)
+        {
+            if (dgvFairs.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Lütfen bir fuar seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedRow = dgvFairs.SelectedRows[0];
+            if (!int.TryParse(selectedRow.Cells["Id"].Value.ToString(), out int selectedFairId))
+            {
+                MessageBox.Show("Geçerli bir fuar seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fairRepository = new FairRepository();
+            var fair = fairRepository.GetById(selectedFairId);
+
+            if (fair == null)
+            {
+                MessageBox.Show("Seçilen fuar bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int delayDuration = (int)nudDelayDuration.Value;
+            string delayReason = txtDelayReason.Text.Trim();
+
+            if (delayDuration <= 0 || string.IsNullOrWhiteSpace(delayReason))
+            {
+                MessageBox.Show("Gecikme süresi ve nedeni girilmelidir.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DateTime newStartDate = fair.CalculatedStartDate.AddDays(delayDuration);
+            DateTime newEndDate = fair.EndDate.AddDays(delayDuration);
+
+            var fairDelay = new FairDelay
+            {
+                FairId = fair.Id,
+                DelayDuration = delayDuration,
+                DelayReason = delayReason,
+                NewStartDate = newStartDate,
+                NewEndDate = newEndDate,
+                CreatedDate = DateTime.Now
+            };
+
+            var fairDelayRepository = new FairDelayRepository();
+            fairDelayRepository.Add(fairDelay);
+
+            fair.CalculatedStartDate = newStartDate;
+            fair.EndDate = newEndDate;
+            fair.IsDelayed = true;
+
+            fairRepository.Update(fair);
+
+            MessageBox.Show("Gecikme bilgisi başarıyla kaydedildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadDelayHistory(fair.Id);
+            ClearFields();
+            LoadFairs();
+        }
+
+        private void btnViewDelays_Click(object sender, EventArgs e)
+        {
+            if (dgvFairs.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Lütfen bir fuar seçiniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int selectedFairId = (int)dgvFairs.SelectedRows[0].Cells["Id"].Value;
+            LoadDelayHistory(selectedFairId);
+        }
+
+        private void LoadDelayHistory(int fairId)
+        {
+            var fairDelayRepository = new FairDelayRepository();
+            var delays = fairDelayRepository.Where(fd => fd.FairId == fairId).ToList();
+
+            lstDelayHistory.Items.Clear();
+
+            if (!delays.Any())
+            {
+                lstDelayHistory.Items.Add("Bu fuar için gecikme bilgisi bulunmamaktadır.");
+                return;
+            }
+
+            foreach (var delay in delays)
+            {
+                lstDelayHistory.Items.Add($"Gecikme Süresi: {delay.DelayDuration} gün - " +
+                                          $"Sebep: {delay.DelayReason} - " +
+                                          $"Yeni Başlangıç: {delay.NewStartDate.ToShortDateString()} - " +
+                                          $"Yeni Bitiş: {delay.NewEndDate.ToShortDateString()}");
+            }
+        }
+
+        private void ClearFields()
+        {
+            nudDelayDuration.Value = 0;
+            txtDelayReason.Clear();
+            lstDelayHistory.Items.Clear();
+        }
+
+        private void LoadFairs()
+        {
+            var fairRepository = new FairRepository();
+            var fairs = fairRepository.GetAll().Select(f => new
+            {
+                f.Id, // ID kolonunun mevcut olduğundan emin olun
+                FuarAdı = f.Name,
+                HesaplananBaşlangıç = f.CalculatedStartDate.ToShortDateString(),
+                BitişTarihi = f.EndDate.ToShortDateString(),
+                ToplamMaliyet = f.TotalCost.ToString("C"),
+                GecikmeDurumu = f.IsDelayed ? "Evet" : "Hayır"
+            }).ToList();
+
+            dgvFairs.DataSource = fairs;
+        }
+
+        private void dgvFairs_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateSelectedFairDetails();
+        }
+
+        private void UpdateSelectedFairDetails()
+        {
+            if (dgvFairs.SelectedRows.Count == 0)
+            {
+                lblSelectedFairDetails.Text = "Seçilen bir fuar yok.";
+                return;
+            }
+
+            var selectedRow = dgvFairs.SelectedRows[0];
+
+            if (!int.TryParse(selectedRow.Cells["Id"].Value.ToString(), out int selectedFairId))
+            {
+                lblSelectedFairDetails.Text = "Geçerli bir fuar seçilmedi.";
+                return;
+            }
+
+            var fairRepository = new FairRepository();
+            var fair = fairRepository.GetById(selectedFairId);
+
+            if (fair == null)
+            {
+                lblSelectedFairDetails.Text = "Fuar bilgisi bulunamadı.";
+                return;
+            }
+
+            // Fuar bilgilerini etiket kontrolüne yazdır
+            lblSelectedFairDetails.Text = $"Fuar Adı: {fair.Name}\n" +
+                                          $"Hesaplanan Başlangıç: {fair.CalculatedStartDate.ToShortDateString()}\n" +
+                                          $"Bitiş Tarihi: {fair.EndDate.ToShortDateString()}\n" +
+                                          $"Maliyet: {fair.TotalCost:C2}\n" +
+                                          $"Gecikme Durumu: {(fair.IsDelayed ? "Evet" : "Hayır")}";
+        }
+
     }
 }
