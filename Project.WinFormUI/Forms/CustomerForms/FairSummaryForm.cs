@@ -30,47 +30,45 @@ namespace Project.WinFormUI.Forms
         }
 
         private void FairSummaryForm_Load(object sender, EventArgs e)
-        {   
-            // Özet bilgileri oluşturmak için StringBuilder kullanılır
-            StringBuilder summaryDetails = new StringBuilder();
+        {
+            // Özet bilgilerini bir string değişkeninde oluştur
+            string summaryDetails = "";
 
             // Bina bilgilerini ekle
             if (SelectedBuilding != null)
             {
-                summaryDetails.AppendLine("Seçilen Bina:");
-                summaryDetails.AppendLine($"- Adı: {SelectedBuilding.Name}");
-                summaryDetails.AppendLine($"- Adres: {SelectedBuilding.Address}");
-                summaryDetails.AppendLine($"- Kat Sayısı: {SelectedBuilding.NumberOfFloor}");
-                summaryDetails.AppendLine($"- Oda Başına Kat: {SelectedBuilding.RoomPerFloor}");
-                summaryDetails.AppendLine();
+                //\r\n : Platforma özgü yeni satır karakteri ekler ve daha uyumlu çalışır.
+                summaryDetails += $"Seçilen Bina:\r\n";
+                summaryDetails += $"- Adı: {SelectedBuilding.Name}\r\n";
+                summaryDetails += $"- Adres: {SelectedBuilding.Address}\r\n";
+                summaryDetails += $"- Kat Sayısı: {SelectedBuilding.NumberOfFloor}\r\n";
+                summaryDetails += $"- Oda Başına Kat: {SelectedBuilding.RoomPerFloor}\r\n\r\n";
             }
 
             // Ek hizmet bilgilerini ekle
             if (SelectedServices != null && SelectedServices.Count > 0)
             {
-                summaryDetails.AppendLine("Seçilen Ek Hizmetler:");
+                summaryDetails += $"Seçilen Ek Hizmetler:\r\n";
 
                 foreach (var service in SelectedServices)
                 {
-                    summaryDetails.AppendLine($"- {service}");
+                    summaryDetails += $"- {service}\r\n";
                 }
 
-                summaryDetails.AppendLine();
+                summaryDetails += "\r\n";
             }
             else
             {
-                summaryDetails.AppendLine("Hiçbir Ek Hizmet Seçilmedi.");
+                summaryDetails += "Hiçbir Ek Hizmet Seçilmedi.\r\n";
             }
 
             // Tarih bilgilerini ekle
-            summaryDetails.AppendLine("Tarih Bilgileri:");
-            summaryDetails.AppendLine($"- Başlangıç Tarihi: {CalculatedStartDate.ToShortDateString()}");
-            summaryDetails.AppendLine($"- Bitiş Tarihi: {EndDate.ToShortDateString()}");
-            summaryDetails.AppendLine();
+            summaryDetails += "Tarih Bilgileri:\r\n";
+            summaryDetails += $"- Başlangıç Tarihi: {CalculatedStartDate.ToShortDateString()}\r\n";
+            summaryDetails += $"- Bitiş Tarihi: {EndDate.ToShortDateString()}\r\n\r\n";
 
             // Bilgileri TextBox'a aktar
-            txtSummaryDetails.Text = summaryDetails.ToString();
-
+            txtSummaryDetails.Text = summaryDetails;
         }
 
         private void btnConfirmSelections_Click(object sender, EventArgs e)
@@ -82,7 +80,7 @@ namespace Project.WinFormUI.Forms
             }
 
             // Fuar fiyat teklifi formunu başlat
-            var fairPriceOfferForm = new FairPriceOfferForm
+            FairPriceOfferForm fairPriceOfferForm = new FairPriceOfferForm
             {
                 LoggedInCustomer = LoggedInCustomer,  // Giriş yapan müşteri bilgisi
                 SelectedBuilding = SelectedBuilding,  // Seçilen bina
@@ -95,7 +93,7 @@ namespace Project.WinFormUI.Forms
             };
 
             fairPriceOfferForm.ShowDialog();  // Fuar fiyat teklifi formunu göster
-            this.Close();  // Bu formu kapat
+            Close();  // Bu formu kapat
         }
 
         private void btnGoBack_Click(object sender, EventArgs e)

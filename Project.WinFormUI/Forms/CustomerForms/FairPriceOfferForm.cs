@@ -27,7 +27,7 @@ namespace Project.WinFormUI.Forms.CustomerForms
         public DateTime CalculatedStartDate { get; set; } // Eksik olan özelliği tanımladık.                                                
         public Fair SelectedFair { get; set; }   // Seçilen fuar bilgisi.
 
-
+        
         // Formun yapıcı metodu.
         public FairPriceOfferForm()
         {
@@ -37,10 +37,10 @@ namespace Project.WinFormUI.Forms.CustomerForms
         private void FairPriceOfferForm_Load(object sender, EventArgs e)
         {
             // Fiyat teklifi özet bilgilerini oluşturmak için StringBuilder kullanılır.
-            StringBuilder priceOfferDetails = new StringBuilder();
+            string priceOfferDetails = "";
 
             // Toplam teklif edilen fiyatı ekle.
-            priceOfferDetails.AppendLine($"Toplam Teklif Edilen Fiyat:\n {TotalCost:C2}");
+            priceOfferDetails += ($"Toplam Teklif Edilen Fiyat:\n {TotalCost:C2}");
 
             // Oluşturulan bilgiyi lblPriceOfferDetails etiketine ata.
             lblPriceOfferDetails.Text = priceOfferDetails.ToString();
@@ -51,37 +51,6 @@ namespace Project.WinFormUI.Forms.CustomerForms
             btnCancelNewOffer.Visible = false; // İptal butonu.
             btnGonder.Visible = false;        // Gönder butonu.
             label1.Visible = false;           // Ek etiket.
-        }
-
-        private int CalculatePreparationDays()
-        {
-            int preparationDays = 0;
-
-            // Bina hazırlık süresi
-            if (SelectedBuilding != null)
-            {
-                preparationDays += SelectedBuilding.NumberOfFloor * 3; // Kat başına 3 gün
-                preparationDays += SelectedBuilding.RoomPerFloor * 2;  // Oda başına 2 gün
-            }
-
-            // Ek hizmetlerin hazırlık ve tampon sürelerini ekle
-            if (SelectedServices != null && SelectedServices.Any())
-            {
-                foreach (var serviceName in SelectedServices)
-                {
-                    // Burada hizmetlerin hazırlık sürelerini almanız gerekecek
-                    // Örneğin: ServiceValueRepository'den süreleri alarak ekleme yapabilirsiniz
-                    var serviceValueRepo = new ServiceValueRepository();
-                    var serviceValue = serviceValueRepo.FirstOrDefault(sv => sv.Name == serviceName);
-                    if (serviceValue != null)
-                    {
-                        preparationDays += serviceValue.PreparationTime; // Hizmet için hazırlık süresi
-                        preparationDays += serviceValue.BufferTime;      // Hizmet için tampon süre
-                    }
-                }
-            }
-
-            return preparationDays;
         }
 
         private void btnAcceptOffer_Click(object sender, EventArgs e)
@@ -145,32 +114,13 @@ namespace Project.WinFormUI.Forms.CustomerForms
             }
             catch (Exception ex)
             {
+
                 // Hata oluşursa mesaj kutusunda detayları göster.
                 MessageBox.Show($"Fuar oluşturulurken bir hata oluştu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}",
                                 "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
-
-        private bool IsBuildingAvailable(Building building, DateTime calculatedStartDate, DateTime endDate)
-        {
-            FairRepository fairRepo = new FairRepository();
-
-            // Binadaki mevcut fuarları al
-            var existingFairs = fairRepo.Where(f => f.BuildingId == building.Id).ToList();
-
-            foreach (var fair in existingFairs)
-            {
-                // Hesaplanan başlangıç ve bitiş tarihleri ile çakışma kontrolü
-                if (calculatedStartDate < fair.EndDate && endDate > fair.CalculatedStartDate)
-                {
-                    return false; // Çakışma var
-                }
-            }
-
-            return true; // Çakışma yok
-        }
-
 
         private void btnDeclineOffer_Click(object sender, EventArgs e)
         {
@@ -195,7 +145,7 @@ namespace Project.WinFormUI.Forms.CustomerForms
         { 
             // Kullanıcı yeni teklif sürecini iptal ettiğinde bilgilendirme mesajı gösterilir.
             MessageBox.Show("Yeni teklif süreci iptal edildi. Fuar oluşturulmadı.", "İptal", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close(); // Form kapatılır.
+            Close(); // Form kapatılır.
         }
 
         private void btnGonder_Click(object sender, EventArgs e)
@@ -264,7 +214,7 @@ namespace Project.WinFormUI.Forms.CustomerForms
                     };
 
                     paymentForm.ShowDialog(); // Ödeme formunu göster.
-                    this.Close(); // Mevcut formu kapat.
+                    Close(); // Mevcut formu kapat.
                 }
                 catch (Exception ex)
                 {
@@ -277,8 +227,60 @@ namespace Project.WinFormUI.Forms.CustomerForms
             {
                 // Kullanıcı yeni teklifi onaylamazsa bilgilendirme mesajı gösterilir.
                 MessageBox.Show("Fuar iptal edildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Form kapatılır.
+                Close(); // Form kapatılır.
             }
+        }
+
+
+        /******************Form Metotlari****************************/
+        private int CalculatePreparationDays()
+        {
+            int preparationDays = 0;
+
+            // Bina hazırlık süresi
+            if (SelectedBuilding != null)
+            {
+                preparationDays += SelectedBuilding.NumberOfFloor * 3; // Kat başına 3 gün
+                preparationDays += SelectedBuilding.RoomPerFloor * 2;  // Oda başına 2 gün
+            }
+
+            // Ek hizmetlerin hazırlık ve tampon sürelerini ekle
+            if (SelectedServices != null && SelectedServices.Any())
+            {
+                foreach (string serviceName in SelectedServices)
+                {
+                    // Burada hizmetlerin hazırlık sürelerini almanız gerekecek
+                    // Örneğin: ServiceValueRepository'den süreleri alarak ekleme yapabilirsiniz
+                    ServiceValueRepository serviceValueRepo = new ServiceValueRepository();
+                    ServiceValue serviceValue = serviceValueRepo.FirstOrDefault(sv => sv.Name == serviceName);
+                    if (serviceValue != null)
+                    {
+                        preparationDays += serviceValue.PreparationTime; // Hizmet için hazırlık süresi
+                        preparationDays += serviceValue.BufferTime;      // Hizmet için tampon süre
+                    }
+                }
+            }
+
+            return preparationDays;
+        }
+
+        private bool IsBuildingAvailable(Building building, DateTime calculatedStartDate, DateTime endDate)
+        {
+            FairRepository fairRepo = new FairRepository();
+
+            // Binadaki mevcut fuarları al
+            List<Fair> existingFairs = fairRepo.Where(f => f.BuildingId == building.Id).ToList();
+
+            foreach (Fair fair in existingFairs)
+            {
+                // Hesaplanan başlangıç ve bitiş tarihleri ile çakışma kontrolü
+                if (calculatedStartDate < fair.EndDate && endDate > fair.CalculatedStartDate)
+                {
+                    return false; // Çakışma var
+                }
+            }
+
+            return true; // Çakışma yok
         }
     }
 }

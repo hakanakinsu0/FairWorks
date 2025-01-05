@@ -71,24 +71,7 @@ namespace Project.WinFormUI.Forms.CustomerForms
                 {
                     MessageBox.Show("Ödeme başarıyla tamamlandı.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Belirtilen formları kapat
-                    CloseSpecificForms<FairServicesForm>();
-                    CloseSpecificForms<FairSummaryForm>();
-                    CloseSpecificForms<FairPriceOfferForm>();
-                    CloseSpecificForms<PaymentForm>();
-
-                    // Eğer CustomerDashboard zaten açık değilse, yeni bir tane aç
-                    if (!Application.OpenForms.OfType<CustomerDashboard>().Any())
-                    {
-                        CustomerDashboard customerDashboard = new CustomerDashboard
-                        {
-                            LoggedInCustomer = LoggedInCustomer
-                        };
-                        customerDashboard.Show();
-                    }
-
-                    // Bu formu da kapat
-                    this.Close();
+                    CloseAllFairRelatedForms(); // Tüm ilgili formları kapat
                 }
                 else
                 {
@@ -98,21 +81,26 @@ namespace Project.WinFormUI.Forms.CustomerForms
             catch (Exception ex)
             {
                 MessageBox.Show($"Ödeme sırasında bir hata oluştu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}",
-                                "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void CloseSpecificForms<T>() where T : Form
-        {
-            var form = Application.OpenForms.OfType<T>().FirstOrDefault();  // Uygulamadaki açık formlar arasında, türü T olan ilk formu bulur
-            if (form != null)  // Eğer form mevcutsa
-            {
-                form.Close();  // Formu kapatır
+                                 "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        /*************Form Metotlari**********************/
+        private void CloseAllFairRelatedForms()
+        {
+            // Fair ile ilgili açık formları kapatır
+            FairServicesForm fairServicesForm = Application.OpenForms.OfType<FairServicesForm>().FirstOrDefault();
+            FairSummaryForm fairSummaryForm = Application.OpenForms.OfType<FairSummaryForm>().FirstOrDefault();
+            FairPriceOfferForm fairPriceOfferForm = Application.OpenForms.OfType<FairPriceOfferForm>().FirstOrDefault();
+
+            fairServicesForm.Close();
+            fairSummaryForm.Close();
+            fairPriceOfferForm.Close();
             Close();
         }
     }
