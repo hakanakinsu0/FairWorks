@@ -50,5 +50,12 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return GetAllCities().OrderBy(city => city).ToList();
         }
 
+        public List<string> GetFormattedLocationReport()
+        {
+            return GetAll().Select(location =>
+                $"Lokasyon ID: {location.Id} - Lokasyon: {location.City}/{location.District} - Durum: {location.Status}")
+            .ToList();
+        }
+
     }
 }

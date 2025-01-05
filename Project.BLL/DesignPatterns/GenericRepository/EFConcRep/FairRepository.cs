@@ -38,5 +38,26 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
                 ? discountedPrice
                 : (discountedPrice + customerOffer) / 2;
         }
+
+        public List<string> GetFormattedFairList()
+        {
+            return Where(f => f.Status != DataStatus.Deleted)
+                   .Select(f => $"Fuar ID: {f.Id} - Adı: {f.Name} - Başlangıç Tarihi: {f.RequestedStartDate:dd/MM/yyyy} - Bitiş Tarihi: {f.EndDate:dd/MM/yyyy} - Maliyet: {f.TotalCost:C2}")
+                   .ToList();
+        }
+
+        public List<string> GetFormattedFairPayments()
+        {
+            var paymentRepo = new PaymentRepository();
+            return GetAll().Select(fair =>
+            {
+                var payment = paymentRepo.FirstOrDefault(p => p.FairId == fair.Id);
+                string paymentStatus = payment?.PaymentStatus.ToString() ?? "Ödenmemiş";
+                string paymentMethod = payment?.PaymentMethod.ToString() ?? "Belirtilmemiş";
+                return $"Fuar Adı: {fair.Name} - Ödeme Durumu: {paymentStatus} - Ödeme Şekli: {paymentMethod}";
+            }).ToList();
+        }
+
+       
     }
 }

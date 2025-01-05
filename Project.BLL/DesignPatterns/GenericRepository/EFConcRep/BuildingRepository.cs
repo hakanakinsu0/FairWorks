@@ -105,5 +105,16 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             errorMessage = string.Empty;
             return true;
         }
+
+        public List<string> GetFormattedBuildingReport()
+        {
+            return GetAll().Select(building =>
+            {
+                string locationDetails = building.Location != null
+                    ? $"{building.Location.City}/{building.Location.District}"
+                    : "Bilinmiyor";
+                return $"Bina ID: {building.Id} - Adı: {building.Name} - Adres: {building.Address} - Şehir/İlçe: {locationDetails} - Durum: {building.Status}";
+            }).ToList();
+        }
     }
 }

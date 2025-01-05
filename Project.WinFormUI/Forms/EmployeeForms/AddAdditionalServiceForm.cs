@@ -16,10 +16,10 @@ namespace Project.WinFormUI.Forms
     {
 
         // Repository'ler (Veritabanı işlemleri için kullanılan sınıflar)
-        private ServiceDescriptorRepository _serviceDescriptorRepository;
-        private ServiceValueRepository _serviceValueRepository;
-        private ServiceProviderRepository _serviceProviderRepository;
-        private ServiceProviderServiceValueRepository _providerServiceValueRepository;
+        ServiceDescriptorRepository _serviceDescriptorRepository;
+        ServiceValueRepository _serviceValueRepository;
+        ServiceProviderRepository _serviceProviderRepository;
+        ServiceProviderServiceValueRepository _providerServiceValueRepository;
 
 
         // Formun yapıcı metodu
@@ -256,7 +256,7 @@ namespace Project.WinFormUI.Forms
             }
         }
 
-
+        /******************Form Metotlari***********************/
 
         private void SetInitialControlState()
         {
@@ -331,7 +331,7 @@ namespace Project.WinFormUI.Forms
                 foreach (var service in providerServiceValues)
                 {
                     // Yeni bir ListViewItem oluşturur ve sağlayıcı adını ekler.
-                    var item = new ListViewItem(service.ProviderName);
+                    ListViewItem item = new ListViewItem(service.ProviderName);
 
                     // Hizmet adını alt öğe olarak ekler.
                     item.SubItems.Add(service.ServiceName);

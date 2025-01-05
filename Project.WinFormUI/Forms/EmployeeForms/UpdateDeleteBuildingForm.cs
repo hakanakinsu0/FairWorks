@@ -157,6 +157,12 @@ namespace Project.WinFormUI.Forms
             }
         }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();//formu kapatır
+        }
+
+        /**********Form Metotlari********************/
         private void ClearFields()
         {
             // TextBox'ları temizle
@@ -173,12 +179,5 @@ namespace Project.WinFormUI.Forms
             _selectedBuilding = null;
             lstBuildings.SelectedIndex = -1;    // Listeyi sıfırla
         }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            Close();//formu kapatır
-        }
-
-     
     }
 }

@@ -403,7 +403,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UpdateDeleteServiceForm";
             this.Text = "Hizmet Güncelle/Sil";
-            this.Load += new System.EventHandler(this.UpdateDeleteServiceForm_Load);
             this.grpProviderDetails.ResumeLayout(false);
             this.grpProviderDetails.PerformLayout();
             this.grpServiceDetails.ResumeLayout(false);

@@ -64,18 +64,20 @@ namespace Project.WinFormUI.Forms
             }
         }
 
+        // "Kapat" butonuna tıklandığında formu kapatır
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close(); // Formu kapatır
+        }
+
+
+        /*****************Form Metotlari********************/
         // Lokasyon listesini yükler
         private void LoadLocations()
         {
             lstLocations.DataSource = null; // Listeyi temizler
             lstLocations.DataSource = _locationRepository.GetActives(); // Aktif lokasyonları getirir
             lstLocations.DisplayMember = "ToString"; // Görünecek alan olarak ToString kullanılır
-        }
-
-        // "Kapat" butonuna tıklandığında formu kapatır
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            Close(); // Formu kapatır
         }
     }
 }

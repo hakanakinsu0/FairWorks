@@ -105,6 +105,7 @@ namespace Project.WinFormUI.Forms
             Close(); // Formu kapatır
         }
 
+        /********************Form Metotlari***********************/
         // Formdaki tüm alanları temizler ve varsayılan değerlere ayarlar
         private void ClearFields()
         {

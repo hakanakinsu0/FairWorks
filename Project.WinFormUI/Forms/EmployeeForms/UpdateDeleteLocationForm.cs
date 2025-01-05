@@ -15,24 +15,17 @@ namespace Project.WinFormUI.Forms
     public partial class UpdateDeleteLocationForm : Form
     { 
         // Lokasyon repository ve seçilen lokasyon değişkenlerini tanımlama
-        private LocationRepository _locationRepository;
-        private Location _selectedLocation;
+        LocationRepository _locationRepository;
+        Location _selectedLocation;
+
         public UpdateDeleteLocationForm()
         {
-
             InitializeComponent();
             _locationRepository = new LocationRepository();  // Lokasyon repository örneğini başlat
 
             LoadLocations();   // Lokasyonları yükle
-
         }
 
-        private void LoadLocations()
-        {
-            // Aktif lokasyonları al ve listeye ekle
-            lstLocations.DataSource = _locationRepository.GetActives();
-            lstLocations.DisplayMember = "ToString"; // Lokasyonun görsel gösterimini ayarla
-        }
 
         private void lstLocations_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -123,6 +116,13 @@ namespace Project.WinFormUI.Forms
             }
         }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close(); // Formu kapat
+
+        }
+
+        /************Form Metotlari**************/
         // Formdaki alanları temizleme işlemi
         private void ClearFields()
         {
@@ -135,12 +135,12 @@ namespace Project.WinFormUI.Forms
             _selectedLocation = null;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void LoadLocations()
         {
-            Close(); // Formu kapat
-
+            // Aktif lokasyonları al ve listeye ekle
+            lstLocations.DataSource = _locationRepository.GetActives();
+            lstLocations.DisplayMember = "ToString"; // Lokasyonun görsel gösterimini ayarla
         }
 
-       
     }
 }

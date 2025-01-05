@@ -33,34 +33,6 @@ namespace Project.WinFormUI.Forms
 
         }
 
-        private void LoadProfile()
-        {
-            // Aktif Profilleri yükle
-            lstEmployees.DataSource = _ProfileRepository.GetActives();// Aktif profilleri getir
-            lstEmployees.DisplayMember = "ToString"; // Listeleme için ToString özelliğini kullan
-        }
-
-
-
-        private void ClearFields()
-        {
-            // Formdaki tüm alanları temizle
-            txtCity.Clear();
-            txtDistrict.Clear();
-            txtAddress.Clear();
-            txtEmail.Clear();
-            txtFirstName.Clear();
-            txtLastName.Clear();
-            txtPhoneNumber.Clear();
-            txtTC.Clear();
-
-            // Label'ı varsayılan değerle güncelle
-            lblSelectedEmployee.Text = "Seçilen çalışan: Yok";
-
-            // Seçilen profil ve çalışan nesnelerini null olarak ayarla
-            _selectedProfile = null;
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             // Formu kapat
@@ -98,9 +70,6 @@ namespace Project.WinFormUI.Forms
 
 
         }
-
-       
-
         private void btnDeleteEmployee_Click(object sender, EventArgs e)
         {
 
@@ -113,10 +82,6 @@ namespace Project.WinFormUI.Forms
 
             try
             {
-
-
-              
-
                 // Seçilen profili sil
                 _ProfileRepository.Delete(_selectedProfile);
                 _employeRepository.Delete(_selectedEmployee);
@@ -133,8 +98,6 @@ namespace Project.WinFormUI.Forms
                 MessageBox.Show($"Bir hata oluştu: {ex.Message}");
             }
         }
-
-   
 
         private void btnUpdateEmployee_Click(object sender, EventArgs e)
         {
@@ -173,6 +136,34 @@ namespace Project.WinFormUI.Forms
                 MessageBox.Show($"Bir hata oluştu: {ex.Message}");
             }
         }
+
+        /***********Form Metotlari********************/
+        private void LoadProfile()
+        {
+            // Aktif Profilleri yükle
+            lstEmployees.DataSource = _ProfileRepository.GetActives();// Aktif profilleri getir
+            lstEmployees.DisplayMember = "ToString"; // Listeleme için ToString özelliğini kullan
+        }
+
+        private void ClearFields()
+        {
+            // Formdaki tüm alanları temizle
+            txtCity.Clear();
+            txtDistrict.Clear();
+            txtAddress.Clear();
+            txtEmail.Clear();
+            txtFirstName.Clear();
+            txtLastName.Clear();
+            txtPhoneNumber.Clear();
+            txtTC.Clear();
+
+            // Label'ı varsayılan değerle güncelle
+            lblSelectedEmployee.Text = "Seçilen çalışan: Yok";
+
+            // Seçilen profil ve çalışan nesnelerini null olarak ayarla
+            _selectedProfile = null;
+        }
+
     }
 }  
     

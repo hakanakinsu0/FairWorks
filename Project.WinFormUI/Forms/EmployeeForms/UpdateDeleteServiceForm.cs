@@ -15,15 +15,15 @@ namespace Project.WinFormUI.Forms
     public partial class UpdateDeleteServiceForm : Form
     {
         // Repository'ler ve seçilen hizmet bilgilerini tutacak değişkenler
-        private ServiceDescriptorRepository _serviceDescriptorRepository;
-        private ServiceValueRepository _serviceValueRepository;
-        private ServiceProviderRepository _serviceProviderRepository;
-        private ServiceProviderServiceValueRepository _providerServiceValueRepository;
+        ServiceDescriptorRepository _serviceDescriptorRepository;
+        ServiceValueRepository _serviceValueRepository;
+        ServiceProviderRepository _serviceProviderRepository;
+        ServiceProviderServiceValueRepository _providerServiceValueRepository;
 
         // Seçilen sağlayıcı ve hizmet değeri nesneleri
         // Bu nesneler, kullanıcının seçim yaptığı sağlayıcı ve hizmet değerini tutar
-        private ServiceProvider _selectedProvider;  // Seçilen hizmet sağlayıcısı
-        private ServiceValue _selectedServiceValue; // Seçilen hizmet değeri
+        ServiceProvider _selectedProvider;  // Seçilen hizmet sağlayıcısı
+        ServiceValue _selectedServiceValue; // Seçilen hizmet değeri
 
 
         public UpdateDeleteServiceForm()
@@ -46,10 +46,10 @@ namespace Project.WinFormUI.Forms
         {
             if (lstServices.SelectedIndex != -1) // Eğer listeden bir öğe seçilmişse
             {
-                var selectedItem = lstServices.SelectedItem.ToString();
+                string selectedItem = lstServices.SelectedItem.ToString();
 
                 // Öğe formatı: "Sağlayıcı Adı - Hizmet Adı - Maliyet"
-                var parts = selectedItem.Split('-');
+                string[] parts = selectedItem.Split('-');
                 if (parts.Length == 3)
                 {
                     string providerName = parts[0].Trim();
@@ -144,7 +144,7 @@ namespace Project.WinFormUI.Forms
             try
             {
                 // Sağlayıcı ve hizmet değeri arasındaki ilişkiyi bul ve sil
-                var link = _providerServiceValueRepository
+                ServiceProviderServiceValue link = _providerServiceValueRepository
                     .FirstOrDefault(psv => psv.ServiceProviderId == _selectedProvider.Id &&
                                            psv.ServiceValueId == _selectedServiceValue.Id);
                 // Eğer ilişki mevcutsa, bu ilişkili kaydı sil
@@ -179,7 +179,7 @@ namespace Project.WinFormUI.Forms
 
         }
 
-
+        /************Form Metotları**************/
         // ListBox'ı başlatan metod
         private void InitializeListBox()
         {
@@ -248,9 +248,5 @@ namespace Project.WinFormUI.Forms
             txtProviderEmail.ReadOnly = false; // Sağlayıcı e-posta alanını düzenlenebilir yapar
         }
 
-        private void UpdateDeleteServiceForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -56,7 +56,6 @@
             this.lblSelectedFairDetails = new System.Windows.Forms.Label();
             this.lstDelayHistory = new System.Windows.Forms.ListBox();
             this.btnViewDelays = new System.Windows.Forms.Button();
-            this.btnClearFields = new System.Windows.Forms.Button();
             this.btnSaveDelay = new System.Windows.Forms.Button();
             this.txtDelayReason = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -335,7 +334,6 @@
             this.GecikmeYonetimi.Controls.Add(this.lblSelectedFairDetails);
             this.GecikmeYonetimi.Controls.Add(this.lstDelayHistory);
             this.GecikmeYonetimi.Controls.Add(this.btnViewDelays);
-            this.GecikmeYonetimi.Controls.Add(this.btnClearFields);
             this.GecikmeYonetimi.Controls.Add(this.btnSaveDelay);
             this.GecikmeYonetimi.Controls.Add(this.txtDelayReason);
             this.GecikmeYonetimi.Controls.Add(this.label2);
@@ -374,15 +372,6 @@
             this.btnViewDelays.Text = "Gecikmeleri Gor";
             this.btnViewDelays.UseVisualStyleBackColor = true;
             this.btnViewDelays.Click += new System.EventHandler(this.btnViewDelays_Click);
-            // 
-            // btnClearFields
-            // 
-            this.btnClearFields.Location = new System.Drawing.Point(231, 377);
-            this.btnClearFields.Name = "btnClearFields";
-            this.btnClearFields.Size = new System.Drawing.Size(75, 23);
-            this.btnClearFields.TabIndex = 5;
-            this.btnClearFields.Text = "Temizle";
-            this.btnClearFields.UseVisualStyleBackColor = true;
             // 
             // btnSaveDelay
             // 
@@ -490,7 +479,6 @@
         private System.Windows.Forms.DataGridView dgvFairs;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnViewDelays;
-        private System.Windows.Forms.Button btnClearFields;
         private System.Windows.Forms.Button btnSaveDelay;
         private System.Windows.Forms.Label lblSelectedFairDetails;
         private System.Windows.Forms.ListBox lstDelayHistory;

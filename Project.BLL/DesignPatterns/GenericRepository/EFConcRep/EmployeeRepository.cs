@@ -24,5 +24,16 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
         {
             return email.Contains("@") && email.Contains(".");
         }
+
+        public List<string> GetFormattedEmployeeReport()
+        {
+            return GetAll().Select(e =>
+            {
+                var profile = e.Profile;
+                return profile != null
+                    ? $"ID: {e.Id} - İsim Soyisim: {profile.FirstName} {profile.LastName} - Rol: {e.Role} - Durum: {e.Status}"
+                    : $"ID: {e.Id} - İsim: Bilinmiyor, Email: {e.Email}, Rol: {e.Role}, Durum: {e.Status}";
+            }).ToList();
+        }
     }
 }

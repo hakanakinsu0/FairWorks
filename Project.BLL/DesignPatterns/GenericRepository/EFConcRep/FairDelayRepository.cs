@@ -10,5 +10,15 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
 {
     public class FairDelayRepository:BaseRepository<FairDelay>
     {
+        public List<string> GetFormattedDelayHistory(int fairId)
+        {
+            return Where(fd => fd.FairId == fairId).Select(delay =>
+                $"Gecikme Süresi: {delay.DelayDuration} gün - Sebep: {delay.DelayReason} - Yeni Başlangıç: {delay.NewStartDate:dd/MM/yyyy} - Yeni Bitiş: {delay.NewEndDate:dd/MM/yyyy}")
+            .ToList();
+        }
+
+       
+
+
     }
 }

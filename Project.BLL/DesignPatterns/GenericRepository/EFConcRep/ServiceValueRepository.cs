@@ -20,5 +20,11 @@ namespace Project.BLL.DesignPatterns.GenericRepository.EFConcRep
             return FirstOrDefault(sv => sv.Name == name);
         }
 
+        public List<string> GetFormattedServiceReport()
+        {
+            return GetAll().Select(service =>
+                $"Hizmet ID: {service.Id} - Adı: {service.Name} - Maliyet: {service.Cost:C2} - Hazırlık Süresi: {service.PreparationTime} gün - Durum: {service.Status}"
+            ).ToList();
+        }
     }
 }

@@ -138,6 +138,9 @@ namespace Project.WinFormUI.Forms
             }
         }
 
+
+        /******************Form Metotlari*********************/
+
         private void LoadRoles()
         {
             List<EmployeeRole> roles = new List<EmployeeRole>    // Çalışan rolleri listesini oluşturuyoruz
